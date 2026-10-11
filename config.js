@@ -40,8 +40,8 @@ window.PORTFOLIO = {
   // counts load live from Discord. role: anything ('Owner', 'Admin', 'Head Mod', 'Partner Manager'…).
   servers: [
     { invite: 'recruitments', role: 'Moderator', since: '2026', note: 'Advertising community -  I run the staff team.' },
-    { invite: 'minecraft', role: 'Admin', since: '2025', note: 'Partnerships and community events.' },
-    { invite: 'python', role: 'Moderator', since: '2023' },
+    { invite: 'adverts', role: 'Trial Moderator', since: '2026', note: 'A normal trial moderator there.' },
+    { invite: 'NZ5qfyQUNc', role: 'Trail Moderator', since: '2023' },
   ],
   serversTitle: 'Servers I help run',
   serversIntro: 'Live numbers straight from Discord — tap a card to join.',
