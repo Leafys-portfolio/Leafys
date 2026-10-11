@@ -45,8 +45,8 @@ window.PORTFOLIO = {
   // Name, icon, online and member counts are fetched live from Discord — you can override name/icon if you want.
   // role: anything — 'Owner', 'Admin', 'Moderator', 'Head Mod', 'Partner Manager'…
   servers: [
-    { invite: 'discord', role: 'Moderator', since: '2024', note: 'Advertising community — I run the staff team and moderation.' },
-    { invite: 'minecraft', role: 'Admin', since: '2025', note: 'Partnerships and community events.' },
+    { invite: 'recruitments', role: 'Senior Moderator', since: '2026', note: 'Advertising community — I run the staff team and moderation.' },
+    { invite: 'NZ5qfyQUNc', role: 'Trial Moderator', since: '2026', note: 'Partnerships and community events.' },
     { invite: 'python', role: 'Moderator', since: '2023' },
   ],
   serversTitle: 'Servers I help run',
