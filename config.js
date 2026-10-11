@@ -5,7 +5,7 @@ window.PORTFOLIO = {
 
   // ---- You ------------------------------------------------------------------
   // Paste your Discord profile link. Name, tag, avatar and banner are fetched from it automatically.
-  profileLink: 'https://discord.com/users/1234567890123456789',
+  profileLink: 'https://discord.com/users/1314899151640858674',
   bio: 'Moderator & community builder. I keep servers calm, organised and growing.',
   location: 'India',               // '' to hide
   timezone: 'Asia/Kolkata',        // shows your local time — '' to hide
@@ -32,7 +32,7 @@ window.PORTFOLIO = {
     { icon: 'discord', label: 'Discord', url: '' },      // '' = uses your profile link above
     { icon: 'github', label: 'GitHub', url: 'https://github.com/IshanToshniwal' },
     { icon: 'youtube', label: 'YouTube', url: 'https://youtube.com/@yourchannel' },
-    { icon: 'email', label: 'Email', url: 'mailto:you@example.com' },
+    { icon: 'email', label: 'Email', url: 'mailto:undeadisop@gmail.com' },
   ],
 
   // ---- Servers ---------------------------------------------------------------
