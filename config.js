@@ -39,7 +39,7 @@ window.PORTFOLIO = {
   // invite: the code after discord.gg/ — must be a PERMANENT invite. Name, icon, banner, online and member
   // counts load live from Discord. role: anything ('Owner', 'Admin', 'Head Mod', 'Partner Manager'…).
   servers: [
-    { invite: 'discord', role: 'Moderator', since: '2024', note: 'Advertising community — I run the staff team.' },
+    { invite: 'recruitments', role: 'Moderator', since: '2026', note: 'Advertising community -  I run the staff team.' },
     { invite: 'minecraft', role: 'Admin', since: '2025', note: 'Partnerships and community events.' },
     { invite: 'python', role: 'Moderator', since: '2023' },
   ],
