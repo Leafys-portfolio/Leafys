@@ -16,7 +16,7 @@ Discord** — plus your socials and projects. No server, no build: it runs on Gi
 | `profileLink` | paste your Discord profile link — **name, tag, avatar and banner are fetched automatically**. `name` / `tag` / `avatar` / `banner` are optional overrides |
 | `bio`, `location`, `timezone`, `tags` | text under your name, your local clock, skill chips |
 | `socials` | any number of links — icons: discord, youtube, twitter, instagram, github, tiktok, twitch, website, email, reddit, steam, spotify |
-| `servers` | one entry per server: `invite` (code after discord.gg/ — must be a **permanent** invite), `role`, `since`, `note`; name, icon and counts load live. Add `name` / `icon` to override. |
+| `servers` | one entry per server: `invite` (code after discord.gg/ — must be a **permanent** invite), `role`, `since`; name, icon and counts load live. Add `name` / `icon` to override. |
 | `footer` | the line at the bottom |
 
 Commit the change — Pages redeploys on its own.

@@ -5,7 +5,7 @@ window.PORTFOLIO = {
 
   // ---- You ------------------------------------------------------------------
   // Paste your Discord profile link. Name, tag, avatar and banner are fetched from it automatically.
-  profileLink: 'https://discord.com/users/1314899151640858674',
+  profileLink: 'https://discord.com/users/1234567890123456789',
   bio: 'Moderator & community builder. I keep servers calm, organised and growing.',
   location: 'India',               // '' to hide
   timezone: 'Asia/Kolkata',        // shows your local time — '' to hide
@@ -39,9 +39,11 @@ window.PORTFOLIO = {
   // invite: the code after discord.gg/ — must be a PERMANENT invite. Name, icon, banner, online and member
   // counts load live from Discord. role: anything ('Owner', 'Admin', 'Head Mod', 'Partner Manager'…).
   servers: [
-    { invite: 'recruitments', role: 'Moderator', since: '2026', note: 'Advertising community -  I run the staff team.' },
-    { invite: 'adverts', role: 'Trial Moderator', since: '2026', note: 'A normal trial moderator there.' },
-    { invite: 'NZ5qfyQUNc', role: 'Trail Moderator', since: '2023' },
+    { invite: 'recruitments', role: 'Senior Moderator', since: '2026' },   // GenreHub
+    { invite: 'adverts',      role: 'Trial Moderator',  since: '2026' },   // Obsidian Advertising
+    { invite: 'nDYAGjKdx2',   role: 'Moderator',        since: '' },       // Steal cash from others
+    { invite: 'NZ5qfyQUNc',   role: 'Trial Moderator',  since: '2023' },   // Free Promotions
+    { invite: '7xx9zZVDMa',   role: 'Server Builder',   since: '' },       // Jane and Joe Club
   ],
   serversTitle: 'Servers I help run',
   serversIntro: 'Live numbers straight from Discord — tap a card to join.',

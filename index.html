@@ -49,13 +49,14 @@
   .srv:hover{border-color:color-mix(in srgb,var(--accent) 55%,transparent);transform:translateY(-2px)}
   .srv .top{height:64px;background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 45%,var(--surface)),var(--surface));background-size:cover;background-position:center}
   .srv .body{padding:0 18px 16px}
-  .srv .head{display:flex;gap:14px;align-items:flex-end;margin-top:-28px}
-  .srv img,.srv .ph{width:62px;height:62px;border-radius:20px;object-fit:cover;background:color-mix(in srgb,var(--accent) 35%,var(--surface));border:4px solid var(--surface);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px}
-  .srv .name{font-weight:700;font-size:18px;line-height:1.2;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .srv .head{display:flex;gap:14px;align-items:flex-start}
+  .srv .head .txt{min-width:0;padding-top:8px;flex:1}
+  .srv img,.srv .ph{width:62px;height:62px;margin-top:-28px;border-radius:20px;object-fit:cover;background:color-mix(in srgb,var(--accent) 35%,var(--surface));border:4px solid var(--surface);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px}
+  .srv .name{font-weight:700;font-size:17px;line-height:1.25;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .srv .name svg{vertical-align:-2px;margin-left:4px}
   .srv .name svg{width:16px;height:16px;fill:var(--accent)}
   .srv .role{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent2) 18%,transparent);color:var(--accent2);font-size:12.5px;font-weight:700}
   .srv .role.owner{background:color-mix(in srgb,var(--accent) 22%,transparent);color:color-mix(in srgb,var(--accent) 70%,#fff)}
-  .srv .note{color:var(--muted);font-size:14.5px;margin:12px 0 0}
   .stats{display:flex;gap:18px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);align-items:center;flex-wrap:wrap}
   .stats b{color:var(--text);font-size:16px;font-variant-numeric:tabular-nums}
   .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--online);margin-right:7px;box-shadow:0 0 0 0 rgba(61,220,132,.5);animation:pulse 2.2s infinite}
@@ -156,7 +157,7 @@ ${C.socials?.length ? `<div class="socials">${C.socials.map((s) => `<a class="so
   // ---- servers
   const sv = document.getElementById('servers');
   if (C.servers?.length) {
-    sv.innerHTML = `<h2>${esc(C.serversTitle || 'Servers')}</h2><p class="sub">${esc(C.serversIntro || '')}</p><div class="grid">${C.servers.map((s, i) => `<a class="srv" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div>${s.note ? `<p class="note">${esc(s.note)}</p>` : ''}<div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
+    sv.innerHTML = `<h2>${esc(C.serversTitle || 'Servers')}</h2><p class="sub">${esc(C.serversIntro || '')}</p><div class="grid">${C.servers.map((s, i) => `<a class="srv" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div><div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
     C.servers.forEach(async (s, i) => {
       const card = document.getElementById('srv' + i);
       try {
