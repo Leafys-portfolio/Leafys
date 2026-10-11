@@ -12,8 +12,9 @@ Discord** — plus your socials and projects. No server, no build: it runs on Gi
 ## Customise — edit `config.js` only
 | Section | What you can change |
 |---|---|
-| `theme` | accent colour, second colour, background, card colour, text colours, corner radius, Google Font name, banner image URL, dotted pattern on/off |
-| `profile` | name, tag, bio, avatar URL, Discord ID (optional live status via Lanyard), timezone (shows your local time), location, skill chips, "Discord profile" button link |
+| `theme` | `preset` (violet · ocean · ember · forest · mono · auto = colours from your Discord banner), or your own accent / accent2 / background / surface hex colours, corner radius, any Google Font, glow and dotted pattern on/off |
+| `profileLink` | paste your Discord profile link — **name, tag, avatar and banner are fetched automatically**. `name` / `tag` / `avatar` / `banner` are optional overrides |
+| `bio`, `location`, `timezone`, `tags` | text under your name, your local clock, skill chips |
 | `socials` | any number of links — icons: discord, youtube, twitter, instagram, github, tiktok, twitch, website, email, reddit, steam, spotify |
 | `servers` | one entry per server: `invite` (code after discord.gg/ — must be a **permanent** invite), `role`, `since`, `note`; name, icon and counts load live. Add `name` / `icon` to override. |
 | `footer` | the line at the bottom |
@@ -21,8 +22,12 @@ Discord** — plus your socials and projects. No server, no build: it runs on Gi
 Commit the change — Pages redeploys on its own.
 
 ## Live status (optional)
-Put your Discord user ID in `profile.discordId` and join **discord.gg/lanyard** once. The page then shows your real
-status dot (online / idle / dnd), what you're playing or listening to, and uses your current avatar automatically.
+Join **discord.gg/lanyard** once (nothing else to set up). The page then shows your real status dot
+(online / idle / dnd), what you're playing or listening to, and always your freshest avatar.
+
+## Changed something and the site didn't update?
+The page loads `config.js` with a fresh timestamp every visit, so edits show up as soon as GitHub finishes deploying
+(repo → **Actions** → green tick, ~1 minute). If you edited `index.html` itself, hard-refresh or open a private tab once.
 
 ## Notes
 - Counts come from Discord's public invite endpoint; if a card says *Live stats unavailable*, the invite expired or was

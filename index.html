@@ -3,38 +3,36 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Discord portfolio</title>
-<meta name="description" content="Servers I help run, with live member counts, and where to find me.">
+<title>Portfolio</title>
+<meta name="description" content="The Discord servers I help run, live, and where to find me.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
-<script src="config.js"></script>
 <style>
-  :root{--accent:#8b7bff;--accent2:#ffb86b;--bg:#0e0b1e;--surface:#17132d;--text:#efeafd;--muted:#9d96bd;--r:22px;--font:'Outfit';--online:#3ddc84;--line:rgba(255,255,255,.08)}
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font),system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
-  body.pattern{background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:26px 26px}
-  body:before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(700px 400px at 50% -10%,color-mix(in srgb,var(--accent) 28%,transparent),transparent 70%);z-index:0}
+  :root{--accent:#8b7bff;--accent2:#ffb86b;--bg:#0e0b1e;--surface:#17132d;--text:#efeafd;--muted:#9d96bd;--r:24px;--font:'Outfit';--online:#3ddc84;--line:rgba(255,255,255,.08)}
+  *{box-sizing:border-box}html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font),system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+  body.pattern{background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:26px 26px}
+  body.glow:before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(760px 420px at 50% -8%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%);z-index:0}
   a{color:inherit;text-decoration:none}
   .wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:40px 16px 72px}
-  @media(max-width:520px){.wrap{padding:16px 12px 56px}}
+  @media(max-width:520px){.wrap{padding:14px 12px 56px}}
 
-  /* profile card */
-  .profile{background:var(--surface);border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px color-mix(in srgb,var(--accent) 55%,transparent)}
-  .banner{height:170px;background:linear-gradient(115deg,var(--accent),color-mix(in srgb,var(--accent) 35%,var(--accent2)) 60%,var(--accent2));background-size:cover;background-position:center;position:relative}
-  .banner:after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(14,11,30,.55),transparent 60%)}
+  .profile{background:var(--surface);border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px color-mix(in srgb,var(--accent) 55%,transparent);opacity:0;transform:translateY(10px);animation:in .5s .05s forwards}
+  @keyframes in{to{opacity:1;transform:none}}
+  .banner{height:180px;background:linear-gradient(115deg,var(--accent),color-mix(in srgb,var(--accent) 35%,var(--accent2)) 60%,var(--accent2));background-size:cover;background-position:center;position:relative}
+  .banner:after{content:'';position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,var(--surface) 70%,transparent),transparent 55%)}
   .pbody{padding:0 28px 26px;position:relative}
-  .avatar{width:124px;height:124px;border-radius:50%;border:6px solid var(--surface);background:var(--surface);margin-top:-62px;object-fit:cover;display:block;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .avwrap{position:relative;width:124px}
-  .status{position:absolute;right:6px;bottom:8px;width:26px;height:26px;border-radius:50%;border:5px solid var(--surface);background:#80848e}
-  .status.online{background:var(--online)}.status.idle{background:#f0b232}.status.dnd{background:#f23f43}
+  @media(max-width:520px){.pbody{padding:0 18px 20px}.banner{height:140px}}
   .toprow{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:11px 18px;border-radius:calc(var(--r) - 8px);font-weight:600;margin-bottom:6px;transition:transform .15s,filter .15s;white-space:nowrap}
-  .cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
-  .cta svg{width:18px;height:18px}
-  h1{font-size:34px;line-height:1.1;margin:14px 0 2px;font-weight:800;letter-spacing:-.6px}
+  .avwrap{position:relative;width:128px;margin-top:-64px}
+  .avatar{width:128px;height:128px;border-radius:50%;border:6px solid var(--surface);background:var(--surface);object-fit:cover;display:block;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .status{position:absolute;right:6px;bottom:8px;width:28px;height:28px;border-radius:50%;border:5px solid var(--surface);background:#80848e}
+  .status.online{background:var(--online)}.status.idle{background:#f0b232}.status.dnd{background:#f23f43}
+  .cta{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;padding:12px 20px;border-radius:calc(var(--r) - 8px);font-weight:600;margin-bottom:6px;transition:transform .15s,filter .15s;white-space:nowrap;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--accent) 70%,transparent)}
+  .cta:hover{filter:brightness(1.1);transform:translateY(-1px)}.cta svg{width:18px;height:18px;fill:currentColor}
+  h1{font-size:36px;line-height:1.1;margin:14px 0 2px;font-weight:800;letter-spacing:-.7px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .tag{color:var(--muted);font-weight:500;margin:0}
   .bio{margin:14px 0 0;max-width:62ch;font-size:17px}
-  .meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-top:12px}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-top:12px;min-height:22px}
   .meta span{display:inline-flex;align-items:center;gap:6px}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
   .chip{padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--accent) 16%,transparent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);font-size:13.5px;font-weight:500}
@@ -43,33 +41,33 @@
   .soc:hover{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:color-mix(in srgb,var(--accent) 50%,transparent)}
   .soc svg{width:20px;height:20px;fill:currentColor}
 
-  /* sections */
   h2{font-size:24px;font-weight:800;letter-spacing:-.4px;margin:44px 0 4px}
   .sub{color:var(--muted);margin:0 0 18px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
   @media(max-width:520px){.grid{grid-template-columns:1fr}}
-  .srv{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;position:relative;overflow:hidden;transition:border-color .15s,transform .15s}
+  .srv{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;position:relative;transition:border-color .15s,transform .15s}
   .srv:hover{border-color:color-mix(in srgb,var(--accent) 55%,transparent);transform:translateY(-2px)}
-  .srv .head{display:flex;gap:14px;align-items:center}
-  .srv img,.srv .ph{width:60px;height:60px;border-radius:18px;object-fit:cover;background:color-mix(in srgb,var(--accent) 25%,transparent);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px}
-  .srv .name{font-weight:700;font-size:18px;line-height:1.2}
-  .srv .role{display:inline-block;margin-top:5px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent2) 18%,transparent);color:var(--accent2);font-size:12.5px;font-weight:700}
+  .srv .top{height:64px;background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 45%,var(--surface)),var(--surface));background-size:cover;background-position:center}
+  .srv .body{padding:0 18px 16px}
+  .srv .head{display:flex;gap:14px;align-items:flex-end;margin-top:-28px}
+  .srv img,.srv .ph{width:62px;height:62px;border-radius:20px;object-fit:cover;background:color-mix(in srgb,var(--accent) 35%,var(--surface));border:4px solid var(--surface);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px}
+  .srv .name{font-weight:700;font-size:18px;line-height:1.2;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .srv .name svg{width:16px;height:16px;fill:var(--accent)}
+  .srv .role{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent2) 18%,transparent);color:var(--accent2);font-size:12.5px;font-weight:700}
   .srv .role.owner{background:color-mix(in srgb,var(--accent) 22%,transparent);color:color-mix(in srgb,var(--accent) 70%,#fff)}
-  .srv .note{color:var(--muted);font-size:14.5px;margin:12px 0 0;min-height:0}
+  .srv .note{color:var(--muted);font-size:14.5px;margin:12px 0 0}
   .stats{display:flex;gap:18px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);align-items:center;flex-wrap:wrap}
   .stats b{color:var(--text);font-size:16px;font-variant-numeric:tabular-nums}
   .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--online);margin-right:7px;box-shadow:0 0 0 0 rgba(61,220,132,.5);animation:pulse 2.2s infinite}
   @keyframes pulse{70%{box-shadow:0 0 0 7px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
-  .since{margin-left:auto}
-  .srv.err .stats{color:var(--accent2)}
-  .join{position:absolute;top:16px;right:16px;font-size:13px;font-weight:600;color:var(--muted);opacity:0;transition:opacity .15s}
+  .since{margin-left:auto}.srv.err .stats{color:var(--accent2)}
+  .join{position:absolute;top:14px;right:14px;font-size:12.5px;font-weight:700;color:#fff;background:rgba(0,0,0,.35);padding:4px 10px;border-radius:999px;opacity:0;transition:opacity .15s}
   .srv:hover .join{opacity:1}
-
   footer{margin-top:56px;color:var(--muted);font-size:13.5px;text-align:center}
   .skel{color:transparent;background:rgba(255,255,255,.08);border-radius:6px;animation:sk 1.2s infinite}
   @keyframes sk{50%{opacity:.5}}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.profile{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -79,8 +77,10 @@
   <footer id="footer"></footer>
 </div>
 <script>
-const C = window.PORTFOLIO || {};
-const T = C.theme || {}, P = C.profile || {};
+// load config.js fresh every time (GitHub Pages caches aggressively)
+(function () { const s = document.createElement('script'); s.src = 'config.js?v=' + Date.now(); s.onload = init; s.onerror = () => { document.getElementById('profile').innerHTML = '<div style="padding:28px">config.js is missing — add it next to index.html.</div>'; }; document.head.appendChild(s); })();
+
+const PRESETS = { violet: ['#8b7bff', '#ffb86b', '#0e0b1e', '#17132d'], ocean: ['#38bdf8', '#a7f3d0', '#07131f', '#0f1f2e'], ember: ['#ff6b4a', '#ffd166', '#17090b', '#241215'], forest: ['#4ade80', '#fde68a', '#071510', '#0f2118'], mono: ['#e5e7eb', '#9ca3af', '#0a0a0a', '#161616'] };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const ICONS = {
   discord: '<svg viewBox="0 0 24 24"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.2.4a18 18 0 0 1 4.4 2.2 15.6 15.6 0 0 0-15.2 0A18 18 0 0 1 8.8 3.4L8.6 3a19.8 19.8 0 0 0-4.9 1.4C.6 9 0 13.5.3 17.9a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 11.8 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.9 19.9 0 0 0 6-3c.5-5.1-.9-9.5-3.4-13.5ZM8.3 15.2c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Zm7.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Z"/></svg>',
@@ -95,63 +95,89 @@ const ICONS = {
   reddit: '<svg viewBox="0 0 24 24"><path d="M24 11.8a2.6 2.6 0 0 0-4.4-1.9 12.9 12.9 0 0 0-6.9-2.2l1.2-5.5 3.8.8a1.8 1.8 0 1 0 .2-.9l-4.3-.9a.5.5 0 0 0-.5.4L11.8 7.7a12.9 12.9 0 0 0-7 2.2 2.6 2.6 0 1 0-2.9 4.3 5 5 0 0 0 0 .8c0 4 4.6 7.2 10.3 7.2S22.4 19 22.4 15a5 5 0 0 0 0-.8 2.6 2.6 0 0 0 1.6-2.4ZM6 13.6a1.8 1.8 0 1 1 3.6 0 1.8 1.8 0 0 1-3.6 0Zm10.3 5c-1.3 1.3-3.7 1.4-4.4 1.4s-3.1-.1-4.4-1.4a.5.5 0 0 1 .7-.7c.8.8 2.5 1.1 3.7 1.1s2.9-.3 3.7-1.1a.5.5 0 0 1 .7.7Zm-.3-3.2a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6Z"/></svg>',
   steam: '<svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 .1 10.6l6.4 2.7a3.4 3.4 0 0 1 1.9-.6h.2l2.9-4.1v-.1a4.5 4.5 0 1 1 4.5 4.5h-.1l-4.1 2.9v.2a3.4 3.4 0 0 1-6.7.6L.3 14.8A12 12 0 1 0 12 0ZM7.5 18.2l-1.5-.6a2.5 2.5 0 0 0 4.7-.9 2.5 2.5 0 0 0-3.6-2.5l1.5.6a1.9 1.9 0 0 1-1.1 3.4Zm8.5-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm0-5.2a2.2 2.2 0 1 0 0 4.5 2.2 2.2 0 0 0 0-4.5Z"/></svg>',
   spotify: '<svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.5 17.3a.7.7 0 0 1-1 .3c-2.8-1.7-6.3-2.1-10.5-1.1a.7.7 0 1 1-.3-1.5c4.5-1 8.4-.6 11.5 1.3.4.2.5.7.3 1Zm1.5-3.3a.9.9 0 0 1-1.3.3c-3.2-2-8.1-2.6-11.9-1.4a.9.9 0 1 1-.5-1.8c4.3-1.3 9.7-.7 13.4 1.6.4.3.6.8.3 1.3Zm.1-3.4C15.3 8.3 9 8.1 5.3 9.2a1.1 1.1 0 1 1-.6-2.1c4.2-1.3 11.2-1 15.6 1.6a1.1 1.1 0 0 1-1.2 1.9Z"/></svg>',
+  telegram: '<svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24Zm5.9 8.2-2 9.3c-.1.7-.5.8-1.1.5l-3-2.2-1.5 1.4c-.2.2-.3.3-.6.3l.2-3.1 5.6-5c.2-.2 0-.3-.3-.1l-7 4.4-3-.9c-.7-.2-.7-.7.1-1l11.7-4.5c.5-.2 1 .1.9.9Z"/></svg>',
+  roblox: '<svg viewBox="0 0 24 24"><path d="M5 0 0 19l19 5 5-19L5 0Zm9.4 14.4-4.8-1.2 1.2-4.8 4.8 1.2-1.2 4.8Z"/></svg>',
+  verified: '<svg viewBox="0 0 24 24"><path d="M12 1.5 15 4l3.9-.4 1.1 3.7 3.3 2.1-1.5 3.6 1.5 3.6-3.3 2.1-1.1 3.7-3.9-.4-3 2.5-3-2.5-3.9.4-1.1-3.7L.7 16.6l1.5-3.6L.7 9.4 4 7.3l1.1-3.7L9 4l3-2.5Zm-1.4 13.8 6-6-1.4-1.4-4.6 4.6-2.2-2.2L7 11.7l3.6 3.6Z"/></svg>',
 };
-// theme
-const root = document.documentElement.style;
-for (const [k, v] of Object.entries({ accent: T.accent, accent2: T.accent2, bg: T.background, surface: T.surface, text: T.text, muted: T.muted })) if (v) root.setProperty('--' + k, v);
-if (T.radius != null) root.setProperty('--r', T.radius + 'px');
-if (T.font) { root.setProperty('--font', `'${T.font}'`); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(T.font)}:wght@400;500;600;700;800&display=swap`; document.head.appendChild(l); }
-if (T.pattern !== false) document.body.classList.add('pattern');
-document.title = `${P.name || 'Discord'} — portfolio`;
-
-// profile
-const prof = document.getElementById('profile');
-prof.innerHTML = `<div class="banner" ${T.banner ? `style="background-image:url('${esc(T.banner)}')"` : ''}></div><div class="pbody">
-<div class="toprow"><div class="avwrap"><img class="avatar" id="avatar" src="${esc(P.avatar || 'https://cdn.discordapp.com/embed/avatars/0.png')}" alt=""><span class="status" id="status" title="status"></span></div>${P.profileLink ? `<a class="cta" href="${esc(P.profileLink)}" target="_blank" rel="noopener">${ICONS.discord} Discord profile</a>` : ''}</div>
-<h1>${esc(P.name || 'Your name')}</h1>${P.tag ? `<p class="tag">${esc(P.tag)}</p>` : ''}
-${P.bio ? `<p class="bio">${esc(P.bio)}</p>` : ''}
-<div class="meta">${P.location ? `<span>📍 ${esc(P.location)}</span>` : ''}${P.timezone ? `<span>🕒 <span id="clock"></span></span>` : ''}<span id="activity"></span></div>
-${P.tags?.length ? `<div class="chips">${P.tags.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
-${C.socials?.length ? `<div class="socials">${C.socials.map((s) => `<a class="soc" href="${esc(s.url)}" target="_blank" rel="noopener">${ICONS[s.icon] || ICONS.website}${esc(s.label || s.icon)}</a>`).join('')}</div>` : ''}
-</div>`;
-if (P.timezone) { const tick = () => { const el = document.getElementById('clock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: P.timezone }) + ' local'; }; tick(); setInterval(tick, 30_000); }
-// optional live presence via Lanyard (join discord.gg/lanyard once)
-if (P.discordId) fetch(`https://api.lanyard.rest/v1/users/${P.discordId}`).then((r) => r.json()).then((j) => {
-  if (!j?.success) return;
-  const d = j.data; const st = document.getElementById('status'); st.className = 'status ' + (d.discord_status || 'offline'); st.title = d.discord_status;
-  if (d.discord_user?.avatar) document.getElementById('avatar').src = `https://cdn.discordapp.com/avatars/${P.discordId}/${d.discord_user.avatar}.png?size=256`;
-  const act = (d.activities || []).find((a) => a.type !== 4); const custom = (d.activities || []).find((a) => a.type === 4);
-  const el = document.getElementById('activity');
-  if (d.listening_to_spotify && d.spotify) el.textContent = `🎵 ${d.spotify.song} — ${d.spotify.artist}`;
-  else if (act) el.textContent = `🎮 ${act.name}`;
-  else if (custom?.state) el.textContent = `💬 ${custom.state}`;
-}).catch(() => {});
-
-// servers
-const sv = document.getElementById('servers');
 const fmt = (n) => (n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + 'M' : n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1) + 'k' : String(n));
 function countUp(el, n) { if (matchMedia('(prefers-reduced-motion: reduce)').matches || n < 50) { el.textContent = fmt(n); return; } const t0 = performance.now(); const step = (t) => { const p = Math.min(1, (t - t0) / 900); el.textContent = fmt(Math.round(n * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
-if (C.servers?.length) {
-  sv.innerHTML = `<h2>${esc(C.serversTitle || 'Servers')}</h2><p class="sub">${esc(C.serversIntro || '')}</p><div class="grid">${C.servers.map((s, i) => `<a class="srv" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><span class="join">Join ↗</span><div class="head">${s.icon ? `<img src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div>${s.note ? `<p class="note">${esc(s.note)}</p>` : ''}<div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></a>`).join('')}</div>`;
-  C.servers.forEach(async (s, i) => {
-    const card = document.getElementById('srv' + i);
-    try {
-      const r = await fetch(`https://discord.com/api/v10/invites/${encodeURIComponent(s.invite)}?with_counts=true&with_expiration=true`);
-      if (!r.ok) throw new Error(r.status === 404 ? 'invite not found or expired' : 'Discord returned ' + r.status);
-      const j = await r.json();
-      const g = j.guild || {};
-      if (!s.name) card.querySelector('.name').textContent = g.name || s.invite;
-      if (!s.icon && g.icon) { const img = document.createElement('img'); img.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128`; img.alt = ''; card.querySelector('.ph')?.replaceWith(img); }
-      countUp(card.querySelector('.on'), j.approximate_presence_count || 0);
-      countUp(card.querySelector('.mem'), j.approximate_member_count || 0);
-    } catch (e) {
-      card.classList.add('err');
-      if (!s.name) card.querySelector('.name').textContent = s.invite;
-      card.querySelector('.stats').innerHTML = `<span>Live stats unavailable — ${esc(e.message)}</span>`;
-    }
-  });
+const idFrom = (link) => (String(link || '').match(/(\d{15,22})/) || [])[1] || '';
+
+function init() {
+  const C = window.PORTFOLIO || {}; const T = C.theme || {};
+  const userId = idFrom(C.profileLink);
+  const profileLink = C.profileLink || (userId ? `https://discord.com/users/${userId}` : '');
+  // ---- theme
+  const root = document.documentElement.style;
+  const preset = PRESETS[T.preset] || PRESETS.violet;
+  const [pa, pa2, pbg, psf] = preset;
+  root.setProperty('--accent', T.accent || pa); root.setProperty('--accent2', T.accent2 || pa2); root.setProperty('--bg', T.background || pbg); root.setProperty('--surface', T.surface || psf);
+  if (T.text) root.setProperty('--text', T.text); if (T.muted) root.setProperty('--muted', T.muted);
+  if (T.radius != null) root.setProperty('--r', T.radius + 'px');
+  if (T.font) { root.setProperty('--font', `'${T.font}'`); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(T.font)}:wght@400;500;600;700;800&display=swap`; document.head.appendChild(l); }
+  if (T.pattern !== false) document.body.classList.add('pattern'); if (T.glow !== false) document.body.classList.add('glow');
+
+  // ---- profile card (renders instantly with what we know, then fills in from Discord)
+  const prof = document.getElementById('profile');
+  prof.innerHTML = `<div class="banner" id="banner" ${C.banner ? `style="background-image:url('${esc(C.banner)}')"` : ''}></div><div class="pbody">
+<div class="toprow"><div class="avwrap"><img class="avatar" id="avatar" src="${esc(C.avatar || `https://cdn.discordapp.com/embed/avatars/${userId ? Number(BigInt(userId) >> 22n) % 6 : 0}.png`)}" alt=""><span class="status" id="status" title="status"></span></div>${profileLink ? `<a class="cta" href="${esc(profileLink)}" target="_blank" rel="noopener">${ICONS.discord} Discord profile</a>` : ''}</div>
+<h1 id="name">${C.name ? esc(C.name) : '<span class="skel">Loading name</span>'}</h1><p class="tag" id="tag">${esc(C.tag || '')}</p>
+${C.bio ? `<p class="bio">${esc(C.bio)}</p>` : ''}
+<div class="meta">${C.location ? `<span>📍 ${esc(C.location)}</span>` : ''}${C.timezone ? `<span>🕒 <span id="clock"></span></span>` : ''}<span id="activity"></span></div>
+${C.tags?.length ? `<div class="chips">${C.tags.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
+${C.socials?.length ? `<div class="socials">${C.socials.map((s) => `<a class="soc" href="${esc(s.url || (s.icon === 'discord' ? profileLink : '#'))}" target="_blank" rel="noopener">${ICONS[s.icon] || ICONS.website}${esc(s.label || s.icon)}</a>`).join('')}</div>` : ''}
+</div>`;
+  if (C.timezone) { const tick = () => { const el = document.getElementById('clock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: C.timezone }) + ' local'; }; tick(); setInterval(tick, 30_000); }
+  const setName = (n, t) => { if (!C.name && n) { document.getElementById('name').textContent = n; document.title = `${n} — portfolio`; } if (!C.tag && t) document.getElementById('tag').textContent = t; };
+  const setAvatar = (u) => { if (!C.avatar && u) document.getElementById('avatar').src = u; };
+  const setBanner = (u, color) => { const b = document.getElementById('banner'); if (C.banner) return; if (u) b.style.backgroundImage = `url('${u}')`; if (T.preset === 'auto' && color) { root.setProperty('--accent', color); } };
+
+  // 1) public profile lookup (no setup needed): name, avatar, banner
+  if (userId) {
+    fetch(`https://discordlookup.mesalytic.moe/v1/user/${userId}`).then((r) => r.ok ? r.json() : null).then((u) => {
+      if (!u) return;
+      setName(u.global_name || u.username, u.username ? '@' + u.username : '');
+      setAvatar(u.avatar?.link ? u.avatar.link + '?size=256' : null);
+      setBanner(u.banner?.link ? u.banner.link + '?size=1024' : null, u.banner?.color || u.accent_color);
+    }).catch(() => {});
+    // 2) live presence via Lanyard (only if you've joined discord.gg/lanyard) — status dot, activity, freshest avatar
+    fetch(`https://api.lanyard.rest/v1/users/${userId}`).then((r) => r.json()).then((j) => {
+      if (!j?.success) return;
+      const d = j.data; const st = document.getElementById('status'); st.className = 'status ' + (d.discord_status || 'offline'); st.title = d.discord_status;
+      setName(d.discord_user?.global_name || d.discord_user?.username, d.discord_user?.username ? '@' + d.discord_user.username : '');
+      if (d.discord_user?.avatar) setAvatar(`https://cdn.discordapp.com/avatars/${userId}/${d.discord_user.avatar}.${d.discord_user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=256`);
+      const act = (d.activities || []).find((a) => a.type !== 4), custom = (d.activities || []).find((a) => a.type === 4);
+      const el = document.getElementById('activity');
+      if (d.listening_to_spotify && d.spotify) el.textContent = `🎵 ${d.spotify.song} — ${d.spotify.artist}`; else if (act) el.textContent = `🎮 ${act.name}`; else if (custom?.state) el.textContent = `💬 ${custom.state}`;
+    }).catch(() => {});
+  } else setName(C.name || 'Your name', C.tag);
+  setTimeout(() => { const n = document.getElementById('name'); if (n.querySelector('.skel')) n.textContent = C.name || 'Discord user'; }, 6000);
+
+  // ---- servers
+  const sv = document.getElementById('servers');
+  if (C.servers?.length) {
+    sv.innerHTML = `<h2>${esc(C.serversTitle || 'Servers')}</h2><p class="sub">${esc(C.serversIntro || '')}</p><div class="grid">${C.servers.map((s, i) => `<a class="srv" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div>${s.note ? `<p class="note">${esc(s.note)}</p>` : ''}<div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
+    C.servers.forEach(async (s, i) => {
+      const card = document.getElementById('srv' + i);
+      try {
+        const r = await fetch(`https://discord.com/api/v10/invites/${encodeURIComponent(s.invite)}?with_counts=true&with_expiration=true`);
+        if (!r.ok) throw new Error(r.status === 404 ? 'invite not found or expired' : 'Discord returned ' + r.status);
+        const j = await r.json(); const g = j.guild || {};
+        const nameEl = card.querySelector('.name');
+        if (!s.name) nameEl.textContent = g.name || s.invite;
+        if ((g.features || []).includes('VERIFIED') || (g.features || []).includes('PARTNERED')) nameEl.insertAdjacentHTML('beforeend', ICONS.verified);
+        if (!s.icon && g.icon) { const img = document.createElement('img'); img.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128`; img.alt = ''; card.querySelector('.ph')?.replaceWith(img); }
+        const art = g.banner ? `https://cdn.discordapp.com/banners/${g.id}/${g.banner}.png?size=600` : g.splash ? `https://cdn.discordapp.com/splashes/${g.id}/${g.splash}.png?size=600` : null;
+        if (art) card.querySelector('.top').style.backgroundImage = `url('${art}')`;
+        countUp(card.querySelector('.on'), j.approximate_presence_count || 0); countUp(card.querySelector('.mem'), j.approximate_member_count || 0);
+      } catch (e) {
+        card.classList.add('err'); if (!s.name) card.querySelector('.name').textContent = s.invite;
+        card.querySelector('.stats').innerHTML = `<span>Live stats unavailable — ${esc(e.message)}</span>`;
+      }
+    });
+  }
+  document.getElementById('footer').textContent = C.footer || '';
 }
-document.getElementById('footer').textContent = C.footer || '';
 </script>
 </body>
 </html>
