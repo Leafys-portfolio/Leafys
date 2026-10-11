@@ -20,15 +20,15 @@ window.PORTFOLIO = {
 
   // ---- You ------------------------------------------------------------------
   profile: {
-    name: 'Ishan',
-    tag: '@ishan',                              // shown under the name
+    name: 'Leafy',
+    tag: '@._maple1',                              // shown under the name
     bio: 'Moderator & bot builder. I keep communities calm, organised and running — and I write the bots that help.',
-    avatar: 'https://cdn.discordapp.com/embed/avatars/1.png',   // your avatar image URL (right-click your Discord avatar → Copy image address)
+    avatar: 'https://cdn.discordapp.com/avatars/1314899151640858674/a0d099f8141dd94469d88c224c87cbc0.png?size=1024',   // your avatar image URL (right-click your Discord avatar → Copy image address)
     discordId: '',             // optional: your Discord user ID. If you join discord.gg/lanyard, live status + avatar are shown automatically
     timezone: 'Asia/Kolkata',  // shows your local time (IANA name) — '' to hide
     location: 'India',         // '' to hide
     tags: ['Moderation', 'Staff management', 'Bot development', 'Community growth'],   // small chips under the bio
-    profileLink: 'https://discord.com/users/YOUR_USER_ID',   // the big "Discord profile" button
+    profileLink: 'https://discord.com/users/1314899151640858674',   // the big "Discord profile" button
   },
 
   // ---- Social links ----------------------------------------------------------
