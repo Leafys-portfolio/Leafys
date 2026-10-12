@@ -16,9 +16,9 @@ window.PORTFOLIO = {
   // ---- Look -----------------------------------------------------------------
   theme: {
     preset: 'violet',          // violet · ocean · ember · forest · mono · auto (auto = colours from your Discord banner)
-    accent: '',                // or set your own colours (hex) — these override the preset
-    accent2: '',
-    background: 'https://i.pinimg.com/originals/70/55/c9/7055c99bad359a99e95a9a0bf4849a77.gif',
+    accent: '#128f04',                // or set your own colours (hex) — these override the preset
+    accent2: '#084701',
+    background: '',
     surface: '',
     radius: 24,                // corner roundness (0 = square)
     font: 'Outfit',            // any Google Font: 'Sora', 'Poppins', 'Space Grotesk', 'DM Sans'…
