@@ -24,7 +24,8 @@ window.PORTFOLIO = {
     font: 'Inter',              // any Google Font: 'Sora', 'Poppins', 'Space Grotesk', 'DM Sans'…
     glow: true,                // soft glow behind the profile card
     pattern: true,             // faint grid behind the hero
-    particles: true,           // floating particles that react to the cursor
+    particles: true,           // 3D starfield that tilts with the cursor
+    orb: true,                 // ripple sphere of dots around your avatar (hover / tap it)
   },
   headline: 'Discord moderator',       // small pill above your name
   ctaText: 'Explore servers',          // main button text
