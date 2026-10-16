@@ -23,12 +23,15 @@ window.PORTFOLIO = {
     radius: 24,                // corner roundness (0 = square)
     font: 'Inter',              // any Google Font: 'Sora', 'Poppins', 'Space Grotesk', 'DM Sans'…
     glow: true,                // soft glow behind the profile card
-    pattern: true,             // faint grid behind the hero
+    pattern: false,            // faint grid behind the hero
     particles: true,           // 3D starfield that tilts with the cursor
-    orb: true,                 // ripple sphere of dots around your avatar (hover / tap it)
+    orb: true,                 // big particle sphere behind the hero (hover / tap it)
+    orbColors: ['#fff3cf', '#e07a2a'],   // sphere colours: [light, dark] — gold like motion.dev
+    cta: '#f5d547',            // main button colour
   },
   headline: 'Discord moderator',       // small pill above your name
   ctaText: 'Explore servers',          // main button text
+  tagline: 'Open for moderation & partnership work.',   // small line above the buttons ('' to hide)
 
   // ---- Social links ----------------------------------------------------------
   // icons: discord · youtube · twitter · instagram · github · tiktok · twitch · website · email · reddit · steam · spotify · telegram · roblox

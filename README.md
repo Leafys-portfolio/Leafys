@@ -18,7 +18,9 @@ Discord** — plus your socials and projects. No server, no build: it runs on Gi
 | `socials` | any number of links — icons: discord, youtube, twitter, instagram, github, tiktok, twitch, website, email, reddit, steam, spotify |
 | `headline` / `ctaText` | pill above your name / main button text |
 | `serversEyebrow` / `socialsEyebrow` / `socialsTitle` | section labels |
-| `theme.particles` | cursor-reactive particle background (`false` to turn off) |
+| `theme.particles` | 3D starfield background (`false` to turn off) |
+| `theme.orb` / `theme.orbColors` / `theme.cta` | the big particle sphere, its two colours [light, dark], and the main button colour |
+| `tagline` | small line above the buttons |
 | `servers` | one entry per server: `invite` (code after discord.gg/ — must be a **permanent** invite), `role`, `since`; name, icon and counts load live. Add `name` / `icon` to override. |
 | `footer` | the line at the bottom |
 
