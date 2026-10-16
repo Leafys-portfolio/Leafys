@@ -5,7 +5,7 @@ window.PORTFOLIO = {
 
   // ---- You ------------------------------------------------------------------
   // Paste your Discord profile link. Name, tag, avatar and banner are fetched from it automatically.
-  profileLink: 'https://discord.com/users/1234567890123456789',
+  profileLink: 'https://discord.com/users/1314899151640858674',
   bio: 'Moderator & community builder. I keep servers calm, organised and growing.',
   location: 'India',               // '' to hide
   timezone: 'Asia/Kolkata',        // shows your local time — '' to hide
@@ -15,7 +15,7 @@ window.PORTFOLIO = {
 
   // ---- Look -----------------------------------------------------------------
   theme: {
-    preset: 'liu',             // liu (black & white, like liuclient.org) · mono · violet · ocean · ember · forest · auto (auto = colours from your Discord banner)
+    preset: 'auto',             // liu (black & white, like liuclient.org) · mono · violet · ocean · ember · forest · auto (auto = colours from your Discord banner)
     accent: '',                // or set your own colours (hex) — these override the preset
     accent2: '',
     background: '',
@@ -47,9 +47,9 @@ window.PORTFOLIO = {
   // counts load live from Discord. role: anything ('Owner', 'Admin', 'Head Mod', 'Partner Manager'…).
   servers: [
     { invite: 'recruitments', role: 'Senior Moderator', since: '2026' },   // GenreHub
-    { invite: 'adverts',      role: 'Trial Moderator',  since: '2026' },   // Obsidian Advertising
+    { invite: 'adverts',      role: 'Trial Moderator / Community manager',  since: '2026' },   // Obsidian Advertising
     { invite: 'nDYAGjKdx2',   role: 'Moderator',        since: '' },       // Steal cash from others
-    { invite: 'NZ5qfyQUNc',   role: 'Trial Moderator',  since: '2023' },   // Free Promotions
+    { invite: 'NZ5qfyQUNc',   role: 'Director Excecutive',  since: '2023' },   // Free Promotions
     { invite: '7xx9zZVDMa',   role: 'Server Builder',   since: '' },       // Jane and Joe Club
   ],
   serversEyebrow: 'Showcase',
