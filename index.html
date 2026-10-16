@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portfolio</title>
 <meta name="theme-color" content="#09090c">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta property="og:type" content="profile"><meta property="og:title" id="ogt" content="Discord portfolio"><meta property="og:description" id="ogd" content="Servers, roles and live member counts."><meta property="og:image" id="ogi" content="">
 <meta name="description" content="Discord moderator portfolio — servers, roles and live member counts.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23fff'/></svg>">
 <style>
@@ -187,7 +189,7 @@ function startFx(on, accent) {
   const c = document.getElementById('fx'); if (!on || matchMedia('(prefers-reduced-motion: reduce)').matches) { c.remove(); return; }
   const x = c.getContext('2d'); const D = Math.min(devicePixelRatio || 1, 2);
   let W, H, P = [], mx = 0, my = 0, rx = 0, ry = 0, scrollY0 = 0;
-  const N = () => Math.min(420, Math.round(innerWidth * innerHeight / 3200));
+  const N = () => Math.min(LOW ? 160 : 420, Math.round(innerWidth * innerHeight / (LOW ? 6000 : 3200)));
   const spawn = (z) => ({ x: (Math.random() - .5) * 2.4, y: (Math.random() - .5) * 2.4, z: z ?? Math.random() * 2 + .2, s: Math.random() * 1.6 + .6, tw: Math.random() * 6.28 });
   const resize = () => { W = c.width = innerWidth * D; H = c.height = innerHeight * D; P = Array.from({ length: N() }, () => spawn()); };
   resize(); addEventListener('resize', resize);
@@ -209,16 +211,24 @@ function startFx(on, accent) {
       const depth = 1 - Math.min(1, Z / 2.4), r = (p.s * (0.4 + depth * 1.6)) * D, a = 0.15 + depth * .85 * (0.75 + .25 * Math.sin(t / 700 + p.tw));
       pts.push([sx, sy, r, a, depth]);
     }
-    // faint constellation lines between close bright stars
+    // faint constellation lines between close bright stars (desktop only — it's an n² pass)
     x.lineWidth = .6 * D; x.strokeStyle = accent;
-    for (let i = 0; i < pts.length; i++) { const a = pts[i]; if (a[4] < .55) continue; for (let j = i + 1; j < pts.length; j++) { const b = pts[j]; if (b[4] < .55) continue; const dx = a[0] - b[0], dy = a[1] - b[1]; const d2 = dx * dx + dy * dy; if (d2 < 130 * 130 * D * D) { x.globalAlpha = (1 - Math.sqrt(d2) / (130 * D)) * .16; x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke(); } } }
+    if (!LOW) for (let i = 0; i < pts.length; i++) { const a = pts[i]; if (a[4] < .55) continue; for (let j = i + 1; j < pts.length; j++) { const b = pts[j]; if (b[4] < .55) continue; const dx = a[0] - b[0], dy = a[1] - b[1]; const d2 = dx * dx + dy * dy; if (d2 < 130 * 130 * D * D) { x.globalAlpha = (1 - Math.sqrt(d2) / (130 * D)) * .16; x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke(); } } }
     x.fillStyle = accent;
     for (const [sx, sy, r, a, depth] of pts) { x.globalAlpha = a; x.beginPath(); x.arc(sx, sy, r, 0, 7); x.fill(); if (depth > .8) { x.globalAlpha = a * .25; x.beginPath(); x.arc(sx, sy, r * 3, 0, 7); x.fill(); } }
-    x.globalAlpha = 1; requestAnimationFrame(draw);
+    x.globalAlpha = 1;
   };
-  requestAnimationFrame(draw);
+  visibleLoop(document.querySelector('.hero'), draw);
 }
 
+// ---- device + visibility helpers (used to throttle the heavy canvases)
+const LOW = innerWidth < 900 || (navigator.hardwareConcurrency || 8) <= 4 || matchMedia('(hover:none)').matches;
+function visibleLoop(el, fn) { // runs fn(t) via rAF only while el is on screen and the tab is visible; halves fps on low-power devices
+  let on = true, odd = false; const io = new IntersectionObserver((es) => { on = es[0].isIntersecting; if (on) requestAnimationFrame(tick); }, { threshold: 0 }); io.observe(el);
+  const tick = (t) => { if (!on || document.hidden) return; odd = !odd; if (!(LOW && odd)) fn(t); requestAnimationFrame(tick); };
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && on) requestAnimationFrame(tick); });
+  requestAnimationFrame(tick);
+}
 // ---- motion helpers (Web Animations API — no library needed)
 const EASE = 'cubic-bezier(.2,.8,.2,1)';
 const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -242,7 +252,7 @@ function magnetic(el, strength = .35) {
 function cursorFx() {
   const cur = document.getElementById('cursor'); if (RM() || matchMedia('(hover:none)').matches) { cur.remove(); return; }
   let tx = -100, ty = -100, cx = -100, cy = -100; addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
-  const loop = () => { cx += (tx - cx) * .22; cy += (ty - cy) * .22; cur.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }; loop();
+  const loop = () => { if (document.hidden) return setTimeout(loop, 300); cx += (tx - cx) * .22; cy += (ty - cy) * .22; cur.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }; loop();
   document.addEventListener('pointerover', (e) => cur.classList.toggle('big', !!e.target.closest('a,button')));
 }
 function navFx() {
@@ -263,10 +273,10 @@ function startOrb(on, colors) {
   const PAL = Array.from({ length: 24 }, (_, i) => mix(i / 23));
   let S = 0, R = 0; const resize = () => { const r = c.getBoundingClientRect(); S = Math.max(200, r.width); c.width = c.height = S * D; R = S * .42; }; resize(); addEventListener('resize', resize);
   // shell: fibonacci lattice (gives the fine woven look)
-  const NS = Math.round(Math.min(9000, innerWidth * 7)), shell = []; const phi = Math.PI * (3 - Math.sqrt(5));
+  const NS = LOW ? 4200 : Math.round(Math.min(9000, innerWidth * 7)), shell = []; const phi = Math.PI * (3 - Math.sqrt(5));
   for (let i = 0; i < NS; i++) { const y = 1 - (i / (NS - 1)) * 2, r = Math.sqrt(1 - y * y), a = phi * i; shell.push([Math.cos(a) * r, y, Math.sin(a) * r]); }
   // ribbon: a flat cloud through the centre that flows and waves
-  const NR = 5200, rib = []; const g = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+  const NR = LOW ? 2600 : 5200, rib = []; const g = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
   for (let i = 0; i < NR; i++) rib.push({ x: (Math.random() - .5) * 1.5, y: g() * .13, z: (Math.random() - .5) * .9, s: Math.random() });
   let mx = 0, my = 0, tx = 0, ty = 0, hover = null, hoverT = 0; const ripples = [];
   const hit = (cx, cy) => { const r = c.getBoundingClientRect(); const px = ((cx - r.left) / r.width - .5) * S / R, py = ((cy - r.top) / r.height - .5) * S / R; const d2 = px * px + py * py; if (d2 > 1.3) return null; const pz = Math.sqrt(Math.max(0, 1 - d2)); const l = Math.hypot(px, py, pz); return [px / l, py / l, pz / l]; };
@@ -281,11 +291,12 @@ function startOrb(on, colors) {
     let hv = null; if (hover) { const [hx, hy, hz] = hover; const y1 = hy * cx_ + hz * sx_, z1 = -hy * sx_ + hz * cx_; hv = [hx * cy_ + z1 * sy_, y1, -hx * sy_ + z1 * cy_]; }
     const half = S * D / 2;
     // shell
+    const rippling = (hv && hoverT > 0.01) || ripples.length;
     for (const [px, py, pz] of shell) {
       let d = 0;
-      if (hv) { const ang = Math.acos(Math.max(-1, Math.min(1, px * hv[0] + py * hv[1] + pz * hv[2]))); d += hoverT * Math.exp(-ang * 2.4) * Math.sin(ang * 10 - t / 180) * .08; }
-      for (const rp of ripples) { const ang = Math.acos(Math.max(-1, Math.min(1, px * rp.p[0] + py * rp.p[1] + pz * rp.p[2]))); const w = ang - rp.t * 1.3; d += Math.exp(-w * w * 16) * Math.exp(-rp.t * 1.1) * .12; }
-      const k = 1 + d; const X = px * k, Y = py * k, Z = pz * k;
+      if (rippling && hv) { const ang = Math.acos(Math.max(-1, Math.min(1, px * hv[0] + py * hv[1] + pz * hv[2]))); d += hoverT * Math.exp(-ang * 2.4) * Math.sin(ang * 10 - t / 180) * .08; }
+      if (rippling) for (const rp of ripples) { const ang = Math.acos(Math.max(-1, Math.min(1, px * rp.p[0] + py * rp.p[1] + pz * rp.p[2]))); const w = ang - rp.t * 1.3; d += Math.exp(-w * w * 16) * Math.exp(-rp.t * 1.1) * .12; }
+      const k = d ? 1 + d : 1; const X = px * k, Y = py * k, Z = pz * k;
       const X1 = X * cy_ - Z * sy_, Z0 = X * sy_ + Z * cy_, Y1 = Y * cx_ - Z0 * sx_, Z1 = Y * sx_ + Z0 * cx_;
       const persp = 1 / (1 + Z1 * .12), sx = half + X1 * R * D * persp, sy = half + Y1 * R * D * persp;
       const rim = 1 - Math.abs(Z1); // bright at the silhouette, faint in the middle
@@ -307,9 +318,9 @@ function startOrb(on, colors) {
       x.fillStyle = PAL[Math.round((X1 + 1) / 2 * 23)];
       const r = (0.7 + p.s * 1.1) * D; x.fillRect(sx - r / 2, sy - r / 2, r, r);
     }
-    x.globalAlpha = 1; requestAnimationFrame(draw);
+    x.globalAlpha = 1;
   };
-  requestAnimationFrame(draw);
+  visibleLoop(c, draw);
 }
 
 function init() {
@@ -358,7 +369,9 @@ function init() {
   let nameAnimated = false; const animName = () => { if (nameAnimated) return; nameAnimated = true; const h = document.getElementById('name'); if (h.querySelector('.skel')) return; letterIn(h, 250); };
   const setName = (n, t) => { if (!C.name && n) { document.getElementById('name').textContent = n; document.getElementById('navname').textContent = n; document.title = `${n} — portfolio`; } if (!C.tag && t) document.getElementById('tag').textContent = t; document.getElementById('ldtxt').textContent = 'Loading ' + (C.name || n || ''); done(); };
   const heroIn = () => { animName(); rise(document.querySelectorAll('.hero .a-in'), { delay: 150, stagger: 110 }); };
-  const setAvatar = (u) => { if (!C.avatar && u) { document.getElementById('avatar').src = u; document.getElementById('navav').src = u; } };
+  const setAvatar = (u) => { if (!C.avatar && u) { document.getElementById('avatar').src = u; document.getElementById('navav').src = u; } setIcon(C.avatar || u); };
+  const setIcon = (u) => { if (!u) return; document.getElementById('ogi').content = u; let l = document.querySelector('link[rel=icon]'); if (!l) { l = document.createElement('link'); l.rel = 'icon'; document.head.appendChild(l); } l.href = u; };
+  document.getElementById('ogt').content = (C.name ? C.name + ' — ' : '') + (C.headline || 'Discord moderator'); document.getElementById('ogd').content = C.bio || document.getElementById('ogd').content; if (C.avatar) setIcon(C.avatar);
   const setAccent = (color) => { if (T.preset === 'auto' && color) root.setProperty('--accent', color); };
   if (C.name) { document.title = `${C.name} — portfolio`; document.getElementById('ldtxt').textContent = 'Loading ' + C.name; }
 
@@ -387,7 +400,7 @@ function init() {
   // ---- servers ("showcase")
   const sv = document.getElementById('servers');
   if (hasServers) {
-    sv.innerHTML = `<div class="sh rv"><span class="eyebrow">${esc(C.serversEyebrow || 'Showcase')}</span><h2>${esc(C.serversTitle || 'Servers')}</h2><p>${esc(C.serversIntro || '')}</p></div><div class="grid">${C.servers.map((s, i) => `<a class="srv rv" style="transition-delay:${i * 60}ms" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><div class="shade"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img class="ic" src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div><div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
+    sv.innerHTML = `<div class="sh rv"><span class="eyebrow">${esc(C.serversEyebrow || 'Showcase')}</span><h2>${esc(C.serversTitle || 'Servers')}</h2><p>${esc(C.serversIntro || '')}</p></div><div class="grid">${C.servers.map((s, i) => `<a class="srv rv" style="transition-delay:${i * 60}ms" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><div class="shade"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img class="ic" loading="lazy" decoding="async" src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div><div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
     C.servers.forEach(async (s, i) => {
       const card = document.getElementById('srv' + i);
       try {
@@ -397,7 +410,7 @@ function init() {
         const nameEl = card.querySelector('.name');
         if (!s.name) { nameEl.textContent = g.name || s.invite; const ph = card.querySelector('.ph'); if (ph && g.name) ph.textContent = g.name[0].toUpperCase(); }
         if ((g.features || []).includes('VERIFIED') || (g.features || []).includes('PARTNERED')) nameEl.insertAdjacentHTML('beforeend', ICONS.verified);
-        if (!s.icon && g.icon) { const img = document.createElement('img'); img.className = 'ic'; img.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128`; img.alt = ''; card.querySelector('.ph')?.replaceWith(img); }
+        if (!s.icon && g.icon) { const img = document.createElement('img'); img.className = 'ic'; img.loading = 'lazy'; img.decoding = 'async'; img.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128`; img.alt = ''; card.querySelector('.ph')?.replaceWith(img); }
         const art = g.banner ? `https://cdn.discordapp.com/banners/${g.id}/${g.banner}.png?size=600` : g.splash ? `https://cdn.discordapp.com/splashes/${g.id}/${g.splash}.png?size=600` : null;
         if (art) card.querySelector('.top').style.backgroundImage = `url('${art}')`;
         countUp(card.querySelector('.on'), j.approximate_presence_count || 0); countUp(card.querySelector('.mem'), j.approximate_member_count || 0);
