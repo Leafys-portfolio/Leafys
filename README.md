@@ -16,6 +16,9 @@ Discord** — plus your socials and projects. No server, no build: it runs on Gi
 | `profileLink` | paste your Discord profile link — **name, tag, avatar and banner are fetched automatically**. `name` / `tag` / `avatar` / `banner` are optional overrides |
 | `bio`, `location`, `timezone`, `tags` | text under your name, your local clock, skill chips |
 | `socials` | any number of links — icons: discord, youtube, twitter, instagram, github, tiktok, twitch, website, email, reddit, steam, spotify |
+| `headline` / `ctaText` | pill above your name / main button text |
+| `serversEyebrow` / `socialsEyebrow` / `socialsTitle` | section labels |
+| `theme.particles` | cursor-reactive particle background (`false` to turn off) |
 | `servers` | one entry per server: `invite` (code after discord.gg/ — must be a **permanent** invite), `role`, `since`; name, icon and counts load live. Add `name` / `icon` to override. |
 | `footer` | the line at the bottom |
 
@@ -33,3 +36,6 @@ The page loads `config.js` with a fresh timestamp every visit, so edits show up 
 - Counts come from Discord's public invite endpoint; if a card says *Live stats unavailable*, the invite expired or was
   revoked — make a permanent one (Invite → Edit invite link → Expire after: Never).
 - Everything is static: there is nothing to host and nothing that can go down except Discord itself.
+
+## Animations
+Everything is built in (no libraries): 3D starfield that tilts with the cursor, letter-by-letter name reveal, 3D tilt + light sheen on cards, magnetic buttons, custom cursor, auto-hiding nav, scroll reveals. They all switch off automatically for visitors with "reduce motion" enabled. `theme.particles: false` turns off the starfield.

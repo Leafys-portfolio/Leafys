@@ -4,84 +4,157 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portfolio</title>
-<meta name="description" content="The Discord servers I help run, live, and where to find me.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<meta name="theme-color" content="#09090c">
+<meta name="description" content="Discord moderator portfolio — servers, roles and live member counts.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23fff'/></svg>">
 <style>
-  :root{--accent:#8b7bff;--accent2:#ffb86b;--bg:#0e0b1e;--surface:#17132d;--text:#efeafd;--muted:#9d96bd;--r:24px;--font:'Outfit';--online:#3ddc84;--line:rgba(255,255,255,.08)}
-  *{box-sizing:border-box}html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font),system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
-  body.pattern{background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:26px 26px}
-  body.glow:before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(760px 420px at 50% -8%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%);z-index:0}
+  :root{--accent:#fff;--accent2:#a1a1aa;--bg:#09090c;--surface:#101014;--text:#f4f4f5;--muted:#8b8b95;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.16);--r:18px;--font:'Inter'}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 var(--font),Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
-  .wrap{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:40px 16px 72px}
-  @media(max-width:520px){.wrap{padding:14px 12px 56px}}
+  canvas#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  body.pattern:before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 100%);opacity:.5}
+  body.glow:after{content:'';position:fixed;left:50%;top:-20vh;width:90vw;height:70vh;transform:translateX(-50%);z-index:0;pointer-events:none;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 16%,transparent),transparent 70%);filter:blur(30px)}
+  .page{position:relative;z-index:1}
 
-  .profile{background:var(--surface);border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px color-mix(in srgb,var(--accent) 55%,transparent);opacity:0;transform:translateY(10px);animation:in .5s .05s forwards}
-  @keyframes in{to{opacity:1;transform:none}}
-  .banner{height:180px;background:linear-gradient(115deg,var(--accent),color-mix(in srgb,var(--accent) 35%,var(--accent2)) 60%,var(--accent2));background-size:cover;background-position:center;position:relative}
-  .banner:after{content:'';position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,var(--surface) 70%,transparent),transparent 55%)}
-  .pbody{padding:0 28px 26px;position:relative}
-  @media(max-width:520px){.pbody{padding:0 18px 20px}.banner{height:140px}}
-  .toprow{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .avwrap{position:relative;width:128px;margin-top:-64px}
-  .avatar{width:128px;height:128px;border-radius:50%;border:6px solid var(--surface);background:var(--surface);object-fit:cover;display:block;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .status{position:absolute;right:6px;bottom:8px;width:28px;height:28px;border-radius:50%;border:5px solid var(--surface);background:#80848e}
-  .status.online{background:var(--online)}.status.idle{background:#f0b232}.status.dnd{background:#f23f43}
-  .cta{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;padding:12px 20px;border-radius:calc(var(--r) - 8px);font-weight:600;margin-bottom:6px;transition:transform .15s,filter .15s;white-space:nowrap;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--accent) 70%,transparent)}
-  .cta:hover{filter:brightness(1.1);transform:translateY(-1px)}.cta svg{width:18px;height:18px;fill:currentColor}
-  h1{font-size:36px;line-height:1.1;margin:14px 0 2px;font-weight:800;letter-spacing:-.7px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .tag{color:var(--muted);font-weight:500;margin:0}
-  .bio{margin:14px 0 0;max-width:62ch;font-size:17px}
-  .meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-top:12px;min-height:22px}
-  .meta span{display:inline-flex;align-items:center;gap:6px}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-  .chip{padding:5px 12px;border-radius:999px;background:color-mix(in srgb,var(--accent) 16%,transparent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);font-size:13.5px;font-weight:500}
-  .socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
-  .soc{display:inline-flex;align-items:center;gap:9px;padding:9px 14px 9px 11px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-weight:500;font-size:14.5px;transition:background .15s,border-color .15s}
-  .soc:hover{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:color-mix(in srgb,var(--accent) 50%,transparent)}
-  .soc svg{width:20px;height:20px;fill:currentColor}
+  /* loader */
+  #loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;transition:opacity .5s,visibility .5s}
+  #loader.hide{opacity:0;visibility:hidden}
+  #loader .in{text-align:center}
+  #loader .t{font-weight:600;letter-spacing:.3px;font-size:15px;color:var(--muted)}
+  #loader .bar{width:160px;height:2px;background:var(--line);border-radius:2px;margin:14px auto 0;overflow:hidden}
+  #loader .bar i{display:block;height:100%;width:40%;background:var(--accent);animation:ld 1s infinite ease-in-out}
+  @keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
 
-  h2{font-size:24px;font-weight:800;letter-spacing:-.4px;margin:44px 0 4px}
-  .sub{color:var(--muted);margin:0 0 18px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-  @media(max-width:520px){.grid{grid-template-columns:1fr}}
-  .srv{display:block;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;position:relative;transition:border-color .15s,transform .15s}
-  .srv:hover{border-color:color-mix(in srgb,var(--accent) 55%,transparent);transform:translateY(-2px)}
-  .srv .top{height:64px;background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 45%,var(--surface)),var(--surface));background-size:cover;background-position:center}
-  .srv .body{padding:0 18px 16px}
+  /* nav */
+  nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:6px;padding:6px 8px 6px 10px;border-radius:999px;background:color-mix(in srgb,var(--bg) 70%,transparent);border:1px solid var(--line2);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 10px 40px rgba(0,0,0,.4);max-width:calc(100% - 24px);white-space:nowrap}
+  nav .brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding-right:8px;border-right:1px solid var(--line);margin-right:4px}
+  nav .brand img{width:24px;height:24px;border-radius:50%;object-fit:cover;background:var(--surface)}
+  nav a.l{padding:7px 12px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--muted);transition:color .15s,background .15s}
+  nav a.l:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  nav a.cta{margin-left:4px;padding:7px 13px;border-radius:999px;background:var(--accent);color:var(--bg);font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+  nav a.cta svg{width:14px;height:14px;fill:currentColor}
+  @media(max-width:560px){nav .brand span{display:none}nav .brand{padding-right:6px}nav a.l{padding:7px 9px;font-size:13px}}
+
+  /* hero */
+  .hero{min-height:100svh;display:grid;place-items:center;padding:110px 20px 70px;text-align:center}
+  .hero .in{max-width:760px;margin:0 auto;animation:up .9s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .avwrap{position:relative;display:inline-block;margin-bottom:26px}
+  .avatar{width:124px;height:124px;border-radius:50%;object-fit:cover;background:var(--surface);border:1px solid var(--line2);box-shadow:0 0 0 8px color-mix(in srgb,var(--accent) 6%,transparent),0 30px 80px rgba(0,0,0,.6)}
+  .status{position:absolute;right:6px;bottom:6px;width:22px;height:22px;border-radius:50%;background:#5b5b66;border:4px solid var(--bg)}
+  .status.online{background:#23a55a}.status.idle{background:#f0b232}.status.dnd{background:#f23f43}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--muted);font-size:12.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin-bottom:22px}
+  .eyebrow i{width:7px;height:7px;border-radius:50%;background:#23a55a;box-shadow:0 0 10px #23a55a}
+  h1{margin:0;font-size:clamp(46px,9vw,92px);line-height:1;letter-spacing:-.04em;font-weight:800;background:linear-gradient(180deg,#fff 30%,color-mix(in srgb,var(--text) 55%,transparent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{margin:12px 0 0;color:var(--muted);font-size:16px;font-weight:500}
+  .bio{margin:22px auto 0;max-width:560px;color:color-mix(in srgb,var(--text) 72%,var(--muted));font-size:clamp(16px,2.2vw,19px);line-height:1.55}
+  .meta{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:13.5px}
+  .btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:34px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:700;font-size:15px;transition:transform .15s,filter .15s,background .15s,border-color .15s}
+  .btn.pri{background:var(--accent);color:var(--bg);box-shadow:0 10px 30px color-mix(in srgb,var(--accent) 25%,transparent)}
+  .btn.pri:hover{transform:translateY(-2px);filter:brightness(1.08)}
+  .btn.ghost{border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--text)}
+  .btn.ghost:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.3)}
+  .btn svg{width:16px;height:16px;fill:currentColor}
+  .chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:30px}
+  .chip{padding:6px 13px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:500}
+  .scroll{margin-top:54px;color:var(--muted);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;animation:bob 2s infinite}
+  @keyframes bob{50%{transform:translateY(5px)}}
+
+  /* sections */
+  section.block{max-width:1120px;margin:0 auto;padding:60px 20px}
+  .sh{text-align:center;margin-bottom:38px}
+  .sh .eyebrow{margin-bottom:14px}
+  .sh h2{margin:0;font-size:clamp(30px,5vw,46px);letter-spacing:-.03em;font-weight:800}
+  .sh p{margin:10px auto 0;max-width:520px;color:var(--muted);font-size:16px}
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
+  .rv.on{opacity:1;transform:none}
+
+  /* server cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  .srv{display:block;position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
+  .srv:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 30px 60px rgba(0,0,0,.5)}
+  .srv .top{aspect-ratio:16/7;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));background-size:cover;background-position:center;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+  .srv:hover .top{transform:scale(1.04)}
+  .srv .shade{position:absolute;left:0;right:0;top:0;aspect-ratio:16/7;background:linear-gradient(180deg,transparent 40%,var(--surface) 100%);pointer-events:none}
+  .srv .join{position:absolute;top:12px;right:12px;padding:5px 11px;border-radius:999px;background:rgba(9,9,12,.7);border:1px solid var(--line2);backdrop-filter:blur(8px);font-size:12px;font-weight:700;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
+  .srv:hover .join{opacity:1;transform:none}
+  .srv .body{padding:0 18px 18px;position:relative}
   .srv .head{display:flex;gap:14px;align-items:flex-start}
-  .srv .head .txt{min-width:0;padding-top:8px;flex:1}
-  .srv img,.srv .ph{width:62px;height:62px;margin-top:-28px;border-radius:20px;object-fit:cover;background:color-mix(in srgb,var(--accent) 35%,var(--surface));border:4px solid var(--surface);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px}
-  .srv .name{font-weight:700;font-size:17px;line-height:1.25;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .srv .name svg{vertical-align:-2px;margin-left:4px}
-  .srv .name svg{width:16px;height:16px;fill:var(--accent)}
-  .srv .role{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--accent2) 18%,transparent);color:var(--accent2);font-size:12.5px;font-weight:700}
-  .srv .role.owner{background:color-mix(in srgb,var(--accent) 22%,transparent);color:color-mix(in srgb,var(--accent) 70%,#fff)}
-  .stats{display:flex;gap:18px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted);align-items:center;flex-wrap:wrap}
-  .stats b{color:var(--text);font-size:16px;font-variant-numeric:tabular-nums}
-  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--online);margin-right:7px;box-shadow:0 0 0 0 rgba(61,220,132,.5);animation:pulse 2.2s infinite}
-  @keyframes pulse{70%{box-shadow:0 0 0 7px rgba(61,220,132,0)}100%{box-shadow:0 0 0 0 rgba(61,220,132,0)}}
-  .since{margin-left:auto}.srv.err .stats{color:var(--accent2)}
-  .join{position:absolute;top:14px;right:14px;font-size:12.5px;font-weight:700;color:#fff;background:rgba(0,0,0,.35);padding:4px 10px;border-radius:999px;opacity:0;transition:opacity .15s}
-  .srv:hover .join{opacity:1}
-  footer{margin-top:56px;color:var(--muted);font-size:13.5px;text-align:center}
+  .srv .head .txt{min-width:0;flex:1;padding-top:10px}
+  .srv img.ic,.srv .ph{width:60px;height:60px;margin-top:-30px;border-radius:18px;object-fit:cover;background:var(--bg);border:3px solid var(--surface);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .srv .name{font-weight:700;font-size:17px;line-height:1.25;letter-spacing:-.01em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .srv .name svg{width:15px;height:15px;fill:var(--accent);vertical-align:-2px;margin-left:4px}
+  .srv .role{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--text);font-size:12px;font-weight:600}
+  .srv .role.owner{background:var(--accent);color:var(--bg);border-color:transparent}
+  .srv .stats{display:flex;gap:16px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  .srv .stats b{color:var(--text);font-weight:700;font-size:14px}
+  .srv .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#23a55a;margin-right:6px;box-shadow:0 0 8px #23a55a;vertical-align:1px}
+  .since{margin-left:auto}.srv.err .stats{color:#f0b232}
+
+  /* socials */
+  .socs{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .soc{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);font-weight:600;transition:transform .2s,border-color .2s,background .2s}
+  .soc:hover{transform:translateY(-3px);border-color:var(--line2);background:color-mix(in srgb,var(--surface) 70%,rgba(255,255,255,.06))}
+  .soc svg{width:20px;height:20px;fill:var(--text);flex-shrink:0}
+  .soc>span{min-width:0}.soc small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .soc .arr{margin-left:auto;color:var(--muted)}
+
+  footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 20px;color:var(--muted);font-size:13px;text-align:center}
   .skel{color:transparent;background:rgba(255,255,255,.08);border-radius:6px;animation:sk 1.2s infinite}
   @keyframes sk{50%{opacity:.5}}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.profile{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.hero .in{animation:none}}
+  /* --- animation layer --- */
+  nav{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,opacity .35s}
+  nav.hide{transform:translate(-50%,-140%)}
+  .avwrap:before{content:'';position:absolute;inset:-7px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 60%,var(--accent) 80%,transparent 100%);animation:spin 5s linear infinite;opacity:.9;-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%);mask:radial-gradient(circle,transparent 62%,#000 63%)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .avatar{animation:float 6s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-8px)}}
+  .status.online:after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid #23a55a;animation:ping 2s infinite;opacity:0}
+  @keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+  .eyebrow i{animation:blink 1.6s infinite}
+  @keyframes blink{50%{opacity:.35}}
+  h1 .ch{display:inline-block;white-space:pre;background:linear-gradient(180deg,#fff 30%,color-mix(in srgb,var(--text) 55%,transparent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 .ch:hover{animation:jelly .6s}
+  @keyframes jelly{30%{transform:scaleY(1.2) translateY(-6px)}60%{transform:scaleY(.9)}}
+  .hero .in{animation:none}
+  .js .a-in{opacity:0}
+  .tilt{transform-style:preserve-3d;will-change:transform}
+  .tilt .sheen{position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.12),transparent 45%);opacity:0;transition:opacity .25s}
+  .tilt:hover .sheen{opacity:1}
+  .srv:hover,.soc:hover{transform:none}
+  .btn,nav a.cta{will-change:transform}
+  .btn.pri{position:relative;overflow:hidden}
+  .btn.pri:after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 4s 1.5s infinite}
+  @keyframes shine{0%{left:-80%}25%,100%{left:140%}}
+  .sh h2 .w{display:inline-block}
+  .cursor{position:fixed;z-index:30;left:0;top:0;width:34px;height:34px;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,border-color .25s;mix-blend-mode:difference}
+  .cursor.big{width:64px;height:64px;background:rgba(255,255,255,.9);border-color:transparent}
+  @media(hover:none){.cursor{display:none}}
+  @media(prefers-reduced-motion:reduce){.js .a-in{opacity:1}.avwrap:before,.avatar,.btn.pri:after{animation:none!important}.cursor{display:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="profile" id="profile"></section>
-  <section id="servers"></section>
+<div class="cursor" id="cursor"></div>
+<div id="loader"><div class="in"><div class="t" id="ldtxt">Loading</div><div class="bar"><i></i></div></div></div>
+<canvas id="fx"></canvas>
+<nav id="nav"></nav>
+<div class="page">
+  <header class="hero" id="home"><div class="in" id="profile"></div></header>
+  <section class="block" id="servers"></section>
+  <section class="block" id="socials"></section>
   <footer id="footer"></footer>
 </div>
 <script>
+document.documentElement.classList.add('js');
 // load config.js fresh every time (GitHub Pages caches aggressively)
-(function () { const s = document.createElement('script'); s.src = 'config.js?v=' + Date.now(); s.onload = init; s.onerror = () => { document.getElementById('profile').innerHTML = '<div style="padding:28px">config.js is missing — add it next to index.html.</div>'; }; document.head.appendChild(s); })();
+(function () { const s = document.createElement('script'); s.src = 'config.js?v=' + Date.now(); s.onload = init; s.onerror = () => { document.getElementById('loader').classList.add('hide'); document.getElementById('profile').innerHTML = '<p>config.js is missing — add it next to index.html.</p>'; }; document.head.appendChild(s); })();
 
-const PRESETS = { violet: ['#8b7bff', '#ffb86b', '#0e0b1e', '#17132d'], ocean: ['#38bdf8', '#a7f3d0', '#07131f', '#0f1f2e'], ember: ['#ff6b4a', '#ffd166', '#17090b', '#241215'], forest: ['#4ade80', '#fde68a', '#071510', '#0f2118'], mono: ['#e5e7eb', '#9ca3af', '#0a0a0a', '#161616'] };
+const PRESETS = { liu: ['#ffffff', '#a1a1aa', '#09090c', '#101014'], mono: ['#e5e7eb', '#9ca3af', '#0a0a0a', '#161616'], violet: ['#8b7bff', '#ffb86b', '#0e0b1e', '#17132d'], ocean: ['#38bdf8', '#a7f3d0', '#07131f', '#0f1f2e'], ember: ['#ff6b4a', '#ffd166', '#17090b', '#241215'], forest: ['#4ade80', '#fde68a', '#071510', '#0f2118'] };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const ICONS = {
   discord: '<svg viewBox="0 0 24 24"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.2.4a18 18 0 0 1 4.4 2.2 15.6 15.6 0 0 0-15.2 0A18 18 0 0 1 8.8 3.4L8.6 3a19.8 19.8 0 0 0-4.9 1.4C.6 9 0 13.5.3 17.9a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 11.8 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.9 19.9 0 0 0 6-3c.5-5.1-.9-9.5-3.4-13.5ZM8.3 15.2c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Zm7.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Z"/></svg>',
@@ -100,9 +173,82 @@ const ICONS = {
   roblox: '<svg viewBox="0 0 24 24"><path d="M5 0 0 19l19 5 5-19L5 0Zm9.4 14.4-4.8-1.2 1.2-4.8 4.8 1.2-1.2 4.8Z"/></svg>',
   verified: '<svg viewBox="0 0 24 24"><path d="M12 1.5 15 4l3.9-.4 1.1 3.7 3.3 2.1-1.5 3.6 1.5 3.6-3.3 2.1-1.1 3.7-3.9-.4-3 2.5-3-2.5-3.9.4-1.1-3.7L.7 16.6l1.5-3.6L.7 9.4 4 7.3l1.1-3.7L9 4l3-2.5Zm-1.4 13.8 6-6-1.4-1.4-4.6 4.6-2.2-2.2L7 11.7l3.6 3.6Z"/></svg>',
 };
+
 const fmt = (n) => (n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + 'M' : n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1) + 'k' : String(n));
 function countUp(el, n) { if (matchMedia('(prefers-reduced-motion: reduce)').matches || n < 50) { el.textContent = fmt(n); return; } const t0 = performance.now(); const step = (t) => { const p = Math.min(1, (t - t0) / 900); el.textContent = fmt(Math.round(n * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
 const idFrom = (link) => (String(link || '').match(/(\d{15,22})/) || [])[1] || '';
+
+// ---- interactive 3D starfield: particles in depth, camera tilts with the cursor, you fly slowly forward
+function startFx(on, accent) {
+  const c = document.getElementById('fx'); if (!on || matchMedia('(prefers-reduced-motion: reduce)').matches) { c.remove(); return; }
+  const x = c.getContext('2d'); const D = Math.min(devicePixelRatio || 1, 2);
+  let W, H, P = [], mx = 0, my = 0, rx = 0, ry = 0, scrollY0 = 0;
+  const N = () => Math.min(420, Math.round(innerWidth * innerHeight / 3200));
+  const spawn = (z) => ({ x: (Math.random() - .5) * 2.4, y: (Math.random() - .5) * 2.4, z: z ?? Math.random() * 2 + .2, s: Math.random() * 1.6 + .6, tw: Math.random() * 6.28 });
+  const resize = () => { W = c.width = innerWidth * D; H = c.height = innerHeight * D; P = Array.from({ length: N() }, () => spawn()); };
+  resize(); addEventListener('resize', resize);
+  addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
+  addEventListener('scroll', () => { scrollY0 = scrollY; }, { passive: true });
+  const f = () => Math.min(W, H) * .9;
+  const draw = (t) => {
+    x.clearRect(0, 0, W, H);
+    rx += (my * .35 - rx) * .05; ry += (mx * .35 - ry) * .05;
+    const cosY = Math.cos(ry), sinY = Math.sin(ry), cosX = Math.cos(rx), sinX = Math.sin(rx);
+    const cx = W / 2, cy = H / 2 - scrollY0 * .15 * D, F = f();
+    const pts = [];
+    for (const p of P) {
+      p.z -= .0022; if (p.z < .12) Object.assign(p, spawn(2.2));
+      // rotate around Y then X (camera tilt)
+      let X = p.x * cosY - p.z * sinY, Z = p.x * sinY + p.z * cosY; let Y = p.y * cosX - Z * sinX; Z = p.y * sinX + Z * cosX;
+      if (Z <= .05) continue;
+      const sx = cx + (X / Z) * F, sy = cy + (Y / Z) * F; if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) continue;
+      const depth = 1 - Math.min(1, Z / 2.4), r = (p.s * (0.4 + depth * 1.6)) * D, a = 0.15 + depth * .85 * (0.75 + .25 * Math.sin(t / 700 + p.tw));
+      pts.push([sx, sy, r, a, depth]);
+    }
+    // faint constellation lines between close bright stars
+    x.lineWidth = .6 * D; x.strokeStyle = accent;
+    for (let i = 0; i < pts.length; i++) { const a = pts[i]; if (a[4] < .55) continue; for (let j = i + 1; j < pts.length; j++) { const b = pts[j]; if (b[4] < .55) continue; const dx = a[0] - b[0], dy = a[1] - b[1]; const d2 = dx * dx + dy * dy; if (d2 < 130 * 130 * D * D) { x.globalAlpha = (1 - Math.sqrt(d2) / (130 * D)) * .16; x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke(); } } }
+    x.fillStyle = accent;
+    for (const [sx, sy, r, a, depth] of pts) { x.globalAlpha = a; x.beginPath(); x.arc(sx, sy, r, 0, 7); x.fill(); if (depth > .8) { x.globalAlpha = a * .25; x.beginPath(); x.arc(sx, sy, r * 3, 0, 7); x.fill(); } }
+    x.globalAlpha = 1; requestAnimationFrame(draw);
+  };
+  requestAnimationFrame(draw);
+}
+
+// ---- motion helpers (Web Animations API — no library needed)
+const EASE = 'cubic-bezier(.2,.8,.2,1)';
+const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+function rise(els, { delay = 0, stagger = 70, y = 28, dur = 800, blur = 8 } = {}) {
+  [...els].forEach((el, i) => { el.classList.remove('a-in'); if (RM()) return; el.animate([{ opacity: 0, transform: `translateY(${y}px) scale(.98)`, filter: `blur(${blur}px)` }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: dur, delay: delay + i * stagger, easing: EASE, fill: 'backwards' }); });
+}
+function splitLetters(el) { const txt = el.textContent; el.textContent = ''; [...txt].forEach((ch) => { const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = ch; el.appendChild(sp); }); return el.querySelectorAll('.ch'); }
+function splitWords(el) { const txt = el.textContent; el.textContent = ''; txt.split(' ').forEach((w, i, arr) => { const sp = document.createElement('span'); sp.className = 'w'; sp.textContent = w + (i < arr.length - 1 ? ' ' : ''); el.appendChild(sp); }); return el.querySelectorAll('.w'); }
+function letterIn(el, delay = 0) { const chs = splitLetters(el); if (RM()) return; chs.forEach((c, i) => c.animate([{ opacity: 0, transform: 'translateY(60px) rotateX(-60deg)', filter: 'blur(10px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 900, delay: delay + i * 45, easing: EASE, fill: 'backwards' })); }
+function tilt(el, max = 10) {
+  if (RM() || matchMedia('(hover:none)').matches) return; el.classList.add('tilt'); const sh = document.createElement('span'); sh.className = 'sheen'; el.appendChild(sh);
+  el.style.transition = 'transform .15s ease-out, border-color .25s, box-shadow .25s';
+  el.addEventListener('pointermove', (e) => { const r = el.getBoundingClientRect(); const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height; el.style.setProperty('--mx', px * 100 + '%'); el.style.setProperty('--my', py * 100 + '%'); el.style.transform = `perspective(900px) rotateX(${(py - .5) * -max}deg) rotateY(${(px - .5) * max}deg) translateY(-4px) scale(1.02)`; });
+  el.addEventListener('pointerleave', () => { el.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1), border-color .25s, box-shadow .25s'; el.style.transform = ''; setTimeout(() => { el.style.transition = 'transform .15s ease-out, border-color .25s, box-shadow .25s'; }, 600); });
+}
+function magnetic(el, strength = .35) {
+  if (RM() || matchMedia('(hover:none)').matches) return;
+  el.addEventListener('pointermove', (e) => { const r = el.getBoundingClientRect(); el.style.transition = 'transform .1s'; el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * strength}px,${(e.clientY - r.top - r.height / 2) * strength}px)`; });
+  el.addEventListener('pointerleave', () => { el.style.transition = 'transform .5s cubic-bezier(.2,.8,.2,1)'; el.style.transform = ''; });
+}
+function cursorFx() {
+  const cur = document.getElementById('cursor'); if (RM() || matchMedia('(hover:none)').matches) { cur.remove(); return; }
+  let tx = -100, ty = -100, cx = -100, cy = -100; addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
+  const loop = () => { cx += (tx - cx) * .22; cy += (ty - cy) * .22; cur.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }; loop();
+  document.addEventListener('pointerover', (e) => cur.classList.toggle('big', !!e.target.closest('a,button')));
+}
+function navFx() {
+  const nav = document.getElementById('nav'); let last = 0;
+  addEventListener('scroll', () => { const y = scrollY; nav.classList.toggle('hide', y > last && y > 120); last = y; }, { passive: true });
+}
+function heroParallax() {
+  if (RM()) return; const hero = document.querySelector('.hero .in');
+  addEventListener('scroll', () => { const y = Math.min(scrollY, innerHeight); hero.style.transform = `translateY(${y * .25}px)`; hero.style.opacity = 1 - y / innerHeight * .9; }, { passive: true });
+}
 
 function init() {
   const C = window.PORTFOLIO || {}; const T = C.theme || {};
@@ -110,36 +256,49 @@ function init() {
   const profileLink = C.profileLink || (userId ? `https://discord.com/users/${userId}` : '');
   // ---- theme
   const root = document.documentElement.style;
-  const preset = PRESETS[T.preset] || PRESETS.violet;
+  const preset = PRESETS[T.preset] || PRESETS.liu;
   const [pa, pa2, pbg, psf] = preset;
   root.setProperty('--accent', T.accent || pa); root.setProperty('--accent2', T.accent2 || pa2); root.setProperty('--bg', T.background || pbg); root.setProperty('--surface', T.surface || psf);
   if (T.text) root.setProperty('--text', T.text); if (T.muted) root.setProperty('--muted', T.muted);
   if (T.radius != null) root.setProperty('--r', T.radius + 'px');
   if (T.font) { root.setProperty('--font', `'${T.font}'`); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(T.font)}:wght@400;500;600;700;800&display=swap`; document.head.appendChild(l); }
   if (T.pattern !== false) document.body.classList.add('pattern'); if (T.glow !== false) document.body.classList.add('glow');
+  startFx(T.particles !== false, T.accent || pa);
+  document.querySelector('meta[name=theme-color]').content = T.background || pbg;
 
-  // ---- profile card (renders instantly with what we know, then fills in from Discord)
-  const prof = document.getElementById('profile');
-  prof.innerHTML = `<div class="banner" id="banner" ${C.banner ? `style="background-image:url('${esc(C.banner)}')"` : ''}></div><div class="pbody">
-<div class="toprow"><div class="avwrap"><img class="avatar" id="avatar" src="${esc(C.avatar || `https://cdn.discordapp.com/embed/avatars/${userId ? Number(BigInt(userId) >> 22n) % 6 : 0}.png`)}" alt=""><span class="status" id="status" title="status"></span></div>${profileLink ? `<a class="cta" href="${esc(profileLink)}" target="_blank" rel="noopener">${ICONS.discord} Discord profile</a>` : ''}</div>
-<h1 id="name">${C.name ? esc(C.name) : '<span class="skel">Loading name</span>'}</h1><p class="tag" id="tag">${esc(C.tag || '')}</p>
-${C.bio ? `<p class="bio">${esc(C.bio)}</p>` : ''}
-<div class="meta">${C.location ? `<span>📍 ${esc(C.location)}</span>` : ''}${C.timezone ? `<span>🕒 <span id="clock"></span></span>` : ''}<span id="activity"></span></div>
-${C.tags?.length ? `<div class="chips">${C.tags.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
-${C.socials?.length ? `<div class="socials">${C.socials.map((s) => `<a class="soc" href="${esc(s.url || (s.icon === 'discord' ? profileLink : '#'))}" target="_blank" rel="noopener">${ICONS[s.icon] || ICONS.website}${esc(s.label || s.icon)}</a>`).join('')}</div>` : ''}
-</div>`;
+  const defaultAvatar = C.avatar || `https://cdn.discordapp.com/embed/avatars/${userId ? Number(BigInt(userId) >> 22n) % 6 : 0}.png`;
+  const hasServers = !!C.servers?.length, hasSocials = !!C.socials?.length;
+
+  // ---- nav
+  document.getElementById('nav').innerHTML = `<a class="brand" href="#home"><img id="navav" src="${esc(defaultAvatar)}" alt=""><span id="navname">${esc(C.name || '')}</span></a><a class="l" href="#home">Home</a>${hasServers ? `<a class="l" href="#servers">${esc(C.navServers || 'Servers')}</a>` : ''}${hasSocials ? `<a class="l" href="#socials">${esc(C.navSocials || 'Socials')}</a>` : ''}${profileLink ? `<a class="cta" href="${esc(profileLink)}" target="_blank" rel="noopener">${ICONS.discord} Discord</a>` : ''}`;
+
+  // ---- hero
+  document.getElementById('profile').innerHTML = `
+<div class="avwrap a-in"><img class="avatar" id="avatar" src="${esc(defaultAvatar)}" alt=""><span class="status" id="status" title="status"></span></div>
+<div class="a-in"><span class="eyebrow"><i></i>${esc(C.headline || 'Discord moderator')}</span></div>
+<h1 id="name">${C.name ? esc(C.name) : '<span class="skel">Loading name</span>'}</h1><p class="tag a-in" id="tag">${esc(C.tag || '')}</p>
+${C.bio ? `<p class="bio a-in">${esc(C.bio)}</p>` : ''}
+<div class="meta a-in">${C.location ? `<span>📍 ${esc(C.location)}</span>` : ''}${C.timezone ? `<span>🕒 <span id="clock"></span></span>` : ''}<span id="activity"></span></div>
+<div class="btns a-in">${hasServers ? `<a class="btn pri" href="#servers">${esc(C.ctaText || 'Explore servers')} ↗</a>` : ''}${profileLink ? `<a class="btn ghost" href="${esc(profileLink)}" target="_blank" rel="noopener">${ICONS.discord} Discord profile</a>` : ''}</div>
+${C.tags?.length ? `<div class="chips a-in">${C.tags.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
+<div class="scroll a-in">scroll</div>`;
   if (C.timezone) { const tick = () => { const el = document.getElementById('clock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: C.timezone }) + ' local'; }; tick(); setInterval(tick, 30_000); }
-  const setName = (n, t) => { if (!C.name && n) { document.getElementById('name').textContent = n; document.title = `${n} — portfolio`; } if (!C.tag && t) document.getElementById('tag').textContent = t; };
-  const setAvatar = (u) => { if (!C.avatar && u) document.getElementById('avatar').src = u; };
-  const setBanner = (u, color) => { const b = document.getElementById('banner'); if (C.banner) return; if (u) b.style.backgroundImage = `url('${u}')`; if (T.preset === 'auto' && color) { root.setProperty('--accent', color); } };
+  const loader = document.getElementById('loader'); let loaded = false;
+  const done = () => { if (loaded) return; loaded = true; setTimeout(() => { loader.classList.add('hide'); heroIn(); }, 350); };
+  let nameAnimated = false; const animName = () => { if (nameAnimated) return; nameAnimated = true; const h = document.getElementById('name'); if (h.querySelector('.skel')) return; letterIn(h, 250); };
+  const setName = (n, t) => { if (!C.name && n) { document.getElementById('name').textContent = n; document.getElementById('navname').textContent = n; document.title = `${n} — portfolio`; } if (!C.tag && t) document.getElementById('tag').textContent = t; document.getElementById('ldtxt').textContent = 'Loading ' + (C.name || n || ''); done(); };
+  const heroIn = () => { animName(); rise(document.querySelectorAll('.hero .a-in'), { delay: 150, stagger: 110 }); };
+  const setAvatar = (u) => { if (!C.avatar && u) { document.getElementById('avatar').src = u; document.getElementById('navav').src = u; } };
+  const setAccent = (color) => { if (T.preset === 'auto' && color) root.setProperty('--accent', color); };
+  if (C.name) { document.title = `${C.name} — portfolio`; document.getElementById('ldtxt').textContent = 'Loading ' + C.name; }
 
-  // 1) public profile lookup (no setup needed): name, avatar, banner
+  // 1) public profile lookup (no setup needed): name, avatar
   if (userId) {
     fetch(`https://discordlookup.mesalytic.moe/v1/user/${userId}`).then((r) => r.ok ? r.json() : null).then((u) => {
       if (!u) return;
       setName(u.global_name || u.username, u.username ? '@' + u.username : '');
       setAvatar(u.avatar?.link ? u.avatar.link + '?size=256' : null);
-      setBanner(u.banner?.link ? u.banner.link + '?size=1024' : null, u.banner?.color || u.accent_color);
+      setAccent(u.banner?.color || u.accent_color);
     }).catch(() => {});
     // 2) live presence via Lanyard (only if you've joined discord.gg/lanyard) — status dot, activity, freshest avatar
     fetch(`https://api.lanyard.rest/v1/users/${userId}`).then((r) => r.json()).then((j) => {
@@ -152,12 +311,13 @@ ${C.socials?.length ? `<div class="socials">${C.socials.map((s) => `<a class="so
       if (d.listening_to_spotify && d.spotify) el.textContent = `🎵 ${d.spotify.song} — ${d.spotify.artist}`; else if (act) el.textContent = `🎮 ${act.name}`; else if (custom?.state) el.textContent = `💬 ${custom.state}`;
     }).catch(() => {});
   } else setName(C.name || 'Your name', C.tag);
-  setTimeout(() => { const n = document.getElementById('name'); if (n.querySelector('.skel')) n.textContent = C.name || 'Discord user'; }, 6000);
+  setTimeout(() => { const n = document.getElementById('name'); if (n.querySelector('.skel')) n.textContent = C.name || 'Discord user'; done(); }, 2500);
+  if (!RM()) { const ld = document.getElementById('ldtxt'); ld.animate([{ opacity: .3 }, { opacity: 1 }, { opacity: .3 }], { duration: 1600, iterations: Infinity }); }
 
-  // ---- servers
+  // ---- servers ("showcase")
   const sv = document.getElementById('servers');
-  if (C.servers?.length) {
-    sv.innerHTML = `<h2>${esc(C.serversTitle || 'Servers')}</h2><p class="sub">${esc(C.serversIntro || '')}</p><div class="grid">${C.servers.map((s, i) => `<a class="srv" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div><div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
+  if (hasServers) {
+    sv.innerHTML = `<div class="sh rv"><span class="eyebrow">${esc(C.serversEyebrow || 'Showcase')}</span><h2>${esc(C.serversTitle || 'Servers')}</h2><p>${esc(C.serversIntro || '')}</p></div><div class="grid">${C.servers.map((s, i) => `<a class="srv rv" style="transition-delay:${i * 60}ms" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><div class="shade"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img class="ic" src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div><div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
     C.servers.forEach(async (s, i) => {
       const card = document.getElementById('srv' + i);
       try {
@@ -165,9 +325,9 @@ ${C.socials?.length ? `<div class="socials">${C.socials.map((s) => `<a class="so
         if (!r.ok) throw new Error(r.status === 404 ? 'invite not found or expired' : 'Discord returned ' + r.status);
         const j = await r.json(); const g = j.guild || {};
         const nameEl = card.querySelector('.name');
-        if (!s.name) nameEl.textContent = g.name || s.invite;
+        if (!s.name) { nameEl.textContent = g.name || s.invite; const ph = card.querySelector('.ph'); if (ph && g.name) ph.textContent = g.name[0].toUpperCase(); }
         if ((g.features || []).includes('VERIFIED') || (g.features || []).includes('PARTNERED')) nameEl.insertAdjacentHTML('beforeend', ICONS.verified);
-        if (!s.icon && g.icon) { const img = document.createElement('img'); img.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128`; img.alt = ''; card.querySelector('.ph')?.replaceWith(img); }
+        if (!s.icon && g.icon) { const img = document.createElement('img'); img.className = 'ic'; img.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128`; img.alt = ''; card.querySelector('.ph')?.replaceWith(img); }
         const art = g.banner ? `https://cdn.discordapp.com/banners/${g.id}/${g.banner}.png?size=600` : g.splash ? `https://cdn.discordapp.com/splashes/${g.id}/${g.splash}.png?size=600` : null;
         if (art) card.querySelector('.top').style.backgroundImage = `url('${art}')`;
         countUp(card.querySelector('.on'), j.approximate_presence_count || 0); countUp(card.querySelector('.mem'), j.approximate_member_count || 0);
@@ -176,8 +336,21 @@ ${C.socials?.length ? `<div class="socials">${C.socials.map((s) => `<a class="so
         card.querySelector('.stats').innerHTML = `<span>Live stats unavailable — ${esc(e.message)}</span>`;
       }
     });
-  }
+  } else sv.remove();
+
+  // ---- socials
+  const so = document.getElementById('socials');
+  if (hasSocials) so.innerHTML = `<div class="sh rv"><span class="eyebrow">${esc(C.socialsEyebrow || 'More')}</span><h2>${esc(C.socialsTitle || 'Find me elsewhere')}</h2></div><div class="socs">${C.socials.map((s, i) => { const url = s.url || (s.icon === 'discord' ? profileLink : '#'); return `<a class="soc rv" style="transition-delay:${i * 50}ms" href="${esc(url)}" target="_blank" rel="noopener">${ICONS[s.icon] || ICONS.website}<span>${esc(s.label || s.icon)}<small>${esc(s.handle || url.replace(/^(https?:\/\/|mailto:)/, '').replace(/\/$/, ''))}</small></span><span class="arr">↗</span></a>`; }).join('')}</div>`; else so.remove();
+
   document.getElementById('footer').textContent = C.footer || '';
+  // reveal on scroll
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; const el = e.target; io.unobserve(el); el.classList.add('on'); el.style.transition = 'none'; el.style.transitionDelay = '';
+    if (el.classList.contains('sh')) { const h2 = el.querySelector('h2'); rise(el.querySelectorAll('.eyebrow, p'), { stagger: 120 }); const ws = splitWords(h2); if (!RM()) ws.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(40px) skewY(4deg)', filter: 'blur(8px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 900, delay: 120 + i * 90, easing: EASE, fill: 'backwards' })); }
+    else { const sib = [...el.parentElement.children]; rise([el], { delay: Math.min(sib.indexOf(el) % 3, 2) * 90, y: 40, dur: 900 }); } }), { threshold: .15 });
+  document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+  document.querySelectorAll('.srv').forEach((el) => tilt(el, 9)); document.querySelectorAll('.soc').forEach((el) => tilt(el, 12));
+  document.querySelectorAll('.btn, nav a.cta').forEach((el) => magnetic(el));
+  cursorFx(); navFx(); heroParallax();
 }
 </script>
 </body>

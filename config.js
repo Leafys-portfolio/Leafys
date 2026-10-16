@@ -5,26 +5,29 @@ window.PORTFOLIO = {
 
   // ---- You ------------------------------------------------------------------
   // Paste your Discord profile link. Name, tag, avatar and banner are fetched from it automatically.
-  profileLink: 'https://discord.com/users/1314899151640858674',
-  bio: 'Moderator & community builder.',
+  profileLink: 'https://discord.com/users/1234567890123456789',
+  bio: 'Moderator & community builder. I keep servers calm, organised and growing.',
   location: 'India',               // '' to hide
   timezone: 'Asia/Kolkata',        // shows your local time — '' to hide
-  tags: ['Moderation', 'Staff management', 'Partnerships', 'Active'],
+  tags: ['Moderation', 'Staff management', 'Partnerships', 'Bot development'],
   // Optional overrides — only fill these if you want something different from your Discord profile:
-  name: '', tag: '', avatar: '', banner: 'https://i.pinimg.com/originals/70/55/c9/7055c99bad359a99e95a9a0bf4849a77.gif',
+  name: '', tag: '', avatar: '', banner: '',
 
   // ---- Look -----------------------------------------------------------------
   theme: {
-    preset: 'violet',          // violet · ocean · ember · forest · mono · auto (auto = colours from your Discord banner)
-    accent: '#128f04',                // or set your own colours (hex) — these override the preset
-    accent2: '#084701',
+    preset: 'liu',             // liu (black & white, like liuclient.org) · mono · violet · ocean · ember · forest · auto (auto = colours from your Discord banner)
+    accent: '',                // or set your own colours (hex) — these override the preset
+    accent2: '',
     background: '',
     surface: '',
     radius: 24,                // corner roundness (0 = square)
-    font: 'Outfit',            // any Google Font: 'Sora', 'Poppins', 'Space Grotesk', 'DM Sans'…
+    font: 'Inter',              // any Google Font: 'Sora', 'Poppins', 'Space Grotesk', 'DM Sans'…
     glow: true,                // soft glow behind the profile card
-    pattern: true,             // dotted background pattern
+    pattern: true,             // faint grid behind the hero
+    particles: true,           // floating particles that react to the cursor
   },
+  headline: 'Discord moderator',       // small pill above your name
+  ctaText: 'Explore servers',          // main button text
 
   // ---- Social links ----------------------------------------------------------
   // icons: discord · youtube · twitter · instagram · github · tiktok · twitch · website · email · reddit · steam · spotify · telegram · roblox
@@ -32,7 +35,7 @@ window.PORTFOLIO = {
     { icon: 'discord', label: 'Discord', url: '' },      // '' = uses your profile link above
     { icon: 'github', label: 'GitHub', url: 'https://github.com/IshanToshniwal' },
     { icon: 'youtube', label: 'YouTube', url: 'https://youtube.com/@yourchannel' },
-    { icon: 'email', label: 'Email', url: 'mailto:undeadisop@gmail.com' },
+    { icon: 'email', label: 'Email', url: 'mailto:you@example.com' },
   ],
 
   // ---- Servers ---------------------------------------------------------------
@@ -45,8 +48,11 @@ window.PORTFOLIO = {
     { invite: 'NZ5qfyQUNc',   role: 'Trial Moderator',  since: '2023' },   // Free Promotions
     { invite: '7xx9zZVDMa',   role: 'Server Builder',   since: '' },       // Jane and Joe Club
   ],
-  serversTitle: 'Servers where Im staff at.',
-  serversIntro: 'Live numbers straight from Discord - tap a card to join.',
+  serversEyebrow: 'Showcase',
+  serversTitle: 'Servers I help run',
+  serversIntro: 'Live numbers straight from Discord — tap a card to join.',
+  socialsEyebrow: 'More',
+  socialsTitle: 'Find me elsewhere',
 
-  footer: '© 2026 · Leafy',
+  footer: '© 2026 · Not affiliated with Discord.',
 };
