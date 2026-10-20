@@ -4,163 +4,145 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portfolio</title>
-<meta name="theme-color" content="#0a0a0a">
+<meta name="theme-color" content="#07070d">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta property="og:type" content="profile"><meta property="og:title" id="ogt" content="Discord portfolio"><meta property="og:description" id="ogd" content="Servers, roles and live member counts."><meta property="og:image" id="ogi" content="">
-<meta name="description" content="Discord moderator portfolio — servers, roles and live member counts.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23fff'/></svg>">
+<meta name="description" id="desc" content="Discord moderator portfolio — servers, roles and live member counts.">
+<link rel="icon" id="fav" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23fff'/></svg>">
 <style>
-  :root{--accent:#fff;--accent2:#a1a1aa;--bg:#0a0a0a;--surface:#111113;--text:#f4f4f5;--muted:#8b8b95;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.18);--r:4px;--cta:#f5d547;--font:'Inter';--mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  :root{--bg:#07070d;--text:#fff;--muted:#a5a5b8;--accent:#fff;--accent-text:#000;--g-op:.06;--g-blur:24px;--g-border:rgba(255,255,255,.14);--g-r:28px;--g-tr:22px;--btn-r:999px;--chip-r:999px;--font:'Inter';--name-size:54px;--name-weight:800;--max:1240px;--on:#23a55a;--idle:#f0b232;--dnd:#f23f43;--off:#5b5b66;--g-shadow:0 30px 80px rgba(0,0,0,.5)}
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 var(--font),Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 var(--font),Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
   a{color:inherit;text-decoration:none}
+  /* backgrounds */
+  #blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;filter:blur(var(--blob-blur,90px));transform:translate(-50%,-50%);will-change:transform}
+  .drift .blob{animation:drift 18s ease-in-out infinite alternate}
+  .drift .blob:nth-child(2){animation-duration:23s;animation-delay:-6s}.drift .blob:nth-child(3){animation-duration:27s;animation-delay:-12s}
+  @keyframes drift{from{transform:translate(-50%,-50%) translate(0,0) scale(1)}to{transform:translate(-50%,-50%) translate(60px,-40px) scale(1.12)}}
   canvas#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-  body.pattern:before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 100%);opacity:.5}
-  body.glow:after{content:'';position:fixed;left:50%;top:-20vh;width:90vw;height:70vh;transform:translateX(-50%);z-index:0;pointer-events:none;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 16%,transparent),transparent 70%);filter:blur(30px)}
+  canvas#orb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,100svh);height:min(100vw,100svh);pointer-events:none;z-index:0;opacity:.6}
   .page{position:relative;z-index:1}
-
+  /* glass */
+  .glass{background:rgba(255,255,255,var(--g-op));border:1px solid var(--g-border);backdrop-filter:blur(var(--g-blur)) saturate(1.3);-webkit-backdrop-filter:blur(var(--g-blur)) saturate(1.3);border-radius:var(--g-r);box-shadow:var(--g-shadow);position:relative}
+  .glass.tile{border-radius:var(--g-tr)}
   /* loader */
   #loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;transition:opacity .5s,visibility .5s}
   #loader.hide{opacity:0;visibility:hidden}
-  #loader .in{text-align:center}
-  #loader .t{font-weight:600;letter-spacing:.3px;font-size:15px;color:var(--muted)}
-  #loader .bar{width:160px;height:2px;background:var(--line);border-radius:2px;margin:14px auto 0;overflow:hidden}
+  #loader .t{font-weight:600;font-size:15px;color:var(--muted);text-align:center}
+  #loader .bar{width:160px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;margin:14px auto 0;overflow:hidden}
   #loader .bar i{display:block;height:100%;width:40%;background:var(--accent);animation:ld 1s infinite ease-in-out}
   @keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
-
   /* nav */
-  nav{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:22px 32px;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s;background:linear-gradient(var(--bg),transparent)}
-  nav.hide{transform:translateY(-120%)}
-  nav .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:-.01em}
-  nav .brand img{width:26px;height:26px;border-radius:50%;object-fit:cover;background:var(--surface)}
-  nav .links{display:flex;gap:6px}
-  nav a.l{padding:8px 14px;font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .15s}
-  nav a.l:hover{color:var(--text)}
-  nav a.cta{justify-self:end;padding:14px 22px;border:1px solid var(--line2);font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text);display:flex;align-items:center;gap:8px;transition:background .2s,border-color .2s}
-  nav a.cta:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.35)}
-  nav a.cta svg{width:14px;height:14px;fill:currentColor}
-  @media(max-width:760px){nav{grid-template-columns:1fr auto;padding:16px 18px}nav .links{display:none}nav .brand span{display:none}nav a.cta{padding:12px 16px}}
-
+  nav{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:22px 32px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  nav.hide{transform:translateY(-130%)}
+  nav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.01em}
+  nav .brand img{width:28px;height:28px;border-radius:50%;object-fit:cover;background:rgba(255,255,255,.1)}
+  nav .pill{display:flex;gap:4px;padding:6px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+  nav .pill a{padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);transition:color .15s,background .15s}
+  nav .pill a:hover{color:var(--text)}nav .pill a.on{background:var(--accent);color:var(--accent-text)}
+  nav .cta{justify-self:end;padding:10px 18px;border-radius:var(--btn-r);background:var(--accent);color:var(--accent-text);font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+  nav .cta svg{width:14px;height:14px;fill:currentColor}
+  @media(max-width:760px){nav{grid-template-columns:1fr auto;padding:14px 16px}nav .pill{display:none}nav .brand{font-size:16px}}
   /* hero */
-  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:110px 32px 48px;overflow:hidden}
-  canvas#orb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,100svh);height:min(100vw,100svh);pointer-events:none;z-index:0}
-  .hero .in{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:end;max-width:1600px;width:100%;margin:0 auto}
-  .orbwrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1}
-  .avwrap{position:relative;display:inline-block}
-  .avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;background:var(--surface);border:1px solid var(--line2);box-shadow:0 0 0 10px rgba(0,0,0,.35),0 30px 80px rgba(0,0,0,.7)}
-  .status{position:absolute;right:2px;bottom:2px;width:20px;height:20px;border-radius:50%;background:#5b5b66;border:4px solid var(--bg)}
-  .status.online{background:#23a55a}.status.idle{background:#f0b232}.status.dnd{background:#f23f43}
-  .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px}
-  .eyebrow i{width:7px;height:7px;border-radius:50%;background:#23a55a;box-shadow:0 0 10px #23a55a}
-  h1{margin:0;font-size:clamp(40px,5.6vw,76px);line-height:1.02;letter-spacing:-.04em;font-weight:700;background:linear-gradient(180deg,#fff 30%,color-mix(in srgb,var(--text) 55%,transparent));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .tag{margin:12px 0 0;color:var(--muted);font:500 14px/1 var(--mono);letter-spacing:.04em}
-  .bio{margin:28px 0 0;max-width:520px;color:color-mix(in srgb,var(--text) 65%,var(--muted));font-size:clamp(16px,1.6vw,20px);line-height:1.5}
-  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:13.5px}
-  .right{display:flex;flex-direction:column;align-items:flex-end;gap:16px;text-align:right}
-  .right .note{color:var(--muted);font-size:14px}
-  .btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:18px 26px;font:600 13px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;transition:transform .15s,filter .15s,background .15s,border-color .15s}
-  .btn.pri{background:var(--cta);color:#111}
-  .btn.pri:hover{filter:brightness(1.06)}
-  .btn.ghost{border:1px solid var(--line2);color:var(--text);background:rgba(0,0,0,.3)}
-  .btn.ghost:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.35)}
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:110px 32px 60px}
+  .hero .in{position:relative;z-index:1;width:100%;max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:minmax(0,440px) 1fr;gap:28px;align-items:center}
+  .hero.center .in{grid-template-columns:minmax(0,560px);justify-content:center;text-align:center}
+  .hero.center .card{align-items:center}.hero.center .row{justify-content:center}
+  .card{padding:34px;display:flex;flex-direction:column;align-items:flex-start}
+  .avwrap{position:relative;display:inline-block;margin-bottom:6px}
+  .avatar{width:var(--av,96px);height:var(--av,96px);border-radius:50%;object-fit:cover;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);display:block}
+  .ring .avwrap:before{content:'';position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 60%,var(--accent) 80%,transparent 100%);animation:spin 5s linear infinite;opacity:.9;-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%);mask:radial-gradient(circle,transparent 62%,#000 63%)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .float .avatar{animation:float 6s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-6px)}}
+  .status{position:absolute;right:2px;bottom:2px;width:20px;height:20px;border-radius:50%;background:var(--off);border:4px solid var(--bg)}
+  .status.online{background:var(--on)}.status.idle{background:var(--idle)}.status.dnd{background:var(--dnd)}
+  .pulse .status.online:after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--on);animation:ping 2s infinite;opacity:0}
+  @keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-top:18px}
+  .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--on);box-shadow:0 0 10px var(--on)}
+  h1{margin:10px 0 6px;font-size:var(--name-size);font-weight:var(--name-weight);letter-spacing:-.04em;line-height:1;overflow-wrap:anywhere}
+  h1 .ch{display:inline-block;white-space:pre}
+  .tag{color:var(--muted);font-size:15px;display:flex;gap:12px;flex-wrap:wrap}
+  .bio{color:color-mix(in srgb,var(--text) 82%,var(--muted));font-size:17px;line-height:1.5;margin:18px 0 0;max-width:420px}
+  .row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  .chip{padding:8px 14px;border-radius:var(--chip-r);background:rgba(255,255,255,.08);font-size:13px;font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:var(--btn-r);font-weight:700;font-size:14.5px;transition:transform .15s,filter .15s,background .15s;position:relative;overflow:hidden}
+  .btn.solid{background:var(--accent);color:var(--accent-text)}.btn.solid:hover{filter:brightness(1.08)}
+  .btn.glass{background:rgba(255,255,255,.1);color:var(--text);border:1px solid rgba(255,255,255,.2)}.btn.glass:hover{background:rgba(255,255,255,.16)}
   .btn svg{width:15px;height:15px;fill:currentColor}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:6px}
-  .chip{padding:6px 12px;border:1px solid var(--line);color:var(--muted);font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
-  @media(max-width:900px){.hero{padding:90px 20px 36px;justify-content:flex-start}.hero .in{grid-template-columns:1fr;gap:26px;margin-top:calc(74vw + 10px)}.right{align-items:flex-start;text-align:left}.btns,.chips{justify-content:flex-start}.orbwrap{top:calc(90px + 37vw)}canvas#orb{top:calc(90px + 37vw);width:min(100vw,70svh);height:min(100vw,70svh)}.bio{max-width:none}.avatar{width:80px;height:80px}}
-
+  .shine .btn.solid:after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:shine 4s 1.5s infinite}
+  @keyframes shine{0%{left:-80%}25%,100%{left:140%}}
+  /* right panel tiles */
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .tile{padding:18px;display:flex;gap:14px;align-items:center;min-width:0;transition:transform .25s,border-color .25s}
+  .tile:hover{border-color:rgba(255,255,255,.3)}
+  .tile .ic{width:46px;height:46px;border-radius:14px;flex-shrink:0;object-fit:cover;background:rgba(255,255,255,.1);display:grid;place-items:center;font-weight:800;font-size:18px}
+  .tile .nm{min-width:0}.tile b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tile small{color:var(--muted);font-size:12.5px}
+  .tile .st{margin-left:auto;text-align:right;font-size:11.5px;color:var(--muted);line-height:1.35;flex-shrink:0}.tile .st b{font-size:15px;display:inline}
+  .tile.stat{justify-content:center;color:var(--muted);font-weight:700;font-size:15px;text-align:center}
+  .tile.big{flex-direction:column;align-items:flex-start;gap:4px}.tile.big .n{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1}.tile.big small{letter-spacing:.1em;text-transform:uppercase;font-size:11px;font-weight:700}
   /* sections */
-  section.block{max-width:1120px;margin:0 auto;padding:60px 20px}
-  .sh{text-align:center;margin-bottom:38px}
-  .sh .eyebrow{margin-bottom:14px;justify-content:center}
-  .sh h2{margin:0;font-size:clamp(30px,5vw,46px);letter-spacing:-.03em;font-weight:800}
-  .sh p{margin:10px auto 0;max-width:520px;color:var(--muted);font-size:16px}
-  .rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
-  .rv.on{opacity:1;transform:none}
-
-  /* server cards */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-  .srv{display:block;position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
-  .srv:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 30px 60px rgba(0,0,0,.5)}
-  .srv .top{aspect-ratio:16/7;background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));background-size:cover;background-position:center;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+  section.block{max-width:var(--max);margin:0 auto;padding:50px 32px}
+  .sh{text-align:center;margin-bottom:34px}.sh .eyebrow{margin:0 0 12px;justify-content:center}
+  .sh h2{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.03em;font-weight:800}.sh p{margin:10px auto 0;max-width:520px;color:var(--muted);font-size:16px}
+  .grid{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:16px}
+  .srv{display:block;overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s}
+  .srv:hover{border-color:rgba(255,255,255,.3)}
+  .srv .top{aspect-ratio:16/7;background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.02));background-size:cover;background-position:center;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
   .srv:hover .top{transform:scale(1.04)}
-  .srv .shade{position:absolute;left:0;right:0;top:0;aspect-ratio:16/7;background:linear-gradient(180deg,transparent 40%,var(--surface) 100%);pointer-events:none}
-  .srv .join{position:absolute;top:12px;right:12px;padding:5px 11px;border-radius:999px;background:rgba(9,9,12,.7);border:1px solid var(--line2);backdrop-filter:blur(8px);font-size:12px;font-weight:700;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
+  .srv .join{position:absolute;top:12px;right:12px;padding:5px 11px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);font-size:12px;font-weight:700;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}
   .srv:hover .join{opacity:1;transform:none}
   .srv .body{padding:0 18px 18px;position:relative}
-  .srv .head{display:flex;gap:14px;align-items:flex-start}
-  .srv .head .txt{min-width:0;flex:1;padding-top:10px}
-  .srv img.ic,.srv .ph{width:60px;height:60px;margin-top:-30px;border-radius:18px;object-fit:cover;background:var(--bg);border:3px solid var(--surface);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-  .srv .name{font-weight:700;font-size:17px;line-height:1.25;letter-spacing:-.01em;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .srv .head{display:flex;gap:14px;align-items:flex-start}.srv .head .txt{min-width:0;flex:1;padding-top:10px}
+  .srv img.ic,.srv .ph{width:60px;height:60px;margin-top:-30px;border-radius:18px;object-fit:cover;background:var(--bg);border:3px solid rgba(20,20,30,.9);flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:22px}
+  .srv .name{font-weight:700;font-size:17px;line-height:1.25;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .srv .name svg{width:15px;height:15px;fill:var(--accent);vertical-align:-2px;margin-left:4px}
-  .srv .role{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--text);font-size:12px;font-weight:600}
-  .srv .role.owner{background:var(--accent);color:var(--bg);border-color:transparent}
-  .srv .stats{display:flex;gap:16px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  .srv .role{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.1);font-size:12px;font-weight:600}
+  .srv .stats{display:flex;gap:16px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:13px}
   .srv .stats b{color:var(--text);font-weight:700;font-size:14px}
-  .srv .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#23a55a;margin-right:6px;box-shadow:0 0 8px #23a55a;vertical-align:1px}
-  .since{margin-left:auto}.srv.err .stats{color:#f0b232}
-
-  /* socials */
-  .socs{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-  .soc{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);font-weight:600;transition:transform .2s,border-color .2s,background .2s}
-  .soc:hover{transform:translateY(-3px);border-color:var(--line2);background:color-mix(in srgb,var(--surface) 70%,rgba(255,255,255,.06))}
-  .soc svg{width:20px;height:20px;fill:var(--text);flex-shrink:0}
-  .soc>span{min-width:0}.soc small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .soc .arr{margin-left:auto;color:var(--muted)}
-
-  footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 20px;color:var(--muted);font-size:13px;text-align:center}
-  .skel{color:transparent;background:rgba(255,255,255,.08);border-radius:6px;animation:sk 1.2s infinite}
-  @keyframes sk{50%{opacity:.5}}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--on);margin-right:6px;box-shadow:0 0 8px var(--on);vertical-align:1px}
+  .since{margin-left:auto}.srv.err .stats{color:var(--idle)}
+  .socs{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .soc{display:flex;align-items:center;gap:12px;padding:16px 18px;font-weight:600;transition:transform .2s,border-color .2s}
+  .soc:hover{border-color:rgba(255,255,255,.3)}
+  .soc svg{width:20px;height:20px;fill:var(--text);flex-shrink:0}.soc>span{min-width:0}
+  .soc small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.soc .arr{margin-left:auto;color:var(--muted)}
+  .xs .card{max-width:760px;margin:0 auto}.xs .card p{color:color-mix(in srgb,var(--text) 82%,var(--muted));font-size:16px;line-height:1.6;margin:0 0 14px}.xs .card p:last-child{margin:0}
+  .xs ul{margin:0;padding-left:20px;line-height:1.9}.xs .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}.xs .cards .tile{flex-direction:column;align-items:flex-start;gap:6px}.xs .cards .tile b{font-size:16px}.xs .cards .tile small{font-size:14px;color:var(--muted)}
+  footer{margin-top:30px;padding:28px 20px;color:var(--muted);font-size:13px;text-align:center}
+  .skel{color:transparent;background:rgba(255,255,255,.08);border-radius:6px;animation:sk 1.2s infinite}@keyframes sk{50%{opacity:.5}}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.hero .in{animation:none}}
-  /* --- animation layer --- */
-  nav{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,opacity .35s}
-  .avwrap:before{content:'';position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 60%,var(--accent) 80%,transparent 100%);animation:spin 5s linear infinite;opacity:.9;-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%);mask:radial-gradient(circle,transparent 62%,#000 63%)}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .avatar{animation:float 6s ease-in-out infinite}
-  @keyframes float{50%{transform:translateY(-8px)}}
-  .status.online:after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid #23a55a;animation:ping 2s infinite;opacity:0}
-  @keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.8);opacity:0}}
-  .eyebrow i{animation:blink 1.6s infinite}
-  @keyframes blink{50%{opacity:.35}}
-  h1 .ch{display:inline-block;white-space:pre;background:linear-gradient(180deg,#fff 30%,color-mix(in srgb,var(--text) 55%,transparent));-webkit-background-clip:text;background-clip:text;color:transparent}
-  h1 .ch:hover{animation:jelly .6s}
-  @keyframes jelly{30%{transform:scaleY(1.2) translateY(-6px)}60%{transform:scaleY(.9)}}
-  .hero .in{animation:none}
-  .js .a-in{opacity:0}
+  .js .a-in{opacity:0}.rv{opacity:0}.rv.on{opacity:1}
   .tilt{transform-style:preserve-3d;will-change:transform}
-  .tilt .sheen{position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.12),transparent 45%);opacity:0;transition:opacity .25s}
+  .tilt .sheen{position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.14),transparent 45%);opacity:0;transition:opacity .25s}
   .tilt:hover .sheen{opacity:1}
-  .tilt:hover{transform:none}
-  .btn,nav a.cta{will-change:transform}
-  .btn.pri{position:relative;overflow:hidden}
-  .btn.pri:after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 4s 1.5s infinite}
-  @keyframes shine{0%{left:-80%}25%,100%{left:140%}}
-  .sh h2 .w{display:inline-block}
   .cursor{position:fixed;z-index:30;left:0;top:0;width:34px;height:34px;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,border-color .25s;mix-blend-mode:difference}
   .cursor.big{width:64px;height:64px;background:rgba(255,255,255,.9);border-color:transparent}
   @media(hover:none){.cursor{display:none}}
-  @media(prefers-reduced-motion:reduce){.js .a-in{opacity:1}.avwrap:before,.avatar,.btn.pri:after{animation:none!important}.cursor{display:none}}
+  @media(max-width:900px){.hero{padding:90px 16px 40px}.hero .in{grid-template-columns:1fr;gap:18px}.tiles{grid-template-columns:1fr}.card{padding:26px}section.block{padding:36px 16px}.grid{grid-template-columns:1fr!important}h1{font-size:calc(var(--name-size) * .78)}nav{grid-template-columns:1fr auto}}
+  @media(min-width:901px) and (max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)!important}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .a-in,.rv{opacity:1}.cursor{display:none}}
 </style>
 </head>
 <body>
-<div class="cursor" id="cursor"></div>
-<div id="loader"><div class="in"><div class="t" id="ldtxt">Loading</div><div class="bar"><i></i></div></div></div>
-<canvas id="fx"></canvas>
+<div id="blobs"></div>
+<div id="loader"><div><div class="t" id="ldtxt">Loading</div><div class="bar"><i></i></div></div></div>
 <nav id="nav"></nav>
 <div class="page">
-  <header class="hero" id="home"><canvas id="orb"></canvas><div id="profile"></div></header>
+  <header class="hero" id="home"><div class="in" id="profile"></div></header>
   <section class="block" id="servers"></section>
   <section class="block" id="socials"></section>
+  <div id="extra"></div>
   <footer id="footer"></footer>
 </div>
 <script>
 document.documentElement.classList.add('js');
 // load config.js fresh every time (GitHub Pages caches aggressively)
-(function () { const s = document.createElement('script'); s.src = 'config.js?v=' + Date.now(); s.onload = init; s.onerror = () => { document.getElementById('loader').classList.add('hide'); document.getElementById('profile').innerHTML = '<p>config.js is missing — add it next to index.html.</p>'; }; document.head.appendChild(s); })();
-
-const PRESETS = { liu: ['#ffffff', '#a1a1aa', '#09090c', '#101014'], mono: ['#e5e7eb', '#9ca3af', '#0a0a0a', '#161616'], violet: ['#8b7bff', '#ffb86b', '#0e0b1e', '#17132d'], ocean: ['#38bdf8', '#a7f3d0', '#07131f', '#0f1f2e'], ember: ['#ff6b4a', '#ffd166', '#17090b', '#241215'], forest: ['#4ade80', '#fde68a', '#071510', '#0f2118'] };
+(function () { const s = document.createElement('script'); s.src = 'config.js?v=' + Date.now(); s.onload = () => { try { init(); } catch (e) { fail('config.js has a mistake: ' + e.message); } }; s.onerror = () => fail('config.js is missing or has a syntax error — check every line ends with a comma and quotes are closed.'); document.head.appendChild(s); })();
+function fail(msg) { document.getElementById('loader').classList.add('hide'); document.getElementById('profile').innerHTML = `<div class="glass card"><b>Portfolio could not load</b><p class="bio">${esc(msg)}</p></div>`; console.error(msg); }
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const ICONS = {
   discord: '<svg viewBox="0 0 24 24"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.2.4a18 18 0 0 1 4.4 2.2 15.6 15.6 0 0 0-15.2 0A18 18 0 0 1 8.8 3.4L8.6 3a19.8 19.8 0 0 0-4.9 1.4C.6 9 0 13.5.3 17.9a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 11.8 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.9 19.9 0 0 0 6-3c.5-5.1-.9-9.5-3.4-13.5ZM8.3 15.2c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Zm7.4 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Z"/></svg>',
@@ -222,7 +204,7 @@ function startFx(on, accent) {
 }
 
 // ---- device + visibility helpers (used to throttle the heavy canvases)
-const LOW = innerWidth < 900 || (navigator.hardwareConcurrency || 8) <= 4 || matchMedia('(hover:none)').matches;
+let LOW = false; // set in init() from effects.lowPowerMobile
 function visibleLoop(el, fn) { // runs fn(t) via rAF only while el is on screen and the tab is visible; halves fps on low-power devices
   let on = true, odd = false, running = false;
   const tick = (t) => { if (!on || document.hidden) { running = false; return; } odd = !odd; if (!(LOW && odd)) fn(t); requestAnimationFrame(tick); };
@@ -258,11 +240,11 @@ function cursorFx() {
   document.addEventListener('pointerover', (e) => cur.classList.toggle('big', !!e.target.closest('a,button')));
 }
 function navFx() {
-  const nav = document.getElementById('nav'); let last = 0;
+  const nav = document.getElementById('nav'); if (!nav) return; let last = 0;
   addEventListener('scroll', () => { const y = scrollY; nav.classList.toggle('hide', y > last && y > 120); last = y; }, { passive: true });
 }
 function heroParallax() {
-  if (RM()) return; const hero = document.getElementById('profile');
+  if (RM()) return; const hero = document.getElementById('profile'); if (!hero) return;
   addEventListener('scroll', () => { const y = Math.min(scrollY, innerHeight); hero.style.transform = `translateY(${y * .25}px)`; hero.style.opacity = 1 - y / innerHeight * .9; }, { passive: true });
 }
 
@@ -336,117 +318,155 @@ function startOrb(on, colors) {
 }
 
 function init() {
-  const C = window.PORTFOLIO || {}; const T = C.theme || {};
-  const userId = idFrom(C.profileLink);
-  const profileLink = C.profileLink || (userId ? `https://discord.com/users/${userId}` : '');
-  // ---- theme
-  const root = document.documentElement.style;
-  const preset = PRESETS[T.preset] || PRESETS.liu;
-  const [pa, pa2, pbg, psf] = preset;
-  root.setProperty('--accent', T.accent || pa); root.setProperty('--accent2', T.accent2 || pa2); root.setProperty('--bg', T.background || pbg); root.setProperty('--surface', T.surface || psf);
-  if (T.text) root.setProperty('--text', T.text); if (T.muted) root.setProperty('--muted', T.muted);
-  if (T.radius != null) root.setProperty('--r', T.radius + 'px');
-  if (T.font) { root.setProperty('--font', `'${T.font}'`); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(T.font)}:wght@400;500;600;700;800&display=swap`; document.head.appendChild(l); }
-  if (T.cta) root.setProperty('--cta', T.cta);
-  { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&display=swap'; document.head.appendChild(l); }
-  if (T.pattern !== false) document.body.classList.add('pattern'); if (T.glow !== false) document.body.classList.add('glow');
-  startFx(T.particles !== false, T.accent || pa);
-  document.querySelector('meta[name=theme-color]').content = T.background || pbg;
+  const C = window.PORTFOLIO || {};
+  const P = C.profile || {}, N = C.nav || {}, H = C.hero || {}, SV = C.servers || {}, SO = C.socials || {}, F = C.footer || {}, T = C.theme || {}, E = C.effects || {}, M = C.meta || {}, G = T.glass || {};
+  const on = (v, d = true) => (v == null ? d : !!v);
+  const userId = idFrom(P.link);
+  const profileLink = P.link || (userId ? `https://discord.com/users/${userId}` : '#');
+  const link = (u) => (u ? u : profileLink);
+  LOW = on(E.lowPowerMobile) && (innerWidth < 900 || (navigator.hardwareConcurrency || 8) <= 4 || matchMedia('(hover:none)').matches);
+  const anim = (k) => on(E[k]) && !RM();
 
-  const defaultAvatar = C.avatar || `https://cdn.discordapp.com/embed/avatars/${userId ? Number(BigInt(userId) >> 22n) % 6 : 0}.png`;
-  const hasServers = !!C.servers?.length, hasSocials = !!C.socials?.length;
+  // ---- theme → CSS variables
+  const root = document.documentElement.style, set = (k, v) => v != null && v !== '' && root.setProperty(k, v);
+  set('--bg', T.background); set('--text', T.text); set('--muted', T.muted); set('--accent', T.accent); set('--accent-text', T.accentText);
+  set('--on', T.online); set('--idle', T.idle); set('--dnd', T.dnd); set('--off', T.offline);
+  set('--g-op', G.opacity); set('--g-blur', G.blur != null ? G.blur + 'px' : null); set('--g-border', G.border != null ? `rgba(255,255,255,${G.border})` : null); set('--g-r', G.radius != null ? G.radius + 'px' : null); set('--g-tr', G.tileRadius != null ? G.tileRadius + 'px' : null); if (G.shadow === false) set('--g-shadow', 'none');
+  set('--btn-r', T.buttonRadius != null ? T.buttonRadius + 'px' : null); set('--chip-r', T.chipRadius != null ? T.chipRadius + 'px' : null); set('--name-size', T.nameSize ? T.nameSize + 'px' : null); set('--name-weight', T.nameWeight); set('--max', T.maxWidth ? T.maxWidth + 'px' : null); set('--av', H.avatarSize ? H.avatarSize + 'px' : null); set('--blob-blur', T.blobBlur != null ? T.blobBlur + 'px' : null);
+  if (T.font) { set('--font', `'${T.font}'`); const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(T.font)}:wght@400;500;600;700;800&display=swap`; document.head.appendChild(l); }
+  if (C.customCss) { const st = document.createElement('style'); st.textContent = C.customCss; document.head.appendChild(st); }
+  const body = document.body;
+  if (anim('avatarRing')) body.classList.add('ring'); if (anim('avatarFloat')) body.classList.add('float'); if (anim('statusPulse')) body.classList.add('pulse'); if (anim('buttonShine')) body.classList.add('shine');
+  // blobs
+  const blobs = Array.isArray(T.blobs) ? T.blobs : [];
+  const bl = document.getElementById('blobs'); bl.innerHTML = blobs.map((b) => `<div class="blob" style="left:${+b.x || 0}%;top:${+b.y || 0}%;width:${+b.size || 500}px;height:${+b.size || 500}px;background:${esc(b.color || '#7c3aed')};opacity:${b.opacity != null ? b.opacity : .7}"></div>`).join('');
+  if (anim('blobsDrift')) bl.classList.add('drift');
+  if (anim('blobsFollowCursor') && !matchMedia('(hover:none)').matches) { let tx = 0, ty = 0, cx = 0, cy = 0; addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; tx = (e.clientX / innerWidth - .5) * 40; ty = (e.clientY / innerHeight - .5) * 40; }, { passive: true }); const loop = () => { cx += (tx - cx) * .04; cy += (ty - cy) * .04; bl.style.transform = `translate(${cx}px,${cy}px)`; if (!document.hidden) requestAnimationFrame(loop); else setTimeout(loop, 300); }; loop(); }
+  // meta
+  document.getElementById('desc').content = M.description || ''; document.getElementById('ogd').content = P.bio || M.description || '';
+  document.querySelector('meta[name=theme-color]').content = M.themeColor || T.background || '#07070d';
+  const setIcon = (u) => { if (!u) return; document.getElementById('ogi').content = M.ogImage || u; document.getElementById('fav').href = M.favicon || u; };
+  if (M.ogImage) document.getElementById('ogi').content = M.ogImage; if (M.favicon) document.getElementById('fav').href = M.favicon;
+
+  const defaultAvatar = P.avatar || `https://cdn.discordapp.com/embed/avatars/${userId ? Number(BigInt(userId) >> 22n) % 6 : 0}.png`;
+  const servers = (SV.list || []).filter((s) => s && s.invite && !s.hide).map((s) => ({ ...s, invite: String(s.invite).trim().replace(/^https?:\/\/(www\.)?(discord\.gg|discord\.com\/invite|discordapp\.com\/invite)\//i, '').replace(/\/.*$/, '') }));
+  const socials = (SO.items || []).filter((s) => s && s.icon);
+  const showServers = on(SV.show) && servers.length, showSocials = on(SO.show) && socials.length;
+  const L = Object.assign({ online: 'online', members: 'members', since: 'since', join: 'Join ↗', unavailable: 'Live stats unavailable' }, SV.labels || {});
 
   // ---- nav
-  document.getElementById('nav').innerHTML = `<a class="brand" href="#home"><img id="navav" src="${esc(defaultAvatar)}" alt=""><span id="navname">${esc(C.name || '')}</span></a><div class="links"><a class="l" href="#home">Home</a>${hasServers ? `<a class="l" href="#servers">${esc(C.navServers || 'Servers')}</a>` : ''}${hasSocials ? `<a class="l" href="#socials">${esc(C.navSocials || 'Socials')}</a>` : ''}</div>${profileLink ? `<a class="cta" href="${esc(profileLink)}" target="_blank" rel="noopener">${ICONS.discord} Discord</a>` : ''}`;
+  const nav = document.getElementById('nav');
+  if (on(N.show)) {
+    const brand = N.brand || 'name', bimg = `<img id="navav" src="${esc(defaultAvatar)}" alt="">`, bname = `<span id="navname">${esc(P.name || '')}</span>`;
+    const links = (N.links || []).filter((l) => l && l.label).filter((l) => !(l.href === '#servers' && !showServers) && !(l.href === '#socials' && !showSocials));
+    nav.innerHTML = `<a class="brand" href="#home">${brand === 'none' ? '' : brand === 'avatar' ? bimg : brand === 'both' ? bimg + bname : bname}</a><div class="pill">${links.map((l, i) => `<a href="${esc(l.href || '#')}" class="${i === 0 ? 'on' : ''}" ${/^https?:/.test(l.href || '') ? 'target="_blank" rel="noopener"' : ''}>${esc(l.label)}</a>`).join('')}</div>${on(N.button?.show) ? `<a class="cta" href="${esc(link(N.button?.url))}" target="_blank" rel="noopener">${ICONS.discord} ${esc(N.button?.label || 'Discord ↗')}</a>` : '<span></span>'}`;
+    if (!links.length) nav.querySelector('.pill').remove();
+    // highlight the section in view
+    const pills = [...nav.querySelectorAll('.pill a')]; if (pills.length) { const secs = pills.map((a) => { const h = a.getAttribute('href'); return /^#./.test(h) ? document.querySelector(h) : null; }).filter(Boolean); const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) pills.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-40% 0px -55% 0px' }); secs.forEach((s) => sio.observe(s)); }
+  } else nav.remove();
 
   // ---- hero
-  document.getElementById('profile').innerHTML = `
-<div class="left">
-  <div class="a-in"><span class="eyebrow"><i></i>${esc(C.headline || 'Discord moderator')}</span></div>
-  <h1 id="name">${C.name ? esc(C.name) : '<span class="skel">Loading name</span>'}</h1><p class="tag a-in" id="tag">${esc(C.tag || '')}</p>
-  ${C.bio ? `<p class="bio a-in">${esc(C.bio)}</p>` : ''}
-  <div class="meta a-in">${C.location ? `<span>📍 ${esc(C.location)}</span>` : ''}${C.timezone ? `<span>🕒 <span id="clock"></span></span>` : ''}<span id="activity"></span></div>
-</div>
-<div class="right">
-  ${C.tagline ? `<p class="note a-in">${esc(C.tagline)}</p>` : ''}
-  <div class="btns a-in">${profileLink ? `<a class="btn ghost" href="${esc(profileLink)}" target="_blank" rel="noopener">${ICONS.discord} Discord profile</a>` : ''}${hasServers ? `<a class="btn pri" href="#servers">${esc(C.ctaText || 'Explore servers')} <span>›</span></a>` : ''}</div>
-  ${C.tags?.length ? `<div class="chips a-in">${C.tags.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
-</div>`;
-  document.getElementById('profile').classList.add('in');
-  document.getElementById('profile').insertAdjacentHTML('beforebegin', `<div class="orbwrap"><div class="avwrap a-in"><img class="avatar" id="avatar" src="${esc(defaultAvatar)}" alt=""><span class="status" id="status" title="status"></span></div></div>`);
-  startOrb(T.orb !== false, (T.orbColors && T.orbColors.length === 2) ? T.orbColors : ['#fff3cf', '#e07a2a']);
-  if (C.timezone) { const tick = () => { const el = document.getElementById('clock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: C.timezone }) + ' local'; }; tick(); setInterval(tick, 30_000); }
-  const loader = document.getElementById('loader'); let loaded = false;
-  const done = () => { if (loaded) return; loaded = true; setTimeout(() => { loader.classList.add('hide'); heroIn(); }, 350); };
-  let nameAnimated = false; const animName = () => { if (nameAnimated) return; nameAnimated = true; const h = document.getElementById('name'); if (h.querySelector('.skel')) return; letterIn(h, 250); };
-  const setName = (n, t) => { if (!C.name && n) { const h = document.getElementById('name'); if (h.textContent !== n) { h.textContent = n; if (nameAnimated) splitLetters(h); } document.getElementById('navname').textContent = n; document.title = `${n} — portfolio`; } if (!C.tag && t) document.getElementById('tag').textContent = t; document.getElementById('ldtxt').textContent = 'Loading ' + (C.name || n || ''); done(); };
-  const heroIn = () => { animName(); rise(document.querySelectorAll('.hero .a-in'), { delay: 150, stagger: 110 }); };
-  const setAvatar = (u) => { if (!C.avatar && u) { document.getElementById('avatar').src = u; document.getElementById('navav').src = u; } setIcon(C.avatar || u); };
-  const setIcon = (u) => { if (!u) return; document.getElementById('ogi').content = u; let l = document.querySelector('link[rel=icon]'); if (!l) { l = document.createElement('link'); l.rel = 'icon'; document.head.appendChild(l); } l.href = u; };
-  document.getElementById('ogt').content = (C.name ? C.name + ' — ' : '') + (C.headline || 'Discord moderator'); document.getElementById('ogd').content = C.bio || document.getElementById('ogd').content; if (C.avatar) setIcon(C.avatar);
-  const setAccent = (color) => { if (T.preset === 'auto' && color) root.setProperty('--accent', color); };
-  if (C.name) { document.title = `${C.name} — portfolio`; document.getElementById('ldtxt').textContent = 'Loading ' + C.name; }
+  const hero = document.querySelector('.hero'); if ((H.layout || 'split') === 'center') hero.classList.add('center');
+  const btn = (b) => `<a class="btn ${b.style === 'glass' ? 'glass' : 'solid'} a-in" href="${esc(b.url ? b.url : profileLink)}" ${/^#/.test(b.url || '') ? '' : 'target="_blank" rel="noopener"'}>${(!b.url || /discord/i.test(b.url)) ? ICONS.discord : ''}${esc(b.label)}</a>`;
+  const buttons = (H.buttons || []).filter((b) => b && b.label).filter((b) => !(b.url === '#servers' && !showServers) && !(b.url === '#socials' && !showSocials));
+  const left = `<div class="glass card" id="card">
+    <div class="avwrap a-in"><img class="avatar" id="avatar" src="${esc(defaultAvatar)}" alt="">${on(H.showStatusDot) ? '<span class="status" id="status"></span>' : ''}</div>
+    ${on(H.showHeadline) && P.headline ? `<span class="eyebrow a-in"><i></i>${esc(P.headline)}</span>` : ''}
+    <h1 id="name">${P.name ? esc(P.name) : '<span class="skel">Loading name</span>'}</h1>
+    ${on(H.showTag) || on(H.showMeta) ? `<div class="tag a-in">${on(H.showTag) ? `<span id="tag">${esc(P.tag || '')}</span>` : ''}${on(H.showMeta) ? `${P.location ? `<span>📍 ${esc(P.location)}</span>` : ''}${P.timezone ? `<span>🕒 <span id="clock"></span></span>` : ''}<span id="activity">${esc(P.activity || '')}</span>` : ''}</div>` : ''}
+    ${on(H.showBio) && P.bio ? `<p class="bio a-in">${esc(P.bio)}</p>` : ''}
+    ${on(H.showTags) && P.tags?.length ? `<div class="row a-in">${P.tags.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div>` : ''}
+    ${buttons.length ? `<div class="row">${buttons.map(btn).join('')}</div>` : ''}
+  </div>`;
+  const tileFor = (s, i) => `<a class="glass tile a-in" id="tile${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener">${s.icon ? `<img class="ic" src="${esc(s.icon)}" alt="">` : `<div class="ic ph" style="${s.color ? `background:${esc(s.color)}` : ''}">${esc((s.name || s.invite)[0].toUpperCase())}</div>`}<div class="nm"><b class="name">${s.name ? esc(s.name) : '<span class="skel">Loading…</span>'}</b><small>${esc(s.role || '')}</small></div><div class="st"><b class="on">—</b> ${esc(L.online)}<br><span class="mem">—</span> ${esc(L.members)}</div></a>`;
+  let right = '';
+  const panel = (H.layout || 'split') === 'center' ? 'none' : (H.rightPanel || 'servers');
+  if (panel === 'servers' && servers.length) right = `<div class="tiles">${servers.slice(0, H.rightTiles || 5).map(tileFor).join('')}${on(H.statsTile?.show) ? `<div class="glass tile stat a-in" id="stattile">${esc((H.statsTile?.text || '{members}+ members reached').replace(/\{\w+\}/g, '…'))}</div>` : ''}</div>`;
+  else if (panel === 'stats') right = `<div class="tiles"><div class="glass tile big a-in"><div class="n" id="st-servers">${servers.length}</div><small>servers</small></div><div class="glass tile big a-in"><div class="n" id="st-members">…</div><small>members reached</small></div><div class="glass tile big a-in"><div class="n" id="st-online">…</div><small>online now</small></div>${on(H.statsTile?.show) ? `<div class="glass tile stat a-in" id="stattile">${esc((H.statsTile?.text || '').replace(/\{\w+\}/g, '…'))}</div>` : ''}</div>`;
+  document.getElementById('profile').innerHTML = left + right; if (!right) hero.classList.add('center');
+  if (on(E.orb, false) && !RM()) { hero.insertAdjacentHTML('afterbegin', '<canvas id="orb"></canvas>'); startOrb(true, (E.orbColors && E.orbColors.length === 2) ? E.orbColors : ['#fff3cf', '#e07a2a']); }
+  if (on(E.starfield, false) && !RM()) { document.body.insertAdjacentHTML('afterbegin', '<canvas id="fx"></canvas>'); startFx(true, T.accent || '#fff'); }
+  if (P.timezone) { const tick = () => { const el = document.getElementById('clock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: P.timezone }); }; try { tick(); setInterval(tick, 30_000); } catch { document.getElementById('clock')?.parentElement?.remove(); } }
 
-  // 1) public profile lookup (no setup needed): name, avatar
+  // ---- loader + entrance
+  const loader = document.getElementById('loader'); let loaded = false;
+  const ldText = (n) => { const el = document.getElementById('ldtxt'); if (el) el.textContent = (E.loaderText || 'Loading {name}').replace('{name}', n || ''); };
+  if (!on(E.loader)) loader.remove(); else ldText(P.name);
+  let nameAnimated = false;
+  const heroIn = () => { const h = document.getElementById('name'); if (!nameAnimated && !h.querySelector('.skel')) { nameAnimated = true; if (anim('letterReveal')) letterIn(h, 200); } if (anim('entrance')) rise(document.querySelectorAll('.hero .a-in'), { delay: 120, stagger: 90 }); else document.querySelectorAll('.a-in').forEach((el) => el.classList.remove('a-in')); };
+  const done = () => { if (loaded) return; loaded = true; setTimeout(() => { document.getElementById('loader')?.classList.add('hide'); heroIn(); }, on(E.loader) ? 350 : 0); };
+  const setName = (n, t) => { if (!P.name && n) { const h = document.getElementById('name'); if (h.textContent !== n) { h.textContent = n; if (nameAnimated) splitLetters(h); } const nn = document.getElementById('navname'); if (nn) nn.textContent = n; } const tt = document.getElementById('tag'); if (!P.tag && t && tt) tt.textContent = t; const nm = P.name || n || ''; document.title = M.title || `${nm} — portfolio`; document.getElementById('ogt').content = `${nm} — ${P.headline || 'Discord'}`; ldText(nm); done(); };
+  const setAvatar = (u) => { if (!P.avatar && u) { document.getElementById('avatar').src = u; const na = document.getElementById('navav'); if (na) na.src = u; } setIcon(P.avatar || u); };
+  const setStatus = (s) => { const st = document.getElementById('status'); if (st) { st.className = 'status ' + (s || 'offline'); st.title = s || ''; } };
+  if (P.status) setStatus(P.status); if (P.avatar) setIcon(P.avatar); if (P.name) { document.title = M.title || `${P.name} — portfolio`; document.getElementById('ogt').content = `${P.name} — ${P.headline || 'Discord'}`; }
   if (userId) {
-    fetch(`https://discordlookup.mesalytic.moe/v1/user/${userId}`).then((r) => r.ok ? r.json() : null).then((u) => {
-      if (!u) return;
-      setName(u.global_name || u.username, u.username ? '@' + u.username : '');
-      setAvatar(u.avatar?.link ? u.avatar.link + '?size=256' : null);
-      setAccent(u.banner?.color || u.accent_color);
-    }).catch(() => {});
-    // 2) live presence via Lanyard (only if you've joined discord.gg/lanyard) — status dot, activity, freshest avatar
+    fetch(`https://discordlookup.mesalytic.moe/v1/user/${userId}`).then((r) => r.ok ? r.json() : null).then((u) => { if (!u) return; setName(u.global_name || u.username, u.username ? '@' + u.username : ''); setAvatar(u.avatar?.link ? u.avatar.link + '?size=256' : null); }).catch(() => {});
     fetch(`https://api.lanyard.rest/v1/users/${userId}`).then((r) => r.json()).then((j) => {
-      if (!j?.success) return;
-      const d = j.data; const st = document.getElementById('status'); st.className = 'status ' + (d.discord_status || 'offline'); st.title = d.discord_status;
+      if (!j?.success) return; const d = j.data; if (!P.status) setStatus(d.discord_status);
       setName(d.discord_user?.global_name || d.discord_user?.username, d.discord_user?.username ? '@' + d.discord_user.username : '');
       if (d.discord_user?.avatar) setAvatar(`https://cdn.discordapp.com/avatars/${userId}/${d.discord_user.avatar}.${d.discord_user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=256`);
-      const act = (d.activities || []).find((a) => a.type !== 4), custom = (d.activities || []).find((a) => a.type === 4);
-      const el = document.getElementById('activity');
-      if (d.listening_to_spotify && d.spotify) el.textContent = `🎵 ${d.spotify.song} — ${d.spotify.artist}`; else if (act) el.textContent = `🎮 ${act.name}`; else if (custom?.state) el.textContent = `💬 ${custom.state}`;
+      if (!P.activity) { const act = (d.activities || []).find((a) => a.type !== 4), custom = (d.activities || []).find((a) => a.type === 4); const el = document.getElementById('activity'); if (!el) return; if (d.listening_to_spotify && d.spotify) el.textContent = `🎵 ${d.spotify.song} — ${d.spotify.artist}`; else if (act) el.textContent = `🎮 ${act.name}`; else if (custom?.state) el.textContent = `💬 ${custom.state}`; }
     }).catch(() => {});
-  } else setName(C.name || 'Your name', C.tag);
-  setTimeout(() => { const n = document.getElementById('name'); if (n.querySelector('.skel')) n.textContent = C.name || 'Discord user'; done(); }, 2500);
-  if (!RM()) { const ld = document.getElementById('ldtxt'); ld.animate([{ opacity: .3 }, { opacity: 1 }, { opacity: .3 }], { duration: 1600, iterations: Infinity }); }
+  } else setName(P.name || 'Your name', P.tag);
+  setTimeout(() => { const n = document.getElementById('name'); if (n.querySelector('.skel')) n.textContent = P.name || 'Discord user'; done(); }, 2500);
+  if (document.getElementById('ldtxt') && !RM()) document.getElementById('ldtxt').animate([{ opacity: .3 }, { opacity: 1 }, { opacity: .3 }], { duration: 1600, iterations: Infinity });
 
-  // ---- servers ("showcase")
+  // ---- servers section
   const sv = document.getElementById('servers');
-  if (hasServers) {
-    C.servers.forEach((s) => { s.invite = String(s.invite || '').trim().replace(/^https?:\/\/(www\.)?(discord\.gg|discord\.com\/invite|discordapp\.com\/invite)\//i, '').replace(/\/.*$/, ''); });
-    sv.innerHTML = `<div class="sh rv"><span class="eyebrow">${esc(C.serversEyebrow || 'Showcase')}</span><h2>${esc(C.serversTitle || 'Servers')}</h2><p>${esc(C.serversIntro || '')}</p></div><div class="grid">${C.servers.map((s, i) => `<a class="srv rv" style="transition-delay:${i * 60}ms" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><div class="shade"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img class="ic" loading="lazy" decoding="async" src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div><div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
-    C.servers.forEach(async (s, i) => {
-      const card = document.getElementById('srv' + i);
-      try {
-        const r = await fetch(`https://discord.com/api/v10/invites/${encodeURIComponent(s.invite)}?with_counts=true&with_expiration=true`);
-        if (!r.ok) throw new Error(r.status === 404 ? 'invite not found or expired' : 'Discord returned ' + r.status);
-        const j = await r.json(); const g = j.guild || {};
-        const nameEl = card.querySelector('.name');
-        if (!s.name) { nameEl.textContent = g.name || s.invite; const ph = card.querySelector('.ph'); if (ph && g.name) ph.textContent = g.name[0].toUpperCase(); }
-        if ((g.features || []).includes('VERIFIED') || (g.features || []).includes('PARTNERED')) nameEl.insertAdjacentHTML('beforeend', ICONS.verified);
-        if (!s.icon && g.icon) { const img = document.createElement('img'); img.className = 'ic'; img.loading = 'lazy'; img.decoding = 'async'; img.src = `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128`; img.alt = ''; card.querySelector('.ph')?.replaceWith(img); }
-        const art = g.banner ? `https://cdn.discordapp.com/banners/${g.id}/${g.banner}.png?size=600` : g.splash ? `https://cdn.discordapp.com/splashes/${g.id}/${g.splash}.png?size=600` : null;
-        if (art) card.querySelector('.top').style.backgroundImage = `url('${art}')`;
-        countUp(card.querySelector('.on'), j.approximate_presence_count || 0); countUp(card.querySelector('.mem'), j.approximate_member_count || 0);
-      } catch (e) {
-        card.classList.add('err'); if (!s.name) card.querySelector('.name').textContent = s.invite;
-        card.querySelector('.stats').innerHTML = `<span>Live stats unavailable — ${esc(e.message)}</span>`;
-      }
-    });
+  if (showServers) {
+    set('--cols', SV.columns || 3);
+    sv.innerHTML = `<div class="sh rv">${SV.eyebrow ? `<span class="eyebrow">${esc(SV.eyebrow)}</span>` : ''}<h2>${esc(SV.title || 'Servers')}</h2>${SV.intro ? `<p>${esc(SV.intro)}</p>` : ''}</div><div class="grid">${servers.map((s, i) => `<a class="glass srv rv" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top" style="${s.color ? `background:${esc(s.color)}` : ''}"></div>${on(SV.showJoin) ? `<span class="join">${esc(L.join)}</span>` : ''}<div class="body"><div class="head">${s.icon ? `<img class="ic" loading="lazy" decoding="async" src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite)[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div>${on(SV.showRole) && s.role ? `<span class="role">${esc(s.role)}</span>` : ''}</div></div><div class="stats">${on(SV.showOnline) ? `<span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> ${esc(L.online)}</span>` : ''}${on(SV.showMembers) ? `<span><b class="mem"><span class="skel">00000</span></b> ${esc(L.members)}</span>` : ''}${on(SV.showSince) && s.since ? `<span class="since">${esc(L.since)} ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
   } else sv.remove();
+
+  // ---- live server data (feeds tiles, cards and stats)
+  let totM = 0, totO = 0;
+  const cu = (el, n) => { if (!el) return; if (anim('countUp')) countUp(el, n); else el.textContent = fmt(n); };
+  const updateStats = () => { const st = document.getElementById('stattile'); if (st) st.textContent = (H.statsTile?.text || '').replace('{members}', fmt(totM)).replace('{online}', fmt(totO)).replace('{servers}', servers.length); cu(document.getElementById('st-members'), totM); cu(document.getElementById('st-online'), totO); };
+  servers.forEach(async (s, i) => {
+    const card = document.getElementById('srv' + i), tile = document.getElementById('tile' + i);
+    try {
+      const r = await fetch(`https://discord.com/api/v10/invites/${encodeURIComponent(s.invite)}?with_counts=true&with_expiration=true`);
+      if (!r.ok) throw new Error(r.status === 404 ? 'invite not found or expired' : 'Discord returned ' + r.status);
+      const j = await r.json(); const g = j.guild || {}; const name = s.name || g.name || s.invite;
+      const iconUrl = s.icon || (g.icon ? `https://cdn.discordapp.com/icons/${g.id}/${g.icon}.${g.icon.startsWith('a_') ? 'gif' : 'png'}?size=128` : null);
+      const art = g.banner ? `https://cdn.discordapp.com/banners/${g.id}/${g.banner}.png?size=600` : g.splash ? `https://cdn.discordapp.com/splashes/${g.id}/${g.splash}.png?size=600` : null;
+      const verified = (g.features || []).includes('VERIFIED') || (g.features || []).includes('PARTNERED');
+      for (const el of [card, tile]) { if (!el) continue; const nameEl = el.querySelector('.name'); nameEl.textContent = name; if (verified) nameEl.insertAdjacentHTML('beforeend', ICONS.verified);
+        if (iconUrl && !s.icon) { const img = document.createElement('img'); img.className = 'ic'; img.loading = 'lazy'; img.decoding = 'async'; img.src = iconUrl; img.alt = ''; el.querySelector('.ph')?.replaceWith(img); } else { const ph = el.querySelector('.ph'); if (ph) ph.textContent = name[0].toUpperCase(); }
+        cu(el.querySelector('.on'), j.approximate_presence_count || 0); cu(el.querySelector('.mem'), j.approximate_member_count || 0); }
+      if (card && art) card.querySelector('.top').style.backgroundImage = `url('${art}')`;
+      totM += j.approximate_member_count || 0; totO += j.approximate_presence_count || 0; updateStats();
+    } catch (e) {
+      if (card) { card.classList.add('err'); if (!s.name) card.querySelector('.name').textContent = s.invite; card.querySelector('.stats').innerHTML = `<span>${esc(L.unavailable)} — ${esc(e.message)}</span>`; }
+      if (tile) { if (!s.name) tile.querySelector('.name').textContent = s.invite; tile.querySelector('.st').innerHTML = `<small>${esc(L.unavailable)}</small>`; }
+    }
+  });
+  if (!servers.length) updateStats();
 
   // ---- socials
   const so = document.getElementById('socials');
-  if (hasSocials) so.innerHTML = `<div class="sh rv"><span class="eyebrow">${esc(C.socialsEyebrow || 'More')}</span><h2>${esc(C.socialsTitle || 'Find me elsewhere')}</h2></div><div class="socs">${C.socials.map((s, i) => { const url = s.url || (s.icon === 'discord' ? profileLink : '#'); return `<a class="soc rv" style="transition-delay:${i * 50}ms" href="${esc(url)}" target="_blank" rel="noopener">${ICONS[s.icon] || ICONS.website}<span>${esc(s.label || s.icon)}<small>${esc(s.handle || url.replace(/^(https?:\/\/|mailto:)/, '').replace(/\/$/, ''))}</small></span><span class="arr">↗</span></a>`; }).join('')}</div>`; else so.remove();
+  if (showSocials) so.innerHTML = `<div class="sh rv">${SO.eyebrow ? `<span class="eyebrow">${esc(SO.eyebrow)}</span>` : ''}<h2>${esc(SO.title || 'Socials')}</h2></div><div class="socs">${socials.map((s) => { const url = s.url || (s.icon === 'discord' ? profileLink : '#'); return `<a class="glass tile soc rv" href="${esc(url)}" target="_blank" rel="noopener">${ICONS[s.icon] || ICONS.website}<span>${esc(s.label || s.icon)}<small>${esc(s.handle || url.replace(/^(https?:\/\/|mailto:)/, '').replace(/\/$/, ''))}</small></span><span class="arr">↗</span></a>`; }).join('')}</div>`; else so.remove();
 
-  document.getElementById('footer').textContent = C.footer || '';
-  // reveal on scroll
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; const el = e.target; io.unobserve(el); el.classList.add('on'); el.style.transition = 'none'; el.style.transitionDelay = '';
-    if (el.classList.contains('sh')) { const h2 = el.querySelector('h2'); rise(el.querySelectorAll('.eyebrow, p'), { stagger: 120 }); const ws = splitWords(h2); if (!RM()) ws.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(40px) skewY(4deg)', filter: 'blur(8px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 900, delay: 120 + i * 90, easing: EASE, fill: 'backwards' })); }
-    else { const sib = [...el.parentElement.children]; rise([el], { delay: Math.min(sib.indexOf(el) % 3, 2) * 90, y: 40, dur: 900 }); } }), { threshold: .15 });
-  document.querySelectorAll('.rv').forEach((el) => io.observe(el));
-  document.querySelectorAll('.srv').forEach((el) => tilt(el, 9)); document.querySelectorAll('.soc').forEach((el) => tilt(el, 12));
-  document.querySelectorAll('.btn, nav a.cta').forEach((el) => magnetic(el));
-  cursorFx(); navFx(); heroParallax();
+  // ---- extra sections
+  const ex = document.getElementById('extra');
+  ex.innerHTML = (C.sections || []).filter((x) => x && x.title).map((x, i) => { const id = esc(x.id || 'section' + i); const head = `<div class="sh rv">${x.eyebrow ? `<span class="eyebrow">${esc(x.eyebrow)}</span>` : ''}<h2>${esc(x.title)}</h2></div>`;
+    if (x.type === 'cards') return `<section class="block xs" id="${id}">${head}<div class="cards">${(x.cards || []).map((c) => `<div class="glass tile rv"><b>${esc(c.title)}</b><small>${esc(c.text || '')}</small></div>`).join('')}</div></section>`;
+    if (x.type === 'list') return `<section class="block xs" id="${id}">${head}<div class="glass card rv"><ul>${(x.items || []).map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div></section>`;
+    return `<section class="block xs" id="${id}">${head}<div class="glass card rv">${[].concat(x.body || []).map((t) => `<p>${esc(t)}</p>`).join('')}</div></section>`; }).join('');
+
+  // ---- footer
+  const ft = document.getElementById('footer'); if (on(F.show) && F.text) ft.textContent = F.text; else ft.remove();
+
+  // ---- scroll reveal, tilt, magnetic, cursor, nav
+  const rvs = document.querySelectorAll('.rv');
+  if (anim('scrollReveal')) { const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; const el = e.target; io.unobserve(el); el.classList.add('on');
+      if (el.classList.contains('sh')) { rise(el.querySelectorAll('.eyebrow, p'), { stagger: 120 }); const ws = splitWords(el.querySelector('h2')); ws.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(40px) skewY(4deg)', filter: 'blur(8px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 900, delay: 120 + i * 90, easing: EASE, fill: 'backwards' })); }
+      else { const sib = [...el.parentElement.children]; rise([el], { delay: Math.min(sib.indexOf(el) % 3, 2) * 90, y: 40, dur: 900 }); } }), { threshold: .15 }); rvs.forEach((el) => io.observe(el)); }
+  else rvs.forEach((el) => el.classList.add('on'));
+  if (anim('tilt')) { document.querySelectorAll('.srv, .soc, .tile').forEach((el) => tilt(el, 9)); }
+  if (anim('magneticButtons')) document.querySelectorAll('.btn, nav .cta').forEach((el) => magnetic(el));
+  if (anim('customCursor')) { document.body.insertAdjacentHTML('afterbegin', '<div class="cursor" id="cursor"></div>'); cursorFx(); }
+  if (on(N.hideOnScroll) && on(N.show)) navFx();
 }
 </script>
 </body>
