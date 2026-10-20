@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portfolio</title>
-<meta name="theme-color" content="#09090c">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta property="og:type" content="profile"><meta property="og:title" id="ogt" content="Discord portfolio"><meta property="og:description" id="ogd" content="Servers, roles and live member counts."><meta property="og:image" id="ogi" content="">
 <meta name="description" content="Discord moderator portfolio — servers, roles and live member counts.">
@@ -132,7 +132,7 @@
   .tilt{transform-style:preserve-3d;will-change:transform}
   .tilt .sheen{position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.12),transparent 45%);opacity:0;transition:opacity .25s}
   .tilt:hover .sheen{opacity:1}
-  .srv:hover,.soc:hover{transform:none}
+  .tilt:hover{transform:none}
   .btn,nav a.cta{will-change:transform}
   .btn.pri{position:relative;overflow:hidden}
   .btn.pri:after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 4s 1.5s infinite}
@@ -193,7 +193,7 @@ function startFx(on, accent) {
   const spawn = (z) => ({ x: (Math.random() - .5) * 2.4, y: (Math.random() - .5) * 2.4, z: z ?? Math.random() * 2 + .2, s: Math.random() * 1.6 + .6, tw: Math.random() * 6.28 });
   const resize = () => { W = c.width = innerWidth * D; H = c.height = innerHeight * D; P = Array.from({ length: N() }, () => spawn()); };
   resize(); addEventListener('resize', resize);
-  addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
+  addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
   addEventListener('scroll', () => { scrollY0 = scrollY; }, { passive: true });
   const f = () => Math.min(W, H) * .9;
   const draw = (t) => {
@@ -224,10 +224,12 @@ function startFx(on, accent) {
 // ---- device + visibility helpers (used to throttle the heavy canvases)
 const LOW = innerWidth < 900 || (navigator.hardwareConcurrency || 8) <= 4 || matchMedia('(hover:none)').matches;
 function visibleLoop(el, fn) { // runs fn(t) via rAF only while el is on screen and the tab is visible; halves fps on low-power devices
-  let on = true, odd = false; const io = new IntersectionObserver((es) => { on = es[0].isIntersecting; if (on) requestAnimationFrame(tick); }, { threshold: 0 }); io.observe(el);
-  const tick = (t) => { if (!on || document.hidden) return; odd = !odd; if (!(LOW && odd)) fn(t); requestAnimationFrame(tick); };
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && on) requestAnimationFrame(tick); });
-  requestAnimationFrame(tick);
+  let on = true, odd = false, running = false;
+  const tick = (t) => { if (!on || document.hidden) { running = false; return; } odd = !odd; if (!(LOW && odd)) fn(t); requestAnimationFrame(tick); };
+  const start = () => { if (running || !on || document.hidden) return; running = true; requestAnimationFrame(tick); };
+  const io = new IntersectionObserver((es) => { on = es[0].isIntersecting; start(); }, { threshold: 0 }); io.observe(el);
+  document.addEventListener('visibilitychange', start);
+  start();
 }
 // ---- motion helpers (Web Animations API — no library needed)
 const EASE = 'cubic-bezier(.2,.8,.2,1)';
@@ -268,7 +270,8 @@ function heroParallax() {
 function startOrb(on, colors) {
   const c = document.getElementById('orb'); if (!on || RM()) { c.remove(); return; }
   const x = c.getContext('2d'); const D = Math.min(devicePixelRatio || 1, 2);
-  const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const [c1, c2] = [hex(colors[0]), hex(colors[1])];
+  const hex = (h) => { h = String(h || '').trim().replace('#', ''); if (h.length === 3) h = h.replace(/./g, (ch) => ch + ch); const v = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)); return v.some(isNaN) ? null : v; };
+  const c1 = hex(colors[0]) || [255, 243, 207], c2 = hex(colors[1]) || [224, 122, 42];
   const mix = (t) => `rgb(${c1.map((v, i) => Math.round(v + (c2[i] - v) * t)).join(',')})`;
   const PAL = Array.from({ length: 24 }, (_, i) => mix(i / 23));
   let S = 0, R = 0; const resize = () => { const r = c.getBoundingClientRect(); S = Math.max(200, r.width); c.width = c.height = S * D; R = S * .42; }; resize(); addEventListener('resize', resize);
@@ -278,23 +281,32 @@ function startOrb(on, colors) {
   // ribbon: a flat cloud through the centre that flows and waves
   const NR = LOW ? 2600 : 5200, rib = []; const g = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
   for (let i = 0; i < NR; i++) rib.push({ x: (Math.random() - .5) * 1.5, y: g() * .13, z: (Math.random() - .5) * .9, s: Math.random() });
-  let mx = 0, my = 0, tx = 0, ty = 0, hover = null, hoverT = 0; const ripples = [];
-  const hit = (cx, cy) => { const r = c.getBoundingClientRect(); const px = ((cx - r.left) / r.width - .5) * S / R, py = ((cy - r.top) / r.height - .5) * S / R; const d2 = px * px + py * py; if (d2 > 1.3) return null; const pz = Math.sqrt(Math.max(0, 1 - d2)); const l = Math.hypot(px, py, pz); return [px / l, py / l, pz / l]; };
-  addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; hover = hit(e.clientX, e.clientY); }, { passive: true });
+  let mx = 0, my = 0, tx = 0, ty = 0, hover = null, hoverT = 0, hoverAt = 0; const ripples = [];
+  let cy_ = 1, sy_ = 0, cx_ = 1, sx_ = 0; // current rotation, updated every frame
+  // screen point → direction on the (un-rotated) sphere, so a ripple stays glued to the surface while the sphere turns
+  const hit = (cx, cy) => { const r = c.getBoundingClientRect(); if (!r.width) return null; const px = ((cx - r.left) / r.width - .5) * S / R, py = ((cy - r.top) / r.height - .5) * S / R; const d2 = px * px + py * py; if (d2 > 1.15) return null; const pz = Math.sqrt(Math.max(0, 1 - d2)); const l = Math.hypot(px, py, pz) || 1; const hx = px / l, hy = py / l, hz = pz / l;
+    const y1 = hy * cx_ + hz * sx_, z1 = -hy * sx_ + hz * cx_; return [hx * cy_ + z1 * sy_, y1, -hx * sy_ + z1 * cy_]; };
+  const TOUCH = matchMedia('(hover:none)').matches;
+  addEventListener('pointermove', (e) => { if (e.pointerType === 'touch' && TOUCH) return; mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; hover = hit(e.clientX, e.clientY); hoverAt = performance.now(); }, { passive: true });
+  const clearHover = () => { hover = null; };
   addEventListener('pointerdown', (e) => { const h = hit(e.clientX, e.clientY); if (h) ripples.push({ p: h, t: 0 }); });
+  addEventListener('pointerup', (e) => { if (e.pointerType === 'touch') clearHover(); }, { passive: true });
+  addEventListener('pointercancel', clearHover, { passive: true });
+  document.addEventListener('mouseleave', clearHover); addEventListener('blur', clearHover);
   let rot = 0;
   const draw = (t) => {
     x.clearRect(0, 0, c.width, c.height);
+    if (hover && t - hoverAt > 2500) hover = null; // a cursor parked on the sphere stops rippling after a while
     tx += (mx - tx) * .03; ty += (my - ty) * .03; rot += .0012; hoverT = hover ? Math.min(1, hoverT + .05) : Math.max(0, hoverT - .03);
-    const ay = rot + tx * .25, ax = .18 + ty * .18, cy_ = Math.cos(ay), sy_ = Math.sin(ay), cx_ = Math.cos(ax), sx_ = Math.sin(ax);
+    const ay = rot + tx * .25, ax = .18 + ty * .18; cy_ = Math.cos(ay); sy_ = Math.sin(ay); cx_ = Math.cos(ax); sx_ = Math.sin(ax);
     for (let i = ripples.length - 1; i >= 0; i--) { ripples[i].t += .018; if (ripples[i].t > 2.4) ripples.splice(i, 1); }
-    let hv = null; if (hover) { const [hx, hy, hz] = hover; const y1 = hy * cx_ + hz * sx_, z1 = -hy * sx_ + hz * cx_; hv = [hx * cy_ + z1 * sy_, y1, -hx * sy_ + z1 * cy_]; }
+    const hv = hover;
     const half = S * D / 2;
     // shell
-    const rippling = (hv && hoverT > 0.01) || ripples.length;
+    const rippling = hoverT > 0.01 || ripples.length;
     for (const [px, py, pz] of shell) {
       let d = 0;
-      if (rippling && hv) { const ang = Math.acos(Math.max(-1, Math.min(1, px * hv[0] + py * hv[1] + pz * hv[2]))); d += hoverT * Math.exp(-ang * 2.4) * Math.sin(ang * 10 - t / 180) * .08; }
+      if (hoverT > 0.01 && hv) { const ang = Math.acos(Math.max(-1, Math.min(1, px * hv[0] + py * hv[1] + pz * hv[2]))); d += hoverT * Math.exp(-ang * 2.4) * Math.sin(ang * 10 - t / 180) * .08; }
       if (rippling) for (const rp of ripples) { const ang = Math.acos(Math.max(-1, Math.min(1, px * rp.p[0] + py * rp.p[1] + pz * rp.p[2]))); const w = ang - rp.t * 1.3; d += Math.exp(-w * w * 16) * Math.exp(-rp.t * 1.1) * .12; }
       const k = d ? 1 + d : 1; const X = px * k, Y = py * k, Z = pz * k;
       const X1 = X * cy_ - Z * sy_, Z0 = X * sy_ + Z * cy_, Y1 = Y * cx_ - Z0 * sx_, Z1 = Y * sx_ + Z0 * cx_;
@@ -367,7 +379,7 @@ function init() {
   const loader = document.getElementById('loader'); let loaded = false;
   const done = () => { if (loaded) return; loaded = true; setTimeout(() => { loader.classList.add('hide'); heroIn(); }, 350); };
   let nameAnimated = false; const animName = () => { if (nameAnimated) return; nameAnimated = true; const h = document.getElementById('name'); if (h.querySelector('.skel')) return; letterIn(h, 250); };
-  const setName = (n, t) => { if (!C.name && n) { document.getElementById('name').textContent = n; document.getElementById('navname').textContent = n; document.title = `${n} — portfolio`; } if (!C.tag && t) document.getElementById('tag').textContent = t; document.getElementById('ldtxt').textContent = 'Loading ' + (C.name || n || ''); done(); };
+  const setName = (n, t) => { if (!C.name && n) { const h = document.getElementById('name'); if (h.textContent !== n) { h.textContent = n; if (nameAnimated) splitLetters(h); } document.getElementById('navname').textContent = n; document.title = `${n} — portfolio`; } if (!C.tag && t) document.getElementById('tag').textContent = t; document.getElementById('ldtxt').textContent = 'Loading ' + (C.name || n || ''); done(); };
   const heroIn = () => { animName(); rise(document.querySelectorAll('.hero .a-in'), { delay: 150, stagger: 110 }); };
   const setAvatar = (u) => { if (!C.avatar && u) { document.getElementById('avatar').src = u; document.getElementById('navav').src = u; } setIcon(C.avatar || u); };
   const setIcon = (u) => { if (!u) return; document.getElementById('ogi').content = u; let l = document.querySelector('link[rel=icon]'); if (!l) { l = document.createElement('link'); l.rel = 'icon'; document.head.appendChild(l); } l.href = u; };
@@ -400,6 +412,7 @@ function init() {
   // ---- servers ("showcase")
   const sv = document.getElementById('servers');
   if (hasServers) {
+    C.servers.forEach((s) => { s.invite = String(s.invite || '').trim().replace(/^https?:\/\/(www\.)?(discord\.gg|discord\.com\/invite|discordapp\.com\/invite)\//i, '').replace(/\/.*$/, ''); });
     sv.innerHTML = `<div class="sh rv"><span class="eyebrow">${esc(C.serversEyebrow || 'Showcase')}</span><h2>${esc(C.serversTitle || 'Servers')}</h2><p>${esc(C.serversIntro || '')}</p></div><div class="grid">${C.servers.map((s, i) => `<a class="srv rv" style="transition-delay:${i * 60}ms" id="srv${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener"><div class="top"></div><div class="shade"></div><span class="join">Join ↗</span><div class="body"><div class="head">${s.icon ? `<img class="ic" loading="lazy" decoding="async" src="${esc(s.icon)}" alt="">` : `<div class="ph">${esc((s.name || s.invite || '?')[0].toUpperCase())}</div>`}<div class="txt"><div class="name">${s.name ? esc(s.name) : '<span class="skel">Loading name…</span>'}</div><span class="role ${/owner|founder/i.test(s.role || '') ? 'owner' : ''}">${esc(s.role || 'Staff')}</span></div></div><div class="stats"><span><span class="dot"></span><b class="on"><span class="skel">0000</span></b> online</span><span><b class="mem"><span class="skel">00000</span></b> members</span>${s.since ? `<span class="since">since ${esc(s.since)}</span>` : ''}</div></div></a>`).join('')}</div>`;
     C.servers.forEach(async (s, i) => {
       const card = document.getElementById('srv' + i);

@@ -5,7 +5,7 @@ window.PORTFOLIO = {
 
   // ---- You ------------------------------------------------------------------
   // Paste your Discord profile link. Name, tag, avatar and banner are fetched from it automatically.
-  profileLink: 'https://discord.com/users/1314899151640858674',
+  profileLink: 'https://discord.com/users/1234567890123456789',
   bio: 'Moderator & community builder. I keep servers calm, organised and growing.',
   location: 'India',               // '' to hide
   timezone: 'Asia/Kolkata',        // shows your local time — '' to hide
