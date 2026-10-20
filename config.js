@@ -90,7 +90,7 @@ window.PORTFOLIO = {
     showJoin: true,        // the "Join ↗" chip on hover
     labels: { online: 'online', members: 'members', since: 'since', join: 'Join ↗', unavailable: 'Live stats unavailable' },
     list: [
-      { invite: 'recruitments', role: 'Senior Moderator', since: '2026' },   // GenreHub
+      { invite: 'recruitments', role: 'Former Staff', since: '2026' },   // GenreHub
       { invite: 'adverts',      role: 'Trial Moderator',  since: '2026' },   // Obsidian Advertising
       { invite: 'nDYAGjKdx2',   role: 'Moderator',        since: '' },       // Steal cash from others
       { invite: 'NZ5qfyQUNc',   role: 'Trial Moderator',  since: '2023' },   // Free Promotions
