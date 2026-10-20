@@ -23,7 +23,7 @@ window.PORTFOLIO = {
     tag: '',              // leave '' to use your @username, or type anything ('@maple', 'he/him', …)
     avatar: '',           // leave '' to use your Discord avatar, or paste an image link (https://… .png/.jpg/.gif)
     headline: 'Moderator · Advertising servers',  // small label above your name
-    bio: 'I moderate advertising & promotion communities — keeping ad channels clean, partnerships fair and staff teams organised.',
+    bio: 'I look after advertising and promotion communities by ensuring that the ad channels remain clean, the partnerships are fair and the staff teams are organised.',
     location: 'India',    // '' hides it
     timezone: 'Asia/Kolkata', // shows your local time. '' hides it. List: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     tags: ['Moderation', 'Advertising servers', 'Partnerships', 'Staff teams'], // skill chips. [] hides them
@@ -81,7 +81,7 @@ window.PORTFOLIO = {
     show: true,            // the full "Servers" section below the hero (cards with banners)
     eyebrow: 'Showcase',   // small label above the title
     title: 'Servers I help run',
-    intro: 'Live numbers straight from Discord — tap a card to join.',
+    intro: 'Live numbers straight from Discord - tap a card to join.',
     columns: 3,            // cards per row on desktop (2 · 3 · 4)
     showOnline: true,
     showMembers: true,
@@ -90,14 +90,12 @@ window.PORTFOLIO = {
     showJoin: true,        // the "Join ↗" chip on hover
     labels: { online: 'online', members: 'members', since: 'since', join: 'Join ↗', unavailable: 'Live stats unavailable' },
     list: [
-      { invite: 'NZ5qfyQUNc',   role: 'Director Executive', since: '2023' }, // Free Promotions
-      { invite: 'adverts',      role: 'Trial Moderator',  since: '2026' },   // Obsidian Advertising
+      { invite: 'NZ5qfyQUNc',   role: 'Director Executive', since: '2023' }, // Free Promotion
       { invite: 'nDYAGjKdx2',   role: 'Moderator',        since: '' },       // Steal cash from others
       { invite: 'ShmeDYqrUs',   role: 'Moderator',        since: '2026' },   // (name loads from Discord)
       { invite: 'hhuN5Sxc4',    role: 'Moderator',        since: '' },       // (name loads from Discord)
       { invite: '7xx9zZVDMa',   role: 'Server Builder',   since: '' },       // Jane and Joe Club
       { invite: 'recruitments', role: 'Former Staff',     since: '2026' },   // GenreHub
-      { invite: 'SWatQW56tC',   role: 'Former Staff',     since: '' },       // (name loads from Discord)
     ],
   },
 
