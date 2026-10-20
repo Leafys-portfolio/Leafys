@@ -93,7 +93,6 @@ window.PORTFOLIO = {
       { invite: 'NZ5qfyQUNc',   role: 'Director Executive', since: '2023' }, // Free Promotion
       { invite: 'nDYAGjKdx2',   role: 'Moderator',        since: '' },       // Steal cash from others
       { invite: 'ShmeDYqrUs',   role: 'Moderator',        since: '2026' },   // (name loads from Discord)
-      { invite: 'hhuN5Sxc4',    role: 'Moderator',        since: '' },       // (name loads from Discord)
       { invite: '7xx9zZVDMa',   role: 'Server Builder',   since: '' },       // Jane and Joe Club
       { invite: 'recruitments', role: 'Former Staff',     since: '2026' },   // GenreHub
     ],
