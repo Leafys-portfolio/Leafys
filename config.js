@@ -17,7 +17,7 @@ window.PORTFOLIO = {
   //  1. YOU
   // ══════════════════════════════════════════════════════════════════════════
   profile: {
-    link: 'https://discord.com/users/1234567890123456789', // your Discord profile link. Name, @tag and avatar are fetched from it automatically.
+    link: 'https://discord.com/users/1314899151640858674', // your Discord profile link. Name, @tag and avatar are fetched from it automatically.
                                                            // To get it: Discord → your profile → ⋯ → "Copy User ID", then paste the number after /users/
     name: '',             // leave '' to use your Discord display name, or type any name to override
     tag: '',              // leave '' to use your @username, or type anything ('@maple', 'he/him', …)
@@ -43,7 +43,7 @@ window.PORTFOLIO = {
       { label: 'Socials', href: '#socials' },
     ],
     button: { show: true, label: 'Discord ↗', url: '' }, // right-side button. url '' = your Discord profile
-    hideOnScroll: true,   // slides away when scrolling down, returns when scrolling up
+    hideOnScroll: false,   // slides away when scrolling down, returns when scrolling up
   },
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -59,14 +59,14 @@ window.PORTFOLIO = {
     showMeta: true,       // location · local time · activity line
     showTags: true,
     buttons: [            // style: 'solid' (white) or 'glass' (see-through). url '' = your Discord profile. '#servers' etc. scroll.
-      { label: 'Discord profile', url: '', style: 'solid' },
+      { label: 'Discord profile', url: '', style: 'glass' },
       { label: 'Explore servers', url: '#servers', style: 'glass' },
     ],
     rightPanel: 'servers', // what the right side shows ('split' layout only): 'servers' = compact server tiles · 'stats' = big numbers · 'none'
     rightTiles: 5,         // how many server tiles to show on the right (the rest are in the Servers section)
     statsTile: {           // the extra tile at the end of the right panel
       show: true,
-      text: '{members}+ members reached', // placeholders: {members} {online} {servers} are filled live
+      text: '{servers} im staff in, {members}+ members reached', // placeholders: {members} {online} {servers} are filled live
     },
   },
 
@@ -192,8 +192,8 @@ window.PORTFOLIO = {
     statusPulse: true,      // pulsing ring on the online dot
     buttonShine: true,      // light sweep across the solid button
     countUp: true,          // numbers count up when they load
-    starfield: false,       // the 3D starfield from the previous design (off = cleaner aurora look)
-    orb: false,             // the big particle sphere from the previous design, drawn behind the hero
+    starfield: true,       // the 3D starfield from the previous design (off = cleaner aurora look)
+    orb: true,             // the big particle sphere from the previous design, drawn behind the hero
     orbColors: ['#fff3cf', '#e07a2a'],
     lowPowerMobile: true,   // lighter effects on phones/tablets
   },
