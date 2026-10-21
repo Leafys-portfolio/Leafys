@@ -95,7 +95,8 @@ window.PORTFOLIO = {
       { invite: 'ShmeDYqrUs',   role: 'Moderator',        since: '2026' },   // OA
       { invite: '7xx9zZVDMa',   role: 'Server Builder',   since: '' },       // Jane and Joe Club
       { invite: 'recruitments', role: 'Former Staff',     since: '2026' },   // GenreHub
-      { invite: 'wjedYaeaue',   role: 'Human Resources',  since: '2026' },
+      { invite: 'wjedYaeaue',   role: 'Human Resources',  since: '2026' },   // AK
+      { invite: 'P4YVh7cbDy',   role: 'Sr CHRO',  since: '2026' },
     ],
   },
 
