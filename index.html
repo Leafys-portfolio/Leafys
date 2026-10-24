@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#07070d">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta property="og:type" content="profile"><meta property="og:title" id="ogt" content="Discord portfolio"><meta property="og:description" id="ogd" content="Servers, roles and live member counts."><meta property="og:image" id="ogi" content="">
-<meta name="description" id="desc" content="Discord moderator portfolio — servers, roles and live member counts.">
+<meta name="description" id="desc" content="Discord moderator portfolio.">
 <link rel="icon" id="fav" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23fff'/></svg>">
 <style>
   :root{--bg:#07070d;--text:#fff;--muted:#a5a5b8;--accent:#fff;--accent-text:#000;--g-op:.06;--g-blur:24px;--g-border:rgba(255,255,255,.14);--g-r:28px;--g-tr:22px;--btn-r:999px;--chip-r:999px;--font:'Inter';--name-size:54px;--name-weight:800;--max:1240px;--on:#23a55a;--idle:#f0b232;--dnd:#f23f43;--off:#5b5b66;--g-shadow:0 30px 80px rgba(0,0,0,.5)}
@@ -15,7 +15,6 @@
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 var(--font),Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
   a{color:inherit;text-decoration:none}
-  /* backgrounds */
   #blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
   .blob{position:absolute;border-radius:50%;filter:blur(var(--blob-blur,90px));transform:translate(-50%,-50%);will-change:transform}
   .drift .blob{animation:drift 18s ease-in-out infinite alternate}
@@ -24,17 +23,14 @@
   canvas#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
   canvas#orb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,100svh);height:min(100vw,100svh);pointer-events:none;z-index:0;opacity:.6}
   .page{position:relative;z-index:1}
-  /* glass */
   .glass{background:rgba(255,255,255,var(--g-op));border:1px solid var(--g-border);backdrop-filter:blur(var(--g-blur)) saturate(1.3);-webkit-backdrop-filter:blur(var(--g-blur)) saturate(1.3);border-radius:var(--g-r);box-shadow:var(--g-shadow);position:relative}
   .glass.tile{border-radius:var(--g-tr)}
-  /* loader */
   #loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;transition:opacity .5s,visibility .5s}
   #loader.hide{opacity:0;visibility:hidden}
   #loader .t{font-weight:600;font-size:15px;color:var(--muted);text-align:center}
   #loader .bar{width:160px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;margin:14px auto 0;overflow:hidden}
   #loader .bar i{display:block;height:100%;width:40%;background:var(--accent);animation:ld 1s infinite ease-in-out}
   @keyframes ld{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
-  /* nav */
   nav{position:fixed;top:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:22px 32px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
   nav.hide{transform:translateY(-130%)}
   nav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;letter-spacing:-.01em}
@@ -45,7 +41,6 @@
   nav .cta{justify-self:end;padding:10px 18px;border-radius:var(--btn-r);background:var(--accent);color:var(--accent-text);font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
   nav .cta svg{width:14px;height:14px;fill:currentColor}
   @media(max-width:760px){nav{grid-template-columns:1fr auto;padding:14px 16px}nav .pill{display:none}nav .brand{font-size:16px}}
-  /* hero */
   .hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:110px 32px 60px}
   .hero .in{position:relative;z-index:1;width:100%;max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:minmax(0,440px) 1fr;gap:28px;align-items:center}
   .hero.center .in{grid-template-columns:minmax(0,560px);justify-content:center;text-align:center}
@@ -75,7 +70,6 @@
   .btn svg{width:15px;height:15px;fill:currentColor}
   .shine .btn.solid:after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-20deg);animation:shine 4s 1.5s infinite}
   @keyframes shine{0%{left:-80%}25%,100%{left:140%}}
-  /* right panel tiles */
   .tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .tile{padding:18px;display:flex;gap:14px;align-items:center;min-width:0;transition:transform .25s,border-color .25s}
   .tile:hover{border-color:rgba(255,255,255,.3)}
@@ -84,10 +78,9 @@
   .tile .st{margin-left:auto;text-align:right;font-size:11.5px;color:var(--muted);line-height:1.35;flex-shrink:0}.tile .st b{font-size:15px;display:inline}
   .tile.stat{justify-content:center;color:var(--muted);font-weight:700;font-size:15px;text-align:center}
   .tile.big{flex-direction:column;align-items:flex-start;gap:4px}.tile.big .n{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1}.tile.big small{letter-spacing:.1em;text-transform:uppercase;font-size:11px;font-weight:700}
-  /* sections */
   section.block{max-width:var(--max);margin:0 auto;padding:50px 32px}
   .sh{text-align:center;margin-bottom:34px}.sh .eyebrow{margin:0 0 12px;justify-content:center}
-  .sh h2{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.03em;font-weight:800}.sh p{margin:10px auto 0;max-width:520px;color:var(--muted);font-size:16px}
+  .sh h2{margin:0;font-size:clamp(30px,5vw,44px);letter-spacing:-.03em;font-weight:800}.sh p{margin:10px auto 0;max-width:560px;color:var(--muted);font-size:16px}
   .grid{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:16px}
   .srv{display:block;overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s}
   .srv:hover{border-color:rgba(255,255,255,.3)}
@@ -112,6 +105,17 @@
   .soc small{display:block;color:var(--muted);font-weight:500;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.soc .arr{margin-left:auto;color:var(--muted)}
   .xs .card{max-width:760px;margin:0 auto}.xs .card p{color:color-mix(in srgb,var(--text) 82%,var(--muted));font-size:16px;line-height:1.6;margin:0 0 14px}.xs .card p:last-child{margin:0}
   .xs ul{margin:0;padding-left:20px;line-height:1.9}.xs .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}.xs .cards .tile{flex-direction:column;align-items:flex-start;gap:6px}.xs .cards .tile b{font-size:16px}.xs .cards .tile small{font-size:14px;color:var(--muted)}
+  /* bot showcase */
+  .botcard{padding:26px;display:flex;flex-direction:column;gap:14px}
+  .botcard .bh{display:flex;gap:14px;align-items:center}.botcard .bh img,.botcard .bh .ph{width:56px;height:56px;border-radius:16px;object-fit:cover;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:26px;flex-shrink:0}
+  .botcard .bh b{font-size:20px;display:block;letter-spacing:-.01em}.botcard .bh small{color:var(--muted)}
+  .live{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);font-weight:600;white-space:nowrap}.live i{width:8px;height:8px;border-radius:50%;background:var(--off)}.live.on i{background:var(--on);box-shadow:0 0 8px var(--on)}.live.off i{background:var(--dnd)}
+  .botcard .fl{display:flex;flex-wrap:wrap;gap:8px}.botcard .fl span{padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.08);font-size:12.5px;font-weight:600}
+  .feats{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+  .feat{padding:20px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}.feat .fi{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:20px}.feat b{font-size:16px}.feat p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+  .access{padding:28px;display:grid;grid-template-columns:1.2fr 1fr;gap:26px;align-items:start;margin-top:18px}.access h3{margin:0 0 8px;font-size:22px;letter-spacing:-.02em}.access p{margin:0;color:color-mix(in srgb,var(--text) 82%,var(--muted));line-height:1.55}
+  .access ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}.access li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.45}.access li:before{content:'✓';flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-text);font-weight:800;font-size:12px;display:grid;place-items:center;margin-top:1px}
+  .access .lock{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);font-size:12.5px;font-weight:700;margin-bottom:12px}
   footer{margin-top:30px;padding:28px 20px;color:var(--muted);font-size:13px;text-align:center}
   .skel{color:transparent;background:rgba(255,255,255,.08);border-radius:6px;animation:sk 1.2s infinite}@keyframes sk{50%{opacity:.5}}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -122,7 +126,7 @@
   .cursor{position:fixed;z-index:30;left:0;top:0;width:34px;height:34px;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,border-color .25s;mix-blend-mode:difference}
   .cursor.big{width:64px;height:64px;background:rgba(255,255,255,.9);border-color:transparent}
   @media(hover:none){.cursor{display:none}}
-  @media(max-width:900px){.hero{padding:90px 16px 40px}.hero .in{grid-template-columns:1fr;gap:18px}.tiles{grid-template-columns:1fr}.card{padding:26px}section.block{padding:36px 16px}.grid{grid-template-columns:1fr!important}h1{font-size:calc(var(--name-size) * .78)}nav{grid-template-columns:1fr auto}}
+  @media(max-width:900px){.hero{padding:90px 16px 40px}.hero .in{grid-template-columns:1fr;gap:18px}.tiles{grid-template-columns:1fr}.card{padding:26px}section.block{padding:36px 16px}.grid{grid-template-columns:1fr!important}h1{font-size:calc(var(--name-size) * .78)}nav{grid-template-columns:1fr auto}.access{grid-template-columns:1fr}}
   @media(min-width:901px) and (max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)!important}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .a-in,.rv{opacity:1}.cursor{display:none}}
 </style>
@@ -133,6 +137,7 @@
 <nav id="nav"></nav>
 <div class="page">
   <header class="hero" id="home"><div class="in" id="profile"></div></header>
+  <section class="block" id="bot"></section>
   <section class="block" id="servers"></section>
   <section class="block" id="socials"></section>
   <div id="extra"></div>
@@ -166,43 +171,6 @@ const fmt = (n) => (n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + 'M' : n >= 
 function countUp(el, n) { if (matchMedia('(prefers-reduced-motion: reduce)').matches || n < 50) { el.textContent = fmt(n); return; } const t0 = performance.now(); const step = (t) => { const p = Math.min(1, (t - t0) / 900); el.textContent = fmt(Math.round(n * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
 const idFrom = (link) => (String(link || '').match(/(\d{15,22})/) || [])[1] || '';
 
-// ---- interactive 3D starfield: particles in depth, camera tilts with the cursor, you fly slowly forward
-function startFx(on, accent) {
-  const c = document.getElementById('fx'); if (!on || matchMedia('(prefers-reduced-motion: reduce)').matches) { c.remove(); return; }
-  const x = c.getContext('2d'); const D = Math.min(devicePixelRatio || 1, 2);
-  let W, H, P = [], mx = 0, my = 0, rx = 0, ry = 0, scrollY0 = 0;
-  const N = () => Math.min(LOW ? 160 : 420, Math.round(innerWidth * innerHeight / (LOW ? 6000 : 3200)));
-  const spawn = (z) => ({ x: (Math.random() - .5) * 2.4, y: (Math.random() - .5) * 2.4, z: z ?? Math.random() * 2 + .2, s: Math.random() * 1.6 + .6, tw: Math.random() * 6.28 });
-  const resize = () => { W = c.width = innerWidth * D; H = c.height = innerHeight * D; P = Array.from({ length: N() }, () => spawn()); };
-  resize(); addEventListener('resize', resize);
-  addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
-  addEventListener('scroll', () => { scrollY0 = scrollY; }, { passive: true });
-  const f = () => Math.min(W, H) * .9;
-  const draw = (t) => {
-    x.clearRect(0, 0, W, H);
-    rx += (my * .09 - rx) * .03; ry += (mx * .09 - ry) * .03;
-    const cosY = Math.cos(ry), sinY = Math.sin(ry), cosX = Math.cos(rx), sinX = Math.sin(rx);
-    const cx = W / 2, cy = H / 2 - scrollY0 * .15 * D, F = f();
-    const pts = [];
-    for (const p of P) {
-      p.z -= .0022; if (p.z < .12) Object.assign(p, spawn(2.2));
-      // rotate around Y then X (camera tilt)
-      let X = p.x * cosY - p.z * sinY, Z = p.x * sinY + p.z * cosY; let Y = p.y * cosX - Z * sinX; Z = p.y * sinX + Z * cosX;
-      if (Z <= .05) continue;
-      const sx = cx + (X / Z) * F, sy = cy + (Y / Z) * F; if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) continue;
-      const depth = 1 - Math.min(1, Z / 2.4), r = (p.s * (0.4 + depth * 1.6)) * D, a = 0.15 + depth * .85 * (0.75 + .25 * Math.sin(t / 700 + p.tw));
-      pts.push([sx, sy, r, a, depth]);
-    }
-    // faint constellation lines between close bright stars (desktop only — it's an n² pass)
-    x.lineWidth = .6 * D; x.strokeStyle = accent;
-    if (!LOW) for (let i = 0; i < pts.length; i++) { const a = pts[i]; if (a[4] < .55) continue; for (let j = i + 1; j < pts.length; j++) { const b = pts[j]; if (b[4] < .55) continue; const dx = a[0] - b[0], dy = a[1] - b[1]; const d2 = dx * dx + dy * dy; if (d2 < 130 * 130 * D * D) { x.globalAlpha = (1 - Math.sqrt(d2) / (130 * D)) * .16; x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke(); } } }
-    x.fillStyle = accent;
-    for (const [sx, sy, r, a, depth] of pts) { x.globalAlpha = a; x.beginPath(); x.arc(sx, sy, r, 0, 7); x.fill(); if (depth > .8) { x.globalAlpha = a * .25; x.beginPath(); x.arc(sx, sy, r * 3, 0, 7); x.fill(); } }
-    x.globalAlpha = 1;
-  };
-  visibleLoop(document.querySelector('.hero'), draw);
-}
-
 // ---- device + visibility helpers (used to throttle the heavy canvases)
 let LOW = false; // set in init() from effects.lowPowerMobile
 function visibleLoop(el, fn) { // runs fn(t) via rAF only while el is on screen and the tab is visible; halves fps on low-power devices
@@ -213,9 +181,44 @@ function visibleLoop(el, fn) { // runs fn(t) via rAF only while el is on screen 
   document.addEventListener('visibilitychange', start);
   start();
 }
-// ---- motion helpers (Web Animations API — no library needed)
 const EASE = 'cubic-bezier(.2,.8,.2,1)';
 const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---- interactive 3D starfield: particles in depth, camera tilts gently with the cursor, you fly slowly forward
+function startFx(on, accent) {
+  const c = document.getElementById('fx'); if (!on || RM()) { c?.remove(); return; }
+  const x = c.getContext('2d'); const D = Math.min(devicePixelRatio || 1, 2);
+  let W, H, P = [], mx = 0, my = 0, rx = 0, ry = 0, scrollY0 = 0;
+  const N = () => Math.min(LOW ? 160 : 420, Math.round(innerWidth * innerHeight / (LOW ? 6000 : 3200)));
+  const spawn = (z) => ({ x: (Math.random() - .5) * 2.4, y: (Math.random() - .5) * 2.4, z: z ?? Math.random() * 2 + .2, s: Math.random() * 1.6 + .6, tw: Math.random() * 6.28 });
+  const resize = () => { W = c.width = innerWidth * D; H = c.height = innerHeight * D; P = Array.from({ length: N() }, () => spawn()); };
+  resize(); addEventListener('resize', resize);
+  addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
+  addEventListener('scroll', () => { scrollY0 = scrollY; }, { passive: true });
+  const draw = (t) => {
+    x.clearRect(0, 0, W, H);
+    rx += (my * .09 - rx) * .03; ry += (mx * .09 - ry) * .03;
+    const cosY = Math.cos(ry), sinY = Math.sin(ry), cosX = Math.cos(rx), sinX = Math.sin(rx);
+    const cx = W / 2, cy = H / 2 - scrollY0 * .15 * D, F = Math.min(W, H) * .9;
+    const pts = [];
+    for (const p of P) {
+      p.z -= .0022; if (p.z < .12) Object.assign(p, spawn(2.2));
+      let X = p.x * cosY - p.z * sinY, Z = p.x * sinY + p.z * cosY; let Y = p.y * cosX - Z * sinX; Z = p.y * sinX + Z * cosX;
+      if (Z <= .05) continue;
+      const sx = cx + (X / Z) * F, sy = cy + (Y / Z) * F; if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) continue;
+      const depth = 1 - Math.min(1, Z / 2.4), r = (p.s * (0.4 + depth * 1.6)) * D, a = 0.15 + depth * .85 * (0.75 + .25 * Math.sin(t / 700 + p.tw));
+      pts.push([sx, sy, r, a, depth]);
+    }
+    x.lineWidth = .6 * D; x.strokeStyle = accent;
+    if (!LOW) for (let i = 0; i < pts.length; i++) { const a = pts[i]; if (a[4] < .55) continue; for (let j = i + 1; j < pts.length; j++) { const b = pts[j]; if (b[4] < .55) continue; const dx = a[0] - b[0], dy = a[1] - b[1]; const d2 = dx * dx + dy * dy; if (d2 < 130 * 130 * D * D) { x.globalAlpha = (1 - Math.sqrt(d2) / (130 * D)) * .16; x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke(); } } }
+    x.fillStyle = accent;
+    for (const [sx, sy, r, a, depth] of pts) { x.globalAlpha = a; x.beginPath(); x.arc(sx, sy, r, 0, 7); x.fill(); if (depth > .8) { x.globalAlpha = a * .25; x.beginPath(); x.arc(sx, sy, r * 3, 0, 7); x.fill(); } }
+    x.globalAlpha = 1;
+  };
+  visibleLoop(document.querySelector('.hero'), draw);
+}
+
+// ---- motion helpers (Web Animations API — no library needed)
 function rise(els, { delay = 0, stagger = 70, y = 28, dur = 800, blur = 8 } = {}) {
   [...els].forEach((el, i) => { el.classList.remove('a-in'); if (RM()) return; el.animate([{ opacity: 0, transform: `translateY(${y}px) scale(.98)`, filter: `blur(${blur}px)` }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: dur, delay: delay + i * stagger, easing: EASE, fill: 'backwards' }); });
 }
@@ -234,7 +237,7 @@ function magnetic(el, strength = .35) {
   el.addEventListener('pointerleave', () => { el.style.transition = 'transform .5s cubic-bezier(.2,.8,.2,1)'; el.style.transform = ''; });
 }
 function cursorFx() {
-  const cur = document.getElementById('cursor'); if (RM() || matchMedia('(hover:none)').matches) { cur.remove(); return; }
+  const cur = document.getElementById('cursor'); if (!cur) return; if (RM() || matchMedia('(hover:none)').matches) { cur.remove(); return; }
   let tx = -100, ty = -100, cx = -100, cy = -100; addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
   const loop = () => { if (document.hidden) return setTimeout(loop, 300); cx += (tx - cx) * .22; cy += (ty - cy) * .22; cur.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }; loop();
   document.addEventListener('pointerover', (e) => cur.classList.toggle('big', !!e.target.closest('a,button')));
@@ -243,31 +246,24 @@ function navFx() {
   const nav = document.getElementById('nav'); if (!nav) return; let last = 0;
   addEventListener('scroll', () => { const y = scrollY; nav.classList.toggle('hide', y > last && y > 120); last = y; }, { passive: true });
 }
-function heroParallax() {
-  if (RM()) return; const hero = document.getElementById('profile'); if (!hero) return;
-  addEventListener('scroll', () => { const y = Math.min(scrollY, innerHeight); hero.style.transform = `translateY(${y * .25}px)`; hero.style.opacity = 1 - y / innerHeight * .9; }, { passive: true });
-}
 
-// ---- particle sphere (motion.dev style): a huge sparse shell of fine gold dots, brightest at the rim, with a flowing ribbon of particles through the middle
+// ---- particle sphere (motion.dev style): a huge sparse shell of fine dots, brightest at the rim, with a flowing ribbon through the middle.
+// Ripples stick to the surface (hover + tap); touch never leaves a stuck ripple; idle hover fades.
 function startOrb(on, colors) {
-  const c = document.getElementById('orb'); if (!on || RM()) { c.remove(); return; }
+  const c = document.getElementById('orb'); if (!on || RM()) { c?.remove(); return; }
   const x = c.getContext('2d'); const D = Math.min(devicePixelRatio || 1, 2);
   const hex = (h) => { h = String(h || '').trim().replace('#', ''); if (h.length === 3) h = h.replace(/./g, (ch) => ch + ch); const v = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)); return v.some(isNaN) ? null : v; };
   const c1 = hex(colors[0]) || [255, 243, 207], c2 = hex(colors[1]) || [224, 122, 42];
   const mix = (t) => `rgb(${c1.map((v, i) => Math.round(v + (c2[i] - v) * t)).join(',')})`;
   const PAL = Array.from({ length: 24 }, (_, i) => mix(i / 23));
   let S = 0, R = 0; const resize = () => { const r = c.getBoundingClientRect(); S = Math.max(200, r.width); c.width = c.height = S * D; R = S * .42; }; resize(); addEventListener('resize', resize);
-  // shell: fibonacci lattice (gives the fine woven look)
   const NS = LOW ? 4200 : Math.round(Math.min(9000, innerWidth * 7)), shell = []; const phi = Math.PI * (3 - Math.sqrt(5));
   for (let i = 0; i < NS; i++) { const y = 1 - (i / (NS - 1)) * 2, r = Math.sqrt(1 - y * y), a = phi * i; shell.push([Math.cos(a) * r, y, Math.sin(a) * r]); }
-  // ribbon: a flat cloud through the centre that flows and waves
   const NR = LOW ? 2600 : 5200, rib = []; const g = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
   for (let i = 0; i < NR; i++) rib.push({ x: (Math.random() - .5) * 1.5, y: g() * .13, z: (Math.random() - .5) * .9, s: Math.random() });
   let mx = 0, my = 0, tx = 0, ty = 0, hover = null, hoverT = 0, hoverAt = 0; const ripples = [];
-  let cy_ = 1, sy_ = 0, cx_ = 1, sx_ = 0; // current rotation, updated every frame
-  // screen point → direction on the (un-rotated) sphere, so a ripple stays glued to the surface while the sphere turns
-  const hit = (cx, cy) => { const r = c.getBoundingClientRect(); if (!r.width) return null; const px = ((cx - r.left) / r.width - .5) * S / R, py = ((cy - r.top) / r.height - .5) * S / R; const d2 = px * px + py * py; if (d2 > 1.15) return null; const pz = Math.sqrt(Math.max(0, 1 - d2)); const l = Math.hypot(px, py, pz) || 1; const hx = px / l, hy = py / l, hz = pz / l;
-    const y1 = hy * cx_ + hz * sx_, z1 = -hy * sx_ + hz * cx_; return [hx * cy_ + z1 * sy_, y1, -hx * sy_ + z1 * cy_]; };
+  let cy_ = 1, sy_ = 0, cx_ = 1, sx_ = 0;
+  const hit = (cx, cy) => { const r = c.getBoundingClientRect(); if (!r.width) return null; const px = ((cx - r.left) / r.width - .5) * S / R, py = ((cy - r.top) / r.height - .5) * S / R; const d2 = px * px + py * py; if (d2 > 1.15) return null; const pz = Math.sqrt(Math.max(0, 1 - d2)); const l = Math.hypot(px, py, pz) || 1; const hx = px / l, hy = py / l, hz = pz / l; const y1 = hy * cx_ + hz * sx_, z1 = -hy * sx_ + hz * cx_; return [hx * cy_ + z1 * sy_, y1, -hx * sy_ + z1 * cy_]; };
   const TOUCH = matchMedia('(hover:none)').matches;
   addEventListener('pointermove', (e) => { if (e.pointerType === 'touch' && TOUCH) return; mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; hover = hit(e.clientX, e.clientY); hoverAt = performance.now(); }, { passive: true });
   const clearHover = () => { hover = null; };
@@ -278,14 +274,11 @@ function startOrb(on, colors) {
   let rot = 0;
   const draw = (t) => {
     x.clearRect(0, 0, c.width, c.height);
-    if (hover && t - hoverAt > 2500) hover = null; // a cursor parked on the sphere stops rippling after a while
+    if (hover && t - hoverAt > 2500) hover = null;
     tx += (mx - tx) * .03; ty += (my - ty) * .03; rot += .0012; hoverT = hover ? Math.min(1, hoverT + .05) : Math.max(0, hoverT - .03);
     const ay = rot + tx * .25, ax = .18 + ty * .18; cy_ = Math.cos(ay); sy_ = Math.sin(ay); cx_ = Math.cos(ax); sx_ = Math.sin(ax);
     for (let i = ripples.length - 1; i >= 0; i--) { ripples[i].t += .018; if (ripples[i].t > 2.4) ripples.splice(i, 1); }
-    const hv = hover;
-    const half = S * D / 2;
-    // shell
-    const rippling = hoverT > 0.01 || ripples.length;
+    const hv = hover; const half = S * D / 2; const rippling = hoverT > 0.01 || ripples.length;
     for (const [px, py, pz] of shell) {
       let d = 0;
       if (hoverT > 0.01 && hv) { const ang = Math.acos(Math.max(-1, Math.min(1, px * hv[0] + py * hv[1] + pz * hv[2]))); d += hoverT * Math.exp(-ang * 2.4) * Math.sin(ang * 10 - t / 180) * .08; }
@@ -293,21 +286,19 @@ function startOrb(on, colors) {
       const k = d ? 1 + d : 1; const X = px * k, Y = py * k, Z = pz * k;
       const X1 = X * cy_ - Z * sy_, Z0 = X * sy_ + Z * cy_, Y1 = Y * cx_ - Z0 * sx_, Z1 = Y * sx_ + Z0 * cx_;
       const persp = 1 / (1 + Z1 * .12), sx = half + X1 * R * D * persp, sy = half + Y1 * R * D * persp;
-      const rim = 1 - Math.abs(Z1); // bright at the silhouette, faint in the middle
-      const front = (Z1 + 1) / 2;
+      const rim = 1 - Math.abs(Z1), front = (Z1 + 1) / 2;
       const alpha = (0.05 + Math.pow(rim, 2.4) * 1.1) * (0.3 + front * .7) + Math.abs(d) * 4;
       if (alpha < .03) continue;
       x.globalAlpha = Math.min(1, alpha); x.fillStyle = PAL[Math.max(0, Math.min(23, Math.round(((X1 + 1) / 2 * .6 + (Y1 + 1) / 2 * .4) * 23)))];
       const r = (0.6 + rim * .9 + Math.abs(d) * 6) * D; x.fillRect(sx - r / 2, sy - r / 2, r, r);
     }
-    // ribbon
     for (const p of rib) {
       p.x += .0012; if (p.x > .78) p.x = -.78;
       const wave = Math.sin(p.x * 5.5 + t / 1100) * .06 + Math.sin(p.z * 7 + t / 900) * .03;
       const X = p.x, Y = p.y + wave, Z = p.z;
       const X1 = X * cy_ - Z * sy_, Z0 = X * sy_ + Z * cy_, Y1 = Y * cx_ - Z0 * sx_, Z1 = Y * sx_ + Z0 * cx_;
       const persp = 1 / (1 + Z1 * .12), sx = half + X1 * R * D * persp, sy = half + Y1 * R * D * persp;
-      const edge = 1 - Math.min(1, Math.abs(p.x) / .78); // fade at both ends
+      const edge = 1 - Math.min(1, Math.abs(p.x) / .78);
       x.globalAlpha = (0.3 + p.s * .7) * Math.pow(edge, .6) * (0.5 + (Z1 + 1) / 4);
       x.fillStyle = PAL[Math.round((X1 + 1) / 2 * 23)];
       const r = (0.7 + p.s * 1.1) * D; x.fillRect(sx - r / 2, sy - r / 2, r, r);
@@ -319,7 +310,7 @@ function startOrb(on, colors) {
 
 function init() {
   const C = window.PORTFOLIO || {};
-  const P = C.profile || {}, N = C.nav || {}, H = C.hero || {}, SV = C.servers || {}, SO = C.socials || {}, F = C.footer || {}, T = C.theme || {}, E = C.effects || {}, M = C.meta || {}, G = T.glass || {};
+  const P = C.profile || {}, N = C.nav || {}, H = C.hero || {}, SV = C.servers || {}, BT = C.bots || {}, SO = C.socials || {}, F = C.footer || {}, T = C.theme || {}, E = C.effects || {}, M = C.meta || {}, G = T.glass || {};
   const on = (v, d = true) => (v == null ? d : !!v);
   const userId = idFrom(P.link);
   const profileLink = P.link || (userId ? `https://discord.com/users/${userId}` : '#');
@@ -337,12 +328,10 @@ function init() {
   if (C.customCss) { const st = document.createElement('style'); st.textContent = C.customCss; document.head.appendChild(st); }
   const body = document.body;
   if (anim('avatarRing')) body.classList.add('ring'); if (anim('avatarFloat')) body.classList.add('float'); if (anim('statusPulse')) body.classList.add('pulse'); if (anim('buttonShine')) body.classList.add('shine');
-  // blobs
   const blobs = Array.isArray(T.blobs) ? T.blobs : [];
   const bl = document.getElementById('blobs'); bl.innerHTML = blobs.map((b) => `<div class="blob" style="left:${+b.x || 0}%;top:${+b.y || 0}%;width:${+b.size || 500}px;height:${+b.size || 500}px;background:${esc(b.color || '#7c3aed')};opacity:${b.opacity != null ? b.opacity : .7}"></div>`).join('');
   if (anim('blobsDrift')) bl.classList.add('drift');
   if (anim('blobsFollowCursor') && !matchMedia('(hover:none)').matches) { let tx = 0, ty = 0, cx = 0, cy = 0; addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; tx = (e.clientX / innerWidth - .5) * 40; ty = (e.clientY / innerHeight - .5) * 40; }, { passive: true }); const loop = () => { cx += (tx - cx) * .04; cy += (ty - cy) * .04; bl.style.transform = `translate(${cx}px,${cy}px)`; if (!document.hidden) requestAnimationFrame(loop); else setTimeout(loop, 300); }; loop(); }
-  // meta
   document.getElementById('desc').content = M.description || ''; document.getElementById('ogd').content = P.bio || M.description || '';
   document.querySelector('meta[name=theme-color]').content = M.themeColor || T.background || '#07070d';
   const setIcon = (u) => { if (!u) return; document.getElementById('ogi').content = M.ogImage || u; document.getElementById('fav').href = M.favicon || u; };
@@ -351,24 +340,25 @@ function init() {
   const defaultAvatar = P.avatar || `https://cdn.discordapp.com/embed/avatars/${userId ? Number(BigInt(userId) >> 22n) % 6 : 0}.png`;
   const servers = (SV.list || []).filter((s) => s && s.invite && !s.hide).map((s) => ({ ...s, invite: String(s.invite).trim().replace(/^https?:\/\/(www\.)?(discord\.gg|discord\.com\/invite|discordapp\.com\/invite)\//i, '').replace(/\/.*$/, '') }));
   const socials = (SO.items || []).filter((s) => s && s.icon);
-  const showServers = on(SV.show) && servers.length, showSocials = on(SO.show) && socials.length;
+  const bots = (BT.list || []).filter((b) => b && b.name);
+  const showServers = on(SV.show) && servers.length, showSocials = on(SO.show) && socials.length, showBot = on(BT.show) && bots.length;
+  const hidden = (href) => (href === '#servers' && !showServers) || (href === '#socials' && !showSocials) || (href === '#bot' && !showBot);
   const L = Object.assign({ online: 'online', members: 'members', since: 'since', join: 'Join ↗', unavailable: 'Live stats unavailable' }, SV.labels || {});
 
   // ---- nav
   const nav = document.getElementById('nav');
   if (on(N.show)) {
     const brand = N.brand || 'name', bimg = `<img id="navav" src="${esc(defaultAvatar)}" alt="">`, bname = `<span id="navname">${esc(P.name || '')}</span>`;
-    const links = (N.links || []).filter((l) => l && l.label).filter((l) => !(l.href === '#servers' && !showServers) && !(l.href === '#socials' && !showSocials));
+    const links = (N.links || []).filter((l) => l && l.label && !hidden(l.href));
     nav.innerHTML = `<a class="brand" href="#home">${brand === 'none' ? '' : brand === 'avatar' ? bimg : brand === 'both' ? bimg + bname : bname}</a><div class="pill">${links.map((l, i) => `<a href="${esc(l.href || '#')}" class="${i === 0 ? 'on' : ''}" ${/^https?:/.test(l.href || '') ? 'target="_blank" rel="noopener"' : ''}>${esc(l.label)}</a>`).join('')}</div>${on(N.button?.show) ? `<a class="cta" href="${esc(link(N.button?.url))}" target="_blank" rel="noopener">${ICONS.discord} ${esc(N.button?.label || 'Discord ↗')}</a>` : '<span></span>'}`;
     if (!links.length) nav.querySelector('.pill').remove();
-    // highlight the section in view
     const pills = [...nav.querySelectorAll('.pill a')]; if (pills.length) { const secs = pills.map((a) => { const h = a.getAttribute('href'); return /^#./.test(h) ? document.querySelector(h) : null; }).filter(Boolean); const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) pills.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-40% 0px -55% 0px' }); secs.forEach((s) => sio.observe(s)); }
   } else nav.remove();
 
   // ---- hero
   const hero = document.querySelector('.hero'); if ((H.layout || 'split') === 'center') hero.classList.add('center');
   const btn = (b) => `<a class="btn ${b.style === 'glass' ? 'glass' : 'solid'} a-in" href="${esc(b.url ? b.url : profileLink)}" ${/^#/.test(b.url || '') ? '' : 'target="_blank" rel="noopener"'}>${(!b.url || /discord/i.test(b.url)) ? ICONS.discord : ''}${esc(b.label)}</a>`;
-  const buttons = (H.buttons || []).filter((b) => b && b.label).filter((b) => !(b.url === '#servers' && !showServers) && !(b.url === '#socials' && !showSocials));
+  const buttons = (H.buttons || []).filter((b) => b && b.label && !hidden(b.url));
   const left = `<div class="glass card" id="card">
     <div class="avwrap a-in"><img class="avatar" id="avatar" src="${esc(defaultAvatar)}" alt="">${on(H.showStatusDot) ? '<span class="status" id="status"></span>' : ''}</div>
     ${on(H.showHeadline) && P.headline ? `<span class="eyebrow a-in"><i></i>${esc(P.headline)}</span>` : ''}
@@ -379,9 +369,11 @@ function init() {
     ${buttons.length ? `<div class="row">${buttons.map(btn).join('')}</div>` : ''}
   </div>`;
   const tileFor = (s, i) => `<a class="glass tile a-in" id="tile${i}" href="https://discord.gg/${esc(s.invite)}" target="_blank" rel="noopener">${s.icon ? `<img class="ic" src="${esc(s.icon)}" alt="">` : `<div class="ic ph" style="${s.color ? `background:${esc(s.color)}` : ''}">${esc((s.name || s.invite)[0].toUpperCase())}</div>`}<div class="nm"><b class="name">${s.name ? esc(s.name) : '<span class="skel">Loading…</span>'}</b><small>${esc(s.role || '')}</small></div><div class="st"><b class="on">—</b> ${esc(L.online)}<br><span class="mem">—</span> ${esc(L.members)}</div></a>`;
+  const botCard = (b, compact) => `<div class="glass botcard ${compact ? 'a-in' : ''}" data-health="${esc(b.healthUrl || '')}"><div class="bh">${b.icon ? `<img src="${esc(b.icon)}" alt="">` : `<div class="ph">${esc(b.emoji || '🤖')}</div>`}<div style="min-width:0;flex:1"><b>${esc(b.name)}</b><small>${esc(b.tagline || '')}</small></div>${b.healthUrl ? `<span class="live"><i></i><span class="lt">checking…</span></span>` : ''}</div>${b.summary && !compact ? `<p style="margin:0;color:var(--muted);line-height:1.5">${esc(b.summary)}</p>` : ''}${b.highlights?.length ? `<div class="fl">${b.highlights.slice(0, compact ? 6 : 12).map((h) => `<span>${esc(h)}</span>`).join('')}</div>` : ''}${compact ? `<div class="row" style="margin-top:4px"><a class="btn solid" href="#bot">${esc(BT.heroButton || 'See features')}</a>${b.access?.button?.label ? `<a class="btn glass" href="${esc(b.access.button.url || profileLink)}" target="_blank" rel="noopener">${ICONS.discord}${esc(b.access.button.label)}</a>` : ''}</div>` : ''}</div>`;
   let right = '';
   const panel = (H.layout || 'split') === 'center' ? 'none' : (H.rightPanel || 'servers');
-  if (panel === 'servers' && servers.length) right = `<div class="tiles">${servers.slice(0, H.rightTiles || 5).map(tileFor).join('')}${on(H.statsTile?.show) ? `<div class="glass tile stat a-in" id="stattile">${esc((H.statsTile?.text || '{members}+ members reached').replace(/\{\w+\}/g, '…'))}</div>` : ''}</div>`;
+  if (panel === 'bot' && bots.length) right = `<div class="tiles" style="grid-template-columns:1fr">${botCard(bots[0], true)}</div>`;
+  else if (panel === 'servers' && servers.length) right = `<div class="tiles">${servers.slice(0, H.rightTiles || 5).map(tileFor).join('')}${on(H.statsTile?.show) ? `<div class="glass tile stat a-in" id="stattile">${esc((H.statsTile?.text || '{members}+ members reached').replace(/\{\w+\}/g, '…'))}</div>` : ''}</div>`;
   else if (panel === 'stats') right = `<div class="tiles"><div class="glass tile big a-in"><div class="n" id="st-servers">${servers.length}</div><small>servers</small></div><div class="glass tile big a-in"><div class="n" id="st-members">…</div><small>members reached</small></div><div class="glass tile big a-in"><div class="n" id="st-online">…</div><small>online now</small></div>${on(H.statsTile?.show) ? `<div class="glass tile stat a-in" id="stattile">${esc((H.statsTile?.text || '').replace(/\{\w+\}/g, '…'))}</div>` : ''}</div>`;
   document.getElementById('profile').innerHTML = left + right; if (!right) hero.classList.add('center');
   if (on(E.orb, false) && !RM()) { hero.insertAdjacentHTML('afterbegin', '<canvas id="orb"></canvas>'); startOrb(true, (E.orbColors && E.orbColors.length === 2) ? E.orbColors : ['#fff3cf', '#e07a2a']); }
@@ -411,6 +403,15 @@ function init() {
   setTimeout(() => { const n = document.getElementById('name'); if (n.querySelector('.skel')) n.textContent = P.name || 'Discord user'; done(); }, 2500);
   if (document.getElementById('ldtxt') && !RM()) document.getElementById('ldtxt').animate([{ opacity: .3 }, { opacity: 1 }, { opacity: .3 }], { duration: 1600, iterations: Infinity });
 
+  // ---- bot showcase section
+  const bo = document.getElementById('bot');
+  if (showBot) bo.innerHTML = `<div class="sh rv">${BT.eyebrow ? `<span class="eyebrow">${esc(BT.eyebrow)}</span>` : ''}<h2>${esc(BT.title || 'My bot')}</h2>${BT.intro ? `<p>${esc(BT.intro)}</p>` : ''}</div>${bots.map((b) => `
+<div class="rv" style="margin-bottom:18px">${botCard(b, false)}</div>
+${b.features?.length ? `<div class="feats">${b.features.map((f) => `<div class="glass tile feat rv"><div class="fi">${esc(f.icon || '✨')}</div><b>${esc(f.title)}</b><p>${esc(f.text || '')}</p></div>`).join('')}</div>` : ''}
+${b.access ? `<div class="glass access rv"><div>${b.access.badge ? `<span class="lock">🔒 ${esc(b.access.badge)}</span>` : ''}<h3>${esc(b.access.title || 'Want it in your server?')}</h3><p>${esc(b.access.text || '')}</p>${b.access.button?.label ? `<div class="row"><a class="btn solid" href="${esc(b.access.button.url || profileLink)}" target="_blank" rel="noopener">${ICONS.discord}${esc(b.access.button.label)}</a></div>` : ''}</div><div>${b.access.requirementsTitle ? `<b style="display:block;margin-bottom:10px">${esc(b.access.requirementsTitle)}</b>` : ''}<ul>${(b.access.requirements || []).map((r) => `<li>${esc(r)}</li>`).join('')}</ul></div></div>` : ''}`).join('')}`;
+  else bo.remove();
+  document.querySelectorAll('.botcard[data-health]').forEach(async (el) => { const u = el.dataset.health; const live = el.querySelector('.live'); if (!u || !live) return; try { const r = await fetch(u + (u.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' }); const j = await r.json(); const ok = j.ready !== false; live.classList.add(ok ? 'on' : 'off'); live.querySelector('.lt').textContent = ok ? `online${j.guilds != null ? ` · ${j.guilds} server${j.guilds === 1 ? '' : 's'}` : ''}` : 'starting…'; } catch { live.classList.add('off'); live.querySelector('.lt').textContent = 'offline'; } });
+
   // ---- servers section
   const sv = document.getElementById('servers');
   if (showServers) {
@@ -422,8 +423,9 @@ function init() {
   let totM = 0, totO = 0;
   const cu = (el, n) => { if (!el) return; if (anim('countUp')) countUp(el, n); else el.textContent = fmt(n); };
   const updateStats = () => { const st = document.getElementById('stattile'); if (st) st.textContent = (H.statsTile?.text || '').replace('{members}', fmt(totM)).replace('{online}', fmt(totO)).replace('{servers}', servers.length); cu(document.getElementById('st-members'), totM); cu(document.getElementById('st-online'), totO); };
-  servers.forEach(async (s, i) => {
+  if (showServers || panel === 'servers' || panel === 'stats') servers.forEach(async (s, i) => {
     const card = document.getElementById('srv' + i), tile = document.getElementById('tile' + i);
+    if (!card && !tile && panel !== 'stats') return;
     try {
       const r = await fetch(`https://discord.com/api/v10/invites/${encodeURIComponent(s.invite)}?with_counts=true&with_expiration=true`);
       if (!r.ok) throw new Error(r.status === 404 ? 'invite not found or expired' : 'Discord returned ' + r.status);
@@ -441,7 +443,6 @@ function init() {
       if (tile) { if (!s.name) tile.querySelector('.name').textContent = s.invite; tile.querySelector('.st').innerHTML = `<small>${esc(L.unavailable)}</small>`; }
     }
   });
-  if (!servers.length) updateStats();
 
   // ---- socials
   const so = document.getElementById('socials');
@@ -463,7 +464,7 @@ function init() {
       if (el.classList.contains('sh')) { rise(el.querySelectorAll('.eyebrow, p'), { stagger: 120 }); const ws = splitWords(el.querySelector('h2')); ws.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(40px) skewY(4deg)', filter: 'blur(8px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 900, delay: 120 + i * 90, easing: EASE, fill: 'backwards' })); }
       else { const sib = [...el.parentElement.children]; rise([el], { delay: Math.min(sib.indexOf(el) % 3, 2) * 90, y: 40, dur: 900 }); } }), { threshold: .15 }); rvs.forEach((el) => io.observe(el)); }
   else rvs.forEach((el) => el.classList.add('on'));
-  if (anim('tilt')) { document.querySelectorAll('.srv, .soc, .tile').forEach((el) => tilt(el, 9)); }
+  if (anim('tilt')) { document.querySelectorAll('.srv, .soc, .tile, .botcard').forEach((el) => tilt(el, 7)); }
   if (anim('magneticButtons')) document.querySelectorAll('.btn, nav .cta').forEach((el) => magnetic(el));
   if (anim('customCursor')) { document.body.insertAdjacentHTML('afterbegin', '<div class="cursor" id="cursor"></div>'); cursorFx(); }
   if (on(N.hideOnScroll) && on(N.show)) navFx();

@@ -18,92 +18,131 @@ window.PORTFOLIO = {
   // ══════════════════════════════════════════════════════════════════════════
   profile: {
     link: 'https://discord.com/users/1314899151640858674', // your Discord profile link. Name, @tag and avatar are fetched from it automatically.
-                                                           // To get it: Discord → your profile → ⋯ → "Copy User ID", then paste the number after /users/
     name: '',             // leave '' to use your Discord display name, or type any name to override
-    tag: '',              // leave '' to use your @username, or type anything ('@maple', 'he/him', …)
-    avatar: '',           // leave '' to use your Discord avatar, or paste an image link (https://… .png/.jpg/.gif)
-    headline: 'Moderator · Advertising servers',  // small label above your name
-    bio: 'I look after advertising and promotion communities by ensuring that the ad channels remain clean, the partnerships are fair and the staff teams are organised.',
+    tag: '',              // leave '' to use your @username, or type anything
+    avatar: '',           // leave '' to use your Discord avatar, or paste an image link
+    headline: 'Moderator · Bot developer',  // small label above your name
+    bio: 'I moderate advertising & promotion communities and build StaffHub — a staff-management bot I set up for servers myself.',
     location: 'India',    // '' hides it
-    timezone: 'Asia/Kolkata', // shows your local time. '' hides it. List: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    tags: ['Moderation', 'Advertising servers', 'Partnerships', 'Staff teams'], // skill chips. [] hides them
+    timezone: 'Asia/Kolkata', // shows your local time. '' hides it
+    tags: ['Moderation', 'Advertising servers', 'Partnerships', 'Bot development'], // skill chips. [] hides them
     status: '',           // '' = live from Lanyard (join discord.gg/lanyard once). Or force: 'online' / 'idle' / 'dnd' / 'offline'
-    activity: '',         // '' = live from Lanyard (game / Spotify / custom status). Or type your own line
+    activity: '',         // '' = live from Lanyard. Or type your own line
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  2. NAVBAR (the floating pill at the top)
+  //  2. NAVBAR
   // ══════════════════════════════════════════════════════════════════════════
   nav: {
     show: true,
-    brand: 'name',        // what's shown on the left: 'name' · 'avatar' · 'both' · 'none'
-    links: [              // the pill in the middle. href '#home' / '#servers' / '#socials' scroll to sections; any https:// link works too
+    brand: 'name',        // 'name' · 'avatar' · 'both' · 'none'
+    links: [              // '#home' / '#bot' / '#servers' / '#socials' scroll to sections; any https:// link works too
       { label: 'Home', href: '#home' },
-      { label: 'Servers', href: '#servers' },
+      { label: 'StaffHub', href: '#bot' },
       { label: 'Socials', href: '#socials' },
     ],
-    button: { show: true, label: 'Discord ↗', url: '' }, // right-side button. url '' = your Discord profile
-    hideOnScroll: false,   // slides away when scrolling down, returns when scrolling up
+    button: { show: true, label: 'Discord ↗', url: '' }, // url '' = your Discord profile
+    hideOnScroll: false,
   },
 
   // ══════════════════════════════════════════════════════════════════════════
   //  3. HERO (the first screen)
   // ══════════════════════════════════════════════════════════════════════════
   hero: {
-    layout: 'split',      // 'split' = glass card left + tiles right (like the mockup) · 'center' = one centred card
-    avatarSize: 96,       // pixels
-    showStatusDot: true,  // green/yellow/red dot on the avatar
+    layout: 'split',      // 'split' = glass card left + panel right · 'center' = one centred card
+    avatarSize: 96,
+    showStatusDot: true,
     showHeadline: true,
     showTag: true,
     showBio: true,
-    showMeta: true,       // location · local time · activity line
+    showMeta: true,
     showTags: true,
-    buttons: [            // style: 'solid' (white) or 'glass' (see-through). url '' = your Discord profile. '#servers' etc. scroll.
+    buttons: [            // style: 'solid' or 'glass'. url '' = your Discord profile. '#bot' / '#servers' / '#socials' scroll.
       { label: 'Discord profile', url: '', style: 'solid' },
-      { label: 'Explore servers', url: '#servers', style: 'glass' },
+      { label: 'See StaffHub', url: '#bot', style: 'glass' },
     ],
-    rightPanel: 'servers', // what the right side shows ('split' layout only): 'servers' = compact server tiles · 'stats' = big numbers · 'none'
-    rightTiles: 7,         // how many server tiles to show on the right (the rest are in the Servers section)
-    statsTile: {           // the extra tile at the end of the right panel
-      show: true,
-      text: '{servers} im staff in, {members}+ members reached', // placeholders: {members} {online} {servers} are filled live
-    },
+    rightPanel: 'bot',    // what the right side shows: 'bot' = the bot card · 'servers' = server tiles · 'stats' = big numbers · 'none'
+    rightTiles: 7,        // ('servers' panel only) how many server tiles to show
+    statsTile: { show: true, text: '{servers} im staff in, {members}+ members reached' }, // ('servers' / 'stats' panel only)
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  4. SERVERS
-  //  invite = the code after discord.gg/  (full links also work). Must be a PERMANENT invite
-  //  (Invite → Edit link → Expire after: Never) or the card breaks when it expires.
-  //  Name, icon, banner, online & member counts load live from Discord.
-  //  Optional per server: name (override), icon (image link), color (hex, used if the server has no banner), hide: true
+  //  4. BOT SHOWCASE — your bot(s), what they do, and how people get them
+  //  Each bot: name, tagline, emoji or icon (image link), summary, highlights (chips), features (cards),
+  //  healthUrl (the bot's /health address → live "online · N servers" badge), and the access box.
+  // ══════════════════════════════════════════════════════════════════════════
+  bots: {
+    show: true,
+    eyebrow: 'My bot',
+    title: 'StaffHub — staff utility for Discord',
+    intro: 'Applications, verification, roster, strikes, breaks and a full admin dashboard — everything a staff team needs, in one bot.',
+    heroButton: 'See features',           // the button on the hero bot card
+    list: [
+      {
+        name: 'StaffHub',
+        tagline: 'Staff management bot · private, set up by me',
+        emoji: '🧑‍💼',                      // used if icon is empty
+        icon: '',                           // image link for the bot's avatar (optional)
+        healthUrl: 'https://staff-utility.apps.bot-hosting.cloud/health', // '' to hide the live badge
+        summary: 'StaffHub runs the whole staff pipeline for a server: people apply, managers review, accepted staff get verified with the right roles and nickname, and everything after that — promotions, strikes, breaks, activity — is tracked automatically and managed from a web dashboard. Works with a separate staff server or inside a single server.',
+        highlights: ['Admin dashboard', 'Components V2', 'Live roster', 'Image cards', 'Per-server identity', 'Single or dual server'],
+        features: [
+          { icon: '📝', title: 'Applications', text: 'Custom questions by DM or in-server. Managers Accept, Deny or open a private Interview channel with one click.' },
+          { icon: '🪪', title: 'Verification', text: 'Accepted applicants post proof; a manager picks their position from a dropdown and roles + nickname are set in both servers.' },
+          { icon: '🗂️', title: 'Roster & ranks', text: 'Departments and positions with one role each. A live roster message with generated image cards updates itself.' },
+          { icon: '⬆️', title: 'Promotions & demotions', text: 'Change a position and the old roles swap out, nickname tag updates, announcement posts — automatically.' },
+          { icon: '⚠️', title: 'Strikes', text: 'Strike limit with alert / demote / remove actions, optional expiry, full history on every record.' },
+          { icon: '🌴', title: 'Breaks (LOA)', text: 'Staff request time off, managers approve, LOA role is applied and removed on the return date.' },
+          { icon: '📈', title: 'Activity & reports', text: 'Messages, mod actions, interviews and reviews scored into a leaderboard; weekly report with inactive staff.' },
+          { icon: '📊', title: 'Live overview', text: 'One self-updating message in the staff server: what needs a manager, who is on break, who went quiet.' },
+          { icon: '📖', title: 'Auto guides', text: 'Channel and role guides in the main server that rebuild themselves and sync channel topics.' },
+          { icon: '🧩', title: 'Embed builder', text: 'Visual editor for Components V2 messages with buttons, select menus, role-giving and private multi-page replies.' },
+          { icon: '💬', title: 'DM onboarding', text: 'New staff get a welcome image card, a timezone picker and the staff guide as pages with Next / Back.' },
+          { icon: '🪪', title: 'Identity & presence', text: 'Per-server nickname, avatar, banner and Nitro-style name effects; bot status that follows a daily schedule.' },
+        ],
+        access: {
+          badge: 'Owner-authenticated — only I can add it',
+          title: 'Want StaffHub in your server?',
+          text: 'The bot is locked to my account, so it cannot be invited with a link. DM me on Discord, tell me about your server, and I will add it and set it up with you — departments, channels, roles and messages.',
+          button: { label: 'DM me to get it', url: '' },   // url '' = your Discord profile
+          requirementsTitle: 'What I need from you',
+          requirements: [
+            'Give me a Director of Development role (or an Administrator role) in your server — permanently, so I can maintain and update the bot.',
+            'The bot needs Administrator (or Manage Roles, Manage Nicknames, Manage Channels) and its role above your staff roles.',
+            'A quick call or chat to set up departments, positions and channels — about 15 minutes.',
+            'Keep me in the server for as long as you use the bot; removing my role removes support.',
+          ],
+        },
+      },
+    ],
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  //  5. SERVERS — hidden now (show: false). Set show: true and rightPanel: 'servers' to bring them back.
   // ══════════════════════════════════════════════════════════════════════════
   servers: {
-    show: true,            // the full "Servers" section below the hero (cards with banners)
-    eyebrow: 'Showcase',   // small label above the title
+    show: false,
+    eyebrow: 'Showcase',
     title: 'Servers I help run',
-    intro: 'Live numbers straight from Discord - tap a card to join.',
-    columns: 3,            // cards per row on desktop (2 · 3 · 4)
-    showOnline: true,
-    showMembers: true,
-    showSince: true,
-    showRole: true,
-    showJoin: true,        // the "Join ↗" chip on hover
+    intro: 'Live numbers straight from Discord — tap a card to join.',
+    columns: 3,
+    showOnline: true, showMembers: true, showSince: true, showRole: true, showJoin: true,
     labels: { online: 'online', members: 'members', since: 'since', join: 'Join ↗', unavailable: 'Live stats unavailable' },
     list: [
-      { invite: 'NZ5qfyQUNc',   role: 'Director Executive', since: '2023' }, // Free Promotion
+      { invite: 'NZ5qfyQUNc',   role: 'Director Executive', since: '2023' }, // Free Promotions
+      { invite: 'adverts',      role: 'Trial Moderator',  since: '2026' },   // Obsidian Advertising
       { invite: 'nDYAGjKdx2',   role: 'Moderator',        since: '' },       // Steal cash from others
-      { invite: 'ShmeDYqrUs',   role: 'Moderator',        since: '2026' },   // OA
+      { invite: 'ShmeDYqrUs',   role: 'Moderator',        since: '2026' },
+      { invite: 'hhuN5Sxc4',    role: 'Moderator',        since: '' },
       { invite: '7xx9zZVDMa',   role: 'Server Builder',   since: '' },       // Jane and Joe Club
       { invite: 'recruitments', role: 'Former Staff',     since: '2026' },   // GenreHub
-      { invite: 'wjedYaeaue',   role: 'Human Resources',  since: '2026' },   // AK
-      { invite: 'P4YVh7cbDy',   role: 'Sr CHRO',  since: '2026' },
+      { invite: 'SWatQW56tC',   role: 'Former Staff',     since: '' },
     ],
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  5. SOCIALS
+  //  6. SOCIALS
   //  icon: discord · youtube · twitter · instagram · github · tiktok · twitch · website · email · reddit · steam · spotify · telegram · roblox
-  //  handle: the small grey text under the label ('' = taken from the link)
   // ══════════════════════════════════════════════════════════════════════════
   socials: {
     show: true,
@@ -118,106 +157,75 @@ window.PORTFOLIO = {
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  6. EXTRA SECTIONS (optional) — add as many as you like, they appear after Socials
-  //  type 'text'  → a glass card with a title and paragraphs
-  //  type 'list'  → a glass card with bullet points
-  //  type 'cards' → small glass tiles (title + text each)
-  //  Remove the // at the start of the lines to enable an example.
+  //  7. EXTRA SECTIONS (optional) — appear after Socials. type: 'text' · 'list' · 'cards'
   // ══════════════════════════════════════════════════════════════════════════
   sections: [
-    // { type: 'text',  id: 'about', eyebrow: 'About', title: 'A bit more about me', body: ['First paragraph…', 'Second paragraph…'] },
-    // { type: 'list',  id: 'skills', eyebrow: 'How I work', title: 'What I bring', items: ['Fair, consistent moderation', 'Clear staff onboarding'] },
     { type: 'cards', id: 'services', eyebrow: 'Services', title: 'What I can do', cards: [
       { title: 'Moderation', text: 'Clean ad channels, fair warnings, calm chats — consistent rules every day.' },
       { title: 'Advertising & partnerships', text: 'Partner outreach, ad-channel setup, bump & promo systems that stay spam-free.' },
       { title: 'Staff teams', text: 'Onboarding, roles, guides and ModMail so new staff know exactly what to do.' },
-      { title: 'Bots & setup', text: 'Tickets, ModMail, auto-roles and custom utility bots for your server.' },
+      { title: 'Bots & setup', text: 'StaffHub, tickets, ModMail, auto-roles and custom utility bots for your server.' },
     ] },
   ],
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  7. FOOTER
+  //  8. FOOTER
   // ══════════════════════════════════════════════════════════════════════════
-  footer: {
-    show: true,
-    text: 'Made by Leafy · DM me on Discord',
-  },
+  footer: { show: true, text: 'Made by Leafy · DM me on Discord' },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  8. LOOK — colours, glass, fonts
+  //  9. LOOK — colours, glass, fonts
   // ══════════════════════════════════════════════════════════════════════════
   theme: {
-    background: '#06100c',  // page background
-    text: '#ffffff',        // main text
-    muted: '#9fb5a8',       // secondary text
+    background: '#06100c',
+    text: '#ffffff',
+    muted: '#9fb5a8',
     accent: '#34d399',      // solid buttons, active nav link, highlights
-    accentText: '#000000',  // text on solid buttons
-    online: '#23a55a', idle: '#f0b232', dnd: '#f23f43', offline: '#5b5b66', // status dot colours
-
-    // The glowing colour blobs behind everything. x / y = position in % of the screen, size in px.
-    // Add or remove blobs freely. opacity 0–1. Set blobs: [] for a plain background.
-    blobs: [
-      { color: '#16a34a', x: -5, y: -10, size: 620, opacity: .7 },   // leaf green, top-left
-      { color: '#0d9488', x: 95, y: 15, size: 520, opacity: .7 },    // teal, right
-      { color: '#84cc16', x: 45, y: 110, size: 520, opacity: .4 },   // lime, bottom
+    accentText: '#000000',
+    online: '#23a55a', idle: '#f0b232', dnd: '#f23f43', offline: '#5b5b66',
+    blobs: [                // glowing colour blobs. x / y in % of the screen, size in px, opacity 0–1. blobs: [] = plain background
+      { color: '#16a34a', x: -5, y: -10, size: 620, opacity: .7 },
+      { color: '#0d9488', x: 95, y: 15, size: 520, opacity: .7 },
+      { color: '#84cc16', x: 45, y: 110, size: 520, opacity: .4 },
     ],
-    blobBlur: 90,           // px — higher = softer
-
-    glass: {
-      opacity: .06,         // card fill: 0 = fully see-through, .2 = quite solid
-      blur: 24,             // px of background blur behind cards
-      border: .14,          // border brightness 0–1
-      radius: 28,           // card corner roundness (px)
-      tileRadius: 22,       // small tiles (servers on the right, socials)
-      shadow: true,         // soft drop shadow under cards
-    },
-    buttonRadius: 999,      // 999 = pill, 12 = rounded, 0 = square
+    blobBlur: 90,
+    glass: { opacity: .06, blur: 24, border: .14, radius: 28, tileRadius: 22, shadow: true },
+    buttonRadius: 999,
     chipRadius: 999,
-    font: 'Sora',           // any Google Font: 'Sora', 'Poppins', 'Outfit', 'Space Grotesk', 'DM Sans', 'Manrope' …
-    nameSize: 54,           // your name, px (desktop). Phones scale automatically
-    nameWeight: 800,        // 400 normal · 600 semi-bold · 800 extra-bold
-    maxWidth: 1240,         // page width on big screens (px)
+    font: 'Sora',           // any Google Font
+    nameSize: 54,
+    nameWeight: 800,
+    maxWidth: 1240,
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  9. EFFECTS & ANIMATIONS — every switch can be turned off
-  //  (everything also switches off automatically for visitors who prefer reduced motion)
+  //  10. EFFECTS & ANIMATIONS — every switch can be turned off
   // ══════════════════════════════════════════════════════════════════════════
   effects: {
-    loader: true,           // the "Loading <name>" screen
-    loaderText: 'Loading {name}', // {name} = your name
-    blobsDrift: true,       // blobs slowly float around
-    blobsFollowCursor: true,// blobs lean slightly toward the mouse
-    entrance: true,         // hero fades/rises in piece by piece
-    letterReveal: true,     // your name appears letter by letter
-    scrollReveal: true,     // sections rise in as you scroll to them
-    tilt: true,             // cards tilt in 3D toward the cursor with a light sheen (desktop)
-    magneticButtons: true,  // buttons pull toward the cursor (desktop)
-    customCursor: true,     // ring cursor that grows over links (desktop)
-    avatarRing: true,       // spinning light ring around the avatar
-    avatarFloat: true,      // avatar gently bobs
-    statusPulse: true,      // pulsing ring on the online dot
-    buttonShine: true,      // light sweep across the solid button
-    countUp: true,          // numbers count up when they load
-    starfield: true,       // the 3D starfield from the previous design (off = cleaner aurora look)
-    orb: true,             // the big particle sphere from the previous design, drawn behind the hero
-    orbColors: ['#d1fae5', '#0d9488'],   // mint → teal to match the blobs
-    lowPowerMobile: true,   // lighter effects on phones/tablets
+    loader: true, loaderText: 'Loading {name}',
+    blobsDrift: true, blobsFollowCursor: true,
+    entrance: true, letterReveal: true, scrollReveal: true,
+    tilt: true, magneticButtons: true, customCursor: true,
+    avatarRing: true, avatarFloat: true, statusPulse: true, buttonShine: true, countUp: true,
+    starfield: true,                      // 3D starfield behind everything
+    orb: true,                            // big particle sphere behind the hero
+    orbColors: ['#d1fae5', '#0d9488'],    // mint → teal
+    lowPowerMobile: true,
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  10. PAGE INFO (browser tab + link previews in Discord)
+  //  11. PAGE INFO (browser tab + link previews in Discord)
   // ══════════════════════════════════════════════════════════════════════════
   meta: {
-    title: '',              // browser tab title. '' = "<name> — portfolio"
-    description: 'Leafy — Discord moderator for advertising & promotion servers. Live server stats, roles and contact.',
-    ogImage: '',            // image shown when the link is pasted in Discord/Twitter. '' = your avatar (set a direct image link for a guaranteed preview)
-    favicon: '',            // '' = your avatar
-    themeColor: '',         // mobile browser bar colour. '' = background colour
+    title: '',
+    description: 'Leafy — Discord moderator and developer of StaffHub, a staff-management bot set up privately for servers.',
+    ogImage: '',            // set a direct image link for a guaranteed preview image in Discord
+    favicon: '',
+    themeColor: '',
   },
 
   // ══════════════════════════════════════════════════════════════════════════
-  //  11. CUSTOM CSS (advanced) — anything here is added to the page as-is
+  //  12. CUSTOM CSS (advanced)
   // ══════════════════════════════════════════════════════════════════════════
-  customCss: '',            // e.g. '.srv .name{font-size:20px}'
+  customCss: '',
 };
