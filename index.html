@@ -4,9 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Portfolio</title>
-<meta name="theme-color" content="#07070d">
+<meta name="theme-color" content="#06100c">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<meta property="og:type" content="profile"><meta property="og:title" id="ogt" content="Discord portfolio"><meta property="og:description" id="ogd" content="Servers, roles and live member counts."><meta property="og:image" id="ogi" content="">
+<!-- Link previews (Discord / Twitter / WhatsApp) read these without running JavaScript — keep them in sync with config.js meta.* -->
+<meta property="og:type" content="website"><meta property="og:site_name" content="Leafy · Discord moderator">
+<meta property="og:title" id="ogt" content="Leafy — Discord moderator & StaffHub developer">
+<meta property="og:description" id="ogd" content="Moderator for advertising servers and developer of StaffHub, a staff-management bot set up privately for your server. DM me on Discord to get it.">
+<meta property="og:image" id="ogi" content="https://leafys-portfolio.github.io/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:url" content="https://leafys-portfolio.github.io/">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Leafy — Discord moderator & StaffHub developer"><meta name="twitter:description" content="Moderator for advertising servers and developer of StaffHub. DM me on Discord to get it."><meta name="twitter:image" content="https://leafys-portfolio.github.io/og.png">
+<link rel="alternate" type="application/json+oembed" href="https://leafys-portfolio.github.io/oembed.json">
 <meta name="description" id="desc" content="Discord moderator portfolio.">
 <link rel="icon" id="fav" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='%23fff'/></svg>">
 <style>
@@ -332,9 +339,9 @@ function init() {
   const bl = document.getElementById('blobs'); bl.innerHTML = blobs.map((b) => `<div class="blob" style="left:${+b.x || 0}%;top:${+b.y || 0}%;width:${+b.size || 500}px;height:${+b.size || 500}px;background:${esc(b.color || '#7c3aed')};opacity:${b.opacity != null ? b.opacity : .7}"></div>`).join('');
   if (anim('blobsDrift')) bl.classList.add('drift');
   if (anim('blobsFollowCursor') && !matchMedia('(hover:none)').matches) { let tx = 0, ty = 0, cx = 0, cy = 0; addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; tx = (e.clientX / innerWidth - .5) * 40; ty = (e.clientY / innerHeight - .5) * 40; }, { passive: true }); const loop = () => { cx += (tx - cx) * .04; cy += (ty - cy) * .04; bl.style.transform = `translate(${cx}px,${cy}px)`; if (!document.hidden) requestAnimationFrame(loop); else setTimeout(loop, 300); }; loop(); }
-  document.getElementById('desc').content = M.description || ''; document.getElementById('ogd').content = P.bio || M.description || '';
+  if (M.description) document.getElementById('desc').content = M.description; if (M.ogDescription) document.getElementById('ogd').content = M.ogDescription;
   document.querySelector('meta[name=theme-color]').content = M.themeColor || T.background || '#07070d';
-  const setIcon = (u) => { if (!u) return; document.getElementById('ogi').content = M.ogImage || u; document.getElementById('fav').href = M.favicon || u; };
+  const setIcon = (u) => { if (!u) return; if (M.ogImage) document.getElementById('ogi').content = M.ogImage; document.getElementById('fav').href = M.favicon || u; };
   if (M.ogImage) document.getElementById('ogi').content = M.ogImage; if (M.favicon) document.getElementById('fav').href = M.favicon;
 
   const defaultAvatar = P.avatar || `https://cdn.discordapp.com/embed/avatars/${userId ? Number(BigInt(userId) >> 22n) % 6 : 0}.png`;
@@ -387,10 +394,10 @@ function init() {
   let nameAnimated = false;
   const heroIn = () => { const h = document.getElementById('name'); if (!nameAnimated && !h.querySelector('.skel')) { nameAnimated = true; if (anim('letterReveal')) letterIn(h, 200); } if (anim('entrance')) rise(document.querySelectorAll('.hero .a-in'), { delay: 120, stagger: 90 }); else document.querySelectorAll('.a-in').forEach((el) => el.classList.remove('a-in')); };
   const done = () => { if (loaded) return; loaded = true; setTimeout(() => { document.getElementById('loader')?.classList.add('hide'); heroIn(); }, on(E.loader) ? 350 : 0); };
-  const setName = (n, t) => { if (!P.name && n) { const h = document.getElementById('name'); if (h.textContent !== n) { h.textContent = n; if (nameAnimated) splitLetters(h); } const nn = document.getElementById('navname'); if (nn) nn.textContent = n; } const tt = document.getElementById('tag'); if (!P.tag && t && tt) tt.textContent = t; const nm = P.name || n || ''; document.title = M.title || `${nm} — portfolio`; document.getElementById('ogt').content = `${nm} — ${P.headline || 'Discord'}`; ldText(nm); done(); };
+  const setName = (n, t) => { if (!P.name && n) { const h = document.getElementById('name'); if (h.textContent !== n) { h.textContent = n; if (nameAnimated) splitLetters(h); } const nn = document.getElementById('navname'); if (nn) nn.textContent = n; } const tt = document.getElementById('tag'); if (!P.tag && t && tt) tt.textContent = t; const nm = P.name || n || ''; document.title = M.title || `${nm} — portfolio`; if (M.ogTitle) document.getElementById('ogt').content = M.ogTitle; ldText(nm); done(); };
   const setAvatar = (u) => { if (!P.avatar && u) { document.getElementById('avatar').src = u; const na = document.getElementById('navav'); if (na) na.src = u; } setIcon(P.avatar || u); };
   const setStatus = (s) => { const st = document.getElementById('status'); if (st) { st.className = 'status ' + (s || 'offline'); st.title = s || ''; } };
-  if (P.status) setStatus(P.status); if (P.avatar) setIcon(P.avatar); if (P.name) { document.title = M.title || `${P.name} — portfolio`; document.getElementById('ogt').content = `${P.name} — ${P.headline || 'Discord'}`; }
+  if (P.status) setStatus(P.status); if (P.avatar) setIcon(P.avatar); if (P.name) document.title = M.title || `${P.name} — portfolio`;
   if (userId) {
     fetch(`https://discordlookup.mesalytic.moe/v1/user/${userId}`).then((r) => r.ok ? r.json() : null).then((u) => { if (!u) return; setName(u.global_name || u.username, u.username ? '@' + u.username : ''); setAvatar(u.avatar?.link ? u.avatar.link + '?size=256' : null); }).catch(() => {});
     fetch(`https://api.lanyard.rest/v1/users/${userId}`).then((r) => r.json()).then((j) => {

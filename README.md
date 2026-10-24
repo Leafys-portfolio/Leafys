@@ -14,3 +14,6 @@ Rules: text in quotes, numbers without, switches `true`/`false`, every line ends
 
 ## Live bot badge
 `bots.list[].healthUrl` points at the bot's `/health` page; the bot answers with CORS so the badge shows "online · N servers". Blank to hide.
+
+## Link previews
+Discord/Twitter/WhatsApp read `og:*` tags from `index.html` without running JavaScript, so they are hard-coded near the top of the file; `og.png` (1200×630) is the banner and `oembed.json` adds the author line. Edit those to change the preview. Link previews cannot have buttons — use StaffHub's `/portfolio` command for a card with buttons.

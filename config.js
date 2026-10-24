@@ -217,11 +217,15 @@ window.PORTFOLIO = {
   //  11. PAGE INFO (browser tab + link previews in Discord)
   // ══════════════════════════════════════════════════════════════════════════
   meta: {
-    title: '',
+    title: '',              // browser tab title. '' = "<name> — portfolio"
     description: 'Leafy — Discord moderator and developer of StaffHub, a staff-management bot set up privately for servers.',
-    ogImage: '',            // set a direct image link for a guaranteed preview image in Discord
-    favicon: '',
-    themeColor: '',
+    // LINK PREVIEWS (the card Discord shows when the link is pasted) are read from index.html WITHOUT JavaScript,
+    // so they are hard-coded there: og:title, og:description, og:image (og.png in the repo) and oembed.json.
+    // To change them, edit those lines near the top of index.html and/or replace og.png (1200×630).
+    // The three below only update the live page's tags (for tools that run JS); leave '' to keep the static ones.
+    ogTitle: '', ogDescription: '', ogImage: '',
+    favicon: '',            // '' = your avatar
+    themeColor: '',         // mobile browser bar colour. '' = background colour
   },
 
   // ══════════════════════════════════════════════════════════════════════════
